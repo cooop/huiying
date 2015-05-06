@@ -83,6 +83,10 @@
 		E6CF11FF1AFA398A004FBDB7 /* HuiYing */ = {
 			isa = PBXGroup;
 			children = (
+				E6CF122E1AFA3EA3004FBDB7 /* Utils */,
+				E6CF122B1AFA39F6004FBDB7 /* Controllers */,
+				E6CF122A1AFA39ED004FBDB7 /* Views */,
+				E6CF12291AFA39E0004FBDB7 /* Models */,
 				E6CF12041AFA398A004FBDB7 /* AppDelegate.h */,
 				E6CF12051AFA398A004FBDB7 /* AppDelegate.m */,
 				E6CF120A1AFA398A004FBDB7 /* ViewController.h */,
@@ -120,6 +124,50 @@
 				E6CF121E1AFA398A004FBDB7 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		E6CF12291AFA39E0004FBDB7 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				E6CF122D1AFA3A14004FBDB7 /* Database */,
+				E6CF122C1AFA3A06004FBDB7 /* Network */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		E6CF122A1AFA39ED004FBDB7 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		E6CF122B1AFA39F6004FBDB7 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
+		E6CF122C1AFA3A06004FBDB7 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Network;
+			sourceTree = "<group>";
+		};
+		E6CF122D1AFA3A14004FBDB7 /* Database */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Database;
+			sourceTree = "<group>";
+		};
+		E6CF122E1AFA3EA3004FBDB7 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Utils;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
