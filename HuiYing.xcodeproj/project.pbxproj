@@ -15,6 +15,8 @@
 		E6372A9E1AFCEB6000526393 /* MovieDetailMeta.m in Sources */ = {isa = PBXBuildFile; fileRef = E6372A9D1AFCEB6000526393 /* MovieDetailMeta.m */; };
 		E6372AA41AFCF12D00526393 /* SessionMeta.m in Sources */ = {isa = PBXBuildFile; fileRef = E6372AA31AFCF12D00526393 /* SessionMeta.m */; };
 		E6372AA71AFCF14400526393 /* TicketMeta.m in Sources */ = {isa = PBXBuildFile; fileRef = E6372AA61AFCF14400526393 /* TicketMeta.m */; };
+		E6372AAA1AFCF50100526393 /* MovieMeta.m in Sources */ = {isa = PBXBuildFile; fileRef = E6372AA91AFCF50100526393 /* MovieMeta.m */; };
+		E6372AAD1AFCF52100526393 /* CityMeta.m in Sources */ = {isa = PBXBuildFile; fileRef = E6372AAC1AFCF52100526393 /* CityMeta.m */; };
 		E6CF12031AFA398A004FBDB7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E6CF12021AFA398A004FBDB7 /* main.m */; };
 		E6CF12061AFA398A004FBDB7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E6CF12051AFA398A004FBDB7 /* AppDelegate.m */; };
 		E6CF12091AFA398A004FBDB7 /* HuiYing.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E6CF12071AFA398A004FBDB7 /* HuiYing.xcdatamodeld */; };
@@ -71,6 +73,10 @@
 		E6372AA31AFCF12D00526393 /* SessionMeta.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SessionMeta.m; sourceTree = "<group>"; };
 		E6372AA51AFCF14400526393 /* TicketMeta.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TicketMeta.h; sourceTree = "<group>"; };
 		E6372AA61AFCF14400526393 /* TicketMeta.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TicketMeta.m; sourceTree = "<group>"; };
+		E6372AA81AFCF50100526393 /* MovieMeta.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MovieMeta.h; sourceTree = "<group>"; };
+		E6372AA91AFCF50100526393 /* MovieMeta.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MovieMeta.m; sourceTree = "<group>"; };
+		E6372AAB1AFCF52100526393 /* CityMeta.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CityMeta.h; sourceTree = "<group>"; };
+		E6372AAC1AFCF52100526393 /* CityMeta.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CityMeta.m; sourceTree = "<group>"; };
 		E6CF11FD1AFA398A004FBDB7 /* HuiYing.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HuiYing.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E6CF12011AFA398A004FBDB7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E6CF12021AFA398A004FBDB7 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -147,6 +153,8 @@
 			isa = PBXGroup;
 			children = (
 				E6372A8C1AFC787F00526393 /* CityMeta.h */,
+				E6372AAB1AFCF52100526393 /* CityMeta.h */,
+				E6372AAC1AFCF52100526393 /* CityMeta.m */,
 				E6372A8D1AFC787F00526393 /* CityMeta.m */,
 				E6372A931AFCE28400526393 /* DistrictMeta.h */,
 				E6372A941AFCE28400526393 /* DistrictMeta.m */,
@@ -167,6 +175,8 @@
 			isa = PBXGroup;
 			children = (
 				E6372A991AFCE6D800526393 /* MovieMeta.h */,
+				E6372AA81AFCF50100526393 /* MovieMeta.h */,
+				E6372AA91AFCF50100526393 /* MovieMeta.m */,
 				E6372A9A1AFCE6D800526393 /* MovieMeta.m */,
 				E6372A9C1AFCEB6000526393 /* MovieDetailMeta.h */,
 				E6372A9D1AFCEB6000526393 /* MovieDetailMeta.m */,
@@ -467,6 +477,7 @@
 				E6372AA71AFCF14400526393 /* TicketMeta.m in Sources */,
 				E6372A951AFCE28400526393 /* DistrictMeta.m in Sources */,
 				E6CF12061AFA398A004FBDB7 /* AppDelegate.m in Sources */,
+				E6372AAD1AFCF52100526393 /* CityMeta.m in Sources */,
 				E6CF12601AFB8803004FBDB7 /* AFNetworkReachabilityManager.m in Sources */,
 				E6CF12771AFB8813004FBDB7 /* AFNetworkActivityIndicatorManager.m in Sources */,
 				E6CF127B1AFB8813004FBDB7 /* UIImageView+AFNetworking.m in Sources */,
@@ -484,6 +495,7 @@
 				E6CF12031AFA398A004FBDB7 /* main.m in Sources */,
 				E6CF12651AFB8803004FBDB7 /* AFURLSessionManager.m in Sources */,
 				E6CF120C1AFA398A004FBDB7 /* ViewController.m in Sources */,
+				E6372AAA1AFCF50100526393 /* MovieMeta.m in Sources */,
 				E6CF125E1AFB8803004FBDB7 /* AFHTTPRequestOperationManager.m in Sources */,
 				E6CF127C1AFB8813004FBDB7 /* UIProgressView+AFNetworking.m in Sources */,
 				E6CF127A1AFB8813004FBDB7 /* UIButton+AFNetworking.m in Sources */,
