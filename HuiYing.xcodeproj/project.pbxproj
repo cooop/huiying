@@ -13,6 +13,8 @@
 		E6372A981AFCE46B00526393 /* CinemaMeta.m in Sources */ = {isa = PBXBuildFile; fileRef = E6372A971AFCE46B00526393 /* CinemaMeta.m */; };
 		E6372A9B1AFCE6D800526393 /* MovieMeta.m in Sources */ = {isa = PBXBuildFile; fileRef = E6372A9A1AFCE6D800526393 /* MovieMeta.m */; };
 		E6372A9E1AFCEB6000526393 /* MovieDetailMeta.m in Sources */ = {isa = PBXBuildFile; fileRef = E6372A9D1AFCEB6000526393 /* MovieDetailMeta.m */; };
+		E6372AA41AFCF12D00526393 /* SessionMeta.m in Sources */ = {isa = PBXBuildFile; fileRef = E6372AA31AFCF12D00526393 /* SessionMeta.m */; };
+		E6372AA71AFCF14400526393 /* TicketMeta.m in Sources */ = {isa = PBXBuildFile; fileRef = E6372AA61AFCF14400526393 /* TicketMeta.m */; };
 		E6CF12031AFA398A004FBDB7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E6CF12021AFA398A004FBDB7 /* main.m */; };
 		E6CF12061AFA398A004FBDB7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E6CF12051AFA398A004FBDB7 /* AppDelegate.m */; };
 		E6CF12091AFA398A004FBDB7 /* HuiYing.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E6CF12071AFA398A004FBDB7 /* HuiYing.xcdatamodeld */; };
@@ -65,6 +67,10 @@
 		E6372A9A1AFCE6D800526393 /* MovieMeta.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MovieMeta.m; path = ../MovieMeta.m; sourceTree = "<group>"; };
 		E6372A9C1AFCEB6000526393 /* MovieDetailMeta.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MovieDetailMeta.h; sourceTree = "<group>"; };
 		E6372A9D1AFCEB6000526393 /* MovieDetailMeta.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MovieDetailMeta.m; sourceTree = "<group>"; };
+		E6372AA21AFCF12D00526393 /* SessionMeta.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SessionMeta.h; sourceTree = "<group>"; };
+		E6372AA31AFCF12D00526393 /* SessionMeta.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SessionMeta.m; sourceTree = "<group>"; };
+		E6372AA51AFCF14400526393 /* TicketMeta.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TicketMeta.h; sourceTree = "<group>"; };
+		E6372AA61AFCF14400526393 /* TicketMeta.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TicketMeta.m; sourceTree = "<group>"; };
 		E6CF11FD1AFA398A004FBDB7 /* HuiYing.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HuiYing.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E6CF12011AFA398A004FBDB7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E6CF12021AFA398A004FBDB7 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -171,6 +177,8 @@
 		E6372A8A1AFC734600526393 /* Session */ = {
 			isa = PBXGroup;
 			children = (
+				E6372AA21AFCF12D00526393 /* SessionMeta.h */,
+				E6372AA31AFCF12D00526393 /* SessionMeta.m */,
 			);
 			name = Session;
 			sourceTree = "<group>";
@@ -178,6 +186,8 @@
 		E6372A8B1AFC735000526393 /* Ticket */ = {
 			isa = PBXGroup;
 			children = (
+				E6372AA51AFCF14400526393 /* TicketMeta.h */,
+				E6372AA61AFCF14400526393 /* TicketMeta.m */,
 			);
 			name = Ticket;
 			sourceTree = "<group>";
@@ -454,6 +464,7 @@
 			files = (
 				E6CF12611AFB8803004FBDB7 /* AFSecurityPolicy.m in Sources */,
 				E6372A981AFCE46B00526393 /* CinemaMeta.m in Sources */,
+				E6372AA71AFCF14400526393 /* TicketMeta.m in Sources */,
 				E6372A951AFCE28400526393 /* DistrictMeta.m in Sources */,
 				E6CF12061AFA398A004FBDB7 /* AppDelegate.m in Sources */,
 				E6CF12601AFB8803004FBDB7 /* AFNetworkReachabilityManager.m in Sources */,
@@ -466,6 +477,7 @@
 				E6CF125D1AFB8803004FBDB7 /* AFHTTPRequestOperation.m in Sources */,
 				E6CF125F1AFB8803004FBDB7 /* AFHTTPSessionManager.m in Sources */,
 				E6CF12791AFB8813004FBDB7 /* UIAlertView+AFNetworking.m in Sources */,
+				E6372AA41AFCF12D00526393 /* SessionMeta.m in Sources */,
 				E6372A9E1AFCEB6000526393 /* MovieDetailMeta.m in Sources */,
 				E6372A9B1AFCE6D800526393 /* MovieMeta.m in Sources */,
 				E6CF12631AFB8803004FBDB7 /* AFURLRequestSerialization.m in Sources */,
