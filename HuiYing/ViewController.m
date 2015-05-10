@@ -22,8 +22,17 @@
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    NetworkManager *networkManager = [[NetworkManager alloc]init];
+    //For TEST
+    NetworkManager *networkManager = [NetworkManager sharedInstance];
     [networkManager cityList];
+    [networkManager districtListInCity:110100];
+    [networkManager cinemaList];
+    [networkManager cinemaListInCity:110100];
+    [networkManager cinemaListInCity:110100 inDistrict:6911];
+    [networkManager movieList];
+    [networkManager movieListDetailWithID:1];
+    [networkManager sessionOfMovie:1 inCinema:1];
+    [networkManager ticketPriceOfSession:1];
 }
 
 - (void)didReceiveMemoryWarning {

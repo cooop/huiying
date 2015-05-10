@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 
 typedef enum MovieVersion{
-    kMovieVersionUnknown = -1,
+    kMovieVersionUnknown = 0,
     kMovieVersion2D,
     kMovieVersion2DIMAX,
     kMovieVersion3D,
@@ -25,4 +25,5 @@ typedef enum MovieVersion{
 @property (nonatomic,strong) NSString * coverImage;
 @property (nonatomic) int rate;
 -(id)initWithDict:(NSDictionary *)dict;
++(MovieVersion) translateMovieVersion:(NSString *) version;
 @end

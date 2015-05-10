@@ -38,7 +38,8 @@
 #define kJSONKeyMovieDate @"r_date"
 #define kJSONKeyMovieType @"type"
 #define kJSONKeyMovieNation @"nation"
-#define kJSONKeyMovieLanguage @"language"
+//Attention! 服务端返回jsonkey拼写错误，有可能被改正
+#define kJSONKeyMovieLanguage @"lanuage"
 #define kJSONKeyMovieDuration @"duration"
 #define kJSONKeyMovieDescription @"description"
 #define kJSONKeyMovieImages @"images"
@@ -73,7 +74,8 @@
 #define kUserInfoKeySessionID @"session_id"
 #define kUserInfoKeyTickets @"tickets"
 
-#define KUserInfoKeyError @"error"
+#define kUserInfoKeyMethodLocation  @"methodLocation"
+#define kUserInfoKeyError @"error"
 
 #pragma mark - Notification Names
 
@@ -95,5 +97,26 @@
 #define kSessionListFailedNotification @"kSessionListFailedNotification"
 #define kTicketListSuccessNotification @"kTicketListSuccessNotification"
 #define kTicketListFailedNotification @"kTicketListFailedNotification"
+
+#pragma mark - Utils
+
+//获取界面字符串
+#define UI_STRING(key)                  NSLocalizedString(key, nil)
+
+// 声明一个单例方法
+#define DECLARE_SHARED_INSTANCE(className)  \
++ (className *)sharedInstance;
+
+// 实现一个单例方法
+#define IMPLEMENT_SHARED_INSTANCE(className)  \
++ (className *)sharedInstance \
+{ \
+static dispatch_once_t onceToken; \
+static className *sharedInstance = nil; \
+dispatch_once(&onceToken, ^{ \
+sharedInstance = [[self alloc] init]; \
+}); \
+return sharedInstance; \
+}
 
 #endif

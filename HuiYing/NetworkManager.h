@@ -8,8 +8,11 @@
 
 #import <Foundation/Foundation.h>
 #import "AFHTTPRequestOperationManager.h"
+#import "Constraits.h"
 
 @interface NetworkManager : AFHTTPRequestOperationManager
+
+DECLARE_SHARED_INSTANCE(NetworkManager);
 
 //位置查询
 -(void) cityList;

@@ -8,10 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		E6372A861AFC721400526393 /* NetworkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E6372A851AFC721400526393 /* NetworkManager.m */; };
-		E6372A8E1AFC787F00526393 /* CityMeta.m in Sources */ = {isa = PBXBuildFile; fileRef = E6372A8D1AFC787F00526393 /* CityMeta.m */; };
 		E6372A951AFCE28400526393 /* DistrictMeta.m in Sources */ = {isa = PBXBuildFile; fileRef = E6372A941AFCE28400526393 /* DistrictMeta.m */; };
 		E6372A981AFCE46B00526393 /* CinemaMeta.m in Sources */ = {isa = PBXBuildFile; fileRef = E6372A971AFCE46B00526393 /* CinemaMeta.m */; };
-		E6372A9B1AFCE6D800526393 /* MovieMeta.m in Sources */ = {isa = PBXBuildFile; fileRef = E6372A9A1AFCE6D800526393 /* MovieMeta.m */; };
 		E6372A9E1AFCEB6000526393 /* MovieDetailMeta.m in Sources */ = {isa = PBXBuildFile; fileRef = E6372A9D1AFCEB6000526393 /* MovieDetailMeta.m */; };
 		E6372AA41AFCF12D00526393 /* SessionMeta.m in Sources */ = {isa = PBXBuildFile; fileRef = E6372AA31AFCF12D00526393 /* SessionMeta.m */; };
 		E6372AA71AFCF14400526393 /* TicketMeta.m in Sources */ = {isa = PBXBuildFile; fileRef = E6372AA61AFCF14400526393 /* TicketMeta.m */; };
@@ -43,6 +41,8 @@
 		E6CF127D1AFB8813004FBDB7 /* UIRefreshControl+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = E6CF12741AFB8813004FBDB7 /* UIRefreshControl+AFNetworking.m */; };
 		E6CF127E1AFB8813004FBDB7 /* UIWebView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = E6CF12761AFB8813004FBDB7 /* UIWebView+AFNetworking.m */; };
 		E6CF12811AFB88E9004FBDB7 /* URLManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E6CF12801AFB88E9004FBDB7 /* URLManager.m */; };
+		E6DEA9A11AFF3404006E87C3 /* Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = E6DEA9A01AFF3404006E87C3 /* Utils.m */; };
+		E6DEA9A61AFF3BD5006E87C3 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E6DEA9A81AFF3BD5006E87C3 /* Localizable.strings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,15 +58,11 @@
 /* Begin PBXFileReference section */
 		E6372A841AFC721400526393 /* NetworkManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetworkManager.h; sourceTree = "<group>"; };
 		E6372A851AFC721400526393 /* NetworkManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetworkManager.m; sourceTree = "<group>"; };
-		E6372A8C1AFC787F00526393 /* CityMeta.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CityMeta.h; path = ../CityMeta.h; sourceTree = "<group>"; };
-		E6372A8D1AFC787F00526393 /* CityMeta.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CityMeta.m; path = ../CityMeta.m; sourceTree = "<group>"; };
 		E6372A8F1AFC7A6D00526393 /* Constraits.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constraits.h; sourceTree = "<group>"; };
 		E6372A931AFCE28400526393 /* DistrictMeta.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DistrictMeta.h; sourceTree = "<group>"; };
 		E6372A941AFCE28400526393 /* DistrictMeta.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DistrictMeta.m; sourceTree = "<group>"; };
 		E6372A961AFCE46B00526393 /* CinemaMeta.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CinemaMeta.h; sourceTree = "<group>"; };
 		E6372A971AFCE46B00526393 /* CinemaMeta.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CinemaMeta.m; sourceTree = "<group>"; };
-		E6372A991AFCE6D800526393 /* MovieMeta.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MovieMeta.h; path = ../MovieMeta.h; sourceTree = "<group>"; };
-		E6372A9A1AFCE6D800526393 /* MovieMeta.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MovieMeta.m; path = ../MovieMeta.m; sourceTree = "<group>"; };
 		E6372A9C1AFCEB6000526393 /* MovieDetailMeta.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MovieDetailMeta.h; sourceTree = "<group>"; };
 		E6372A9D1AFCEB6000526393 /* MovieDetailMeta.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MovieDetailMeta.m; sourceTree = "<group>"; };
 		E6372AA21AFCF12D00526393 /* SessionMeta.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SessionMeta.h; sourceTree = "<group>"; };
@@ -129,6 +125,12 @@
 		E6CF12761AFB8813004FBDB7 /* UIWebView+AFNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIWebView+AFNetworking.m"; path = "../../../Downloads/AFNetworking-master/UIKit+AFNetworking/UIWebView+AFNetworking.m"; sourceTree = "<group>"; };
 		E6CF127F1AFB88E9004FBDB7 /* URLManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = URLManager.h; sourceTree = "<group>"; };
 		E6CF12801AFB88E9004FBDB7 /* URLManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = URLManager.m; sourceTree = "<group>"; };
+		E6DEA99F1AFF3404006E87C3 /* Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Utils.h; path = Utils/Utils.h; sourceTree = "<group>"; };
+		E6DEA9A01AFF3404006E87C3 /* Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Utils.m; path = Utils/Utils.m; sourceTree = "<group>"; };
+		E6DEA9A41AFF3BA7006E87C3 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Main.strings"; sourceTree = "<group>"; };
+		E6DEA9A51AFF3BA7006E87C3 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
+		E6DEA9A71AFF3BD5006E87C3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
+		E6DEA9A91AFF3BE0006E87C3 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -152,10 +154,8 @@
 		E6372A871AFC730F00526393 /* Location */ = {
 			isa = PBXGroup;
 			children = (
-				E6372A8C1AFC787F00526393 /* CityMeta.h */,
 				E6372AAB1AFCF52100526393 /* CityMeta.h */,
 				E6372AAC1AFCF52100526393 /* CityMeta.m */,
-				E6372A8D1AFC787F00526393 /* CityMeta.m */,
 				E6372A931AFCE28400526393 /* DistrictMeta.h */,
 				E6372A941AFCE28400526393 /* DistrictMeta.m */,
 			);
@@ -174,10 +174,8 @@
 		E6372A891AFC733D00526393 /* Movie */ = {
 			isa = PBXGroup;
 			children = (
-				E6372A991AFCE6D800526393 /* MovieMeta.h */,
 				E6372AA81AFCF50100526393 /* MovieMeta.h */,
 				E6372AA91AFCF50100526393 /* MovieMeta.m */,
-				E6372A9A1AFCE6D800526393 /* MovieMeta.m */,
 				E6372A9C1AFCEB6000526393 /* MovieDetailMeta.h */,
 				E6372A9D1AFCEB6000526393 /* MovieDetailMeta.m */,
 			);
@@ -274,9 +272,9 @@
 				E6372A891AFC733D00526393 /* Movie */,
 				E6372A881AFC731600526393 /* Cinema */,
 				E6372A871AFC730F00526393 /* Location */,
-				E6CF122D1AFA3A14004FBDB7 /* Database */,
 				E6CF122C1AFA3A06004FBDB7 /* Network */,
 				E6372A8F1AFC7A6D00526393 /* Constraits.h */,
+				E6DEA9A81AFF3BD5006E87C3 /* Localizable.strings */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -306,18 +304,13 @@
 			name = Network;
 			sourceTree = "<group>";
 		};
-		E6CF122D1AFA3A14004FBDB7 /* Database */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Database;
-			sourceTree = "<group>";
-		};
 		E6CF122E1AFA3EA3004FBDB7 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
 				E6CF12491AFB87D6004FBDB7 /* UIKit+AFNetworking */,
 				E6CF12481AFB87C7004FBDB7 /* AFNetworking */,
+				E6DEA99F1AFF3404006E87C3 /* Utils.h */,
+				E6DEA9A01AFF3404006E87C3 /* Utils.m */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
@@ -435,6 +428,7 @@
 			knownRegions = (
 				en,
 				Base,
+				"zh-Hans",
 			);
 			mainGroup = E6CF11F41AFA398A004FBDB7;
 			productRefGroup = E6CF11FE1AFA398A004FBDB7 /* Products */;
@@ -453,6 +447,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E6CF120F1AFA398A004FBDB7 /* Main.storyboard in Resources */,
+				E6DEA9A61AFF3BD5006E87C3 /* Localizable.strings in Resources */,
 				E6CF12141AFA398A004FBDB7 /* LaunchScreen.xib in Resources */,
 				E6CF12111AFA398A004FBDB7 /* Images.xcassets in Resources */,
 			);
@@ -490,9 +485,9 @@
 				E6CF12791AFB8813004FBDB7 /* UIAlertView+AFNetworking.m in Sources */,
 				E6372AA41AFCF12D00526393 /* SessionMeta.m in Sources */,
 				E6372A9E1AFCEB6000526393 /* MovieDetailMeta.m in Sources */,
-				E6372A9B1AFCE6D800526393 /* MovieMeta.m in Sources */,
 				E6CF12631AFB8803004FBDB7 /* AFURLRequestSerialization.m in Sources */,
 				E6CF12031AFA398A004FBDB7 /* main.m in Sources */,
+				E6DEA9A11AFF3404006E87C3 /* Utils.m in Sources */,
 				E6CF12651AFB8803004FBDB7 /* AFURLSessionManager.m in Sources */,
 				E6CF120C1AFA398A004FBDB7 /* ViewController.m in Sources */,
 				E6372AAA1AFCF50100526393 /* MovieMeta.m in Sources */,
@@ -501,7 +496,6 @@
 				E6CF127A1AFB8813004FBDB7 /* UIButton+AFNetworking.m in Sources */,
 				E6CF12641AFB8803004FBDB7 /* AFURLResponseSerialization.m in Sources */,
 				E6CF127D1AFB8813004FBDB7 /* UIRefreshControl+AFNetworking.m in Sources */,
-				E6372A8E1AFC787F00526393 /* CityMeta.m in Sources */,
 				E6CF12811AFB88E9004FBDB7 /* URLManager.m in Sources */,
 				E6CF12091AFA398A004FBDB7 /* HuiYing.xcdatamodeld in Sources */,
 			);
@@ -530,6 +524,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				E6CF120E1AFA398A004FBDB7 /* Base */,
+				E6DEA9A41AFF3BA7006E87C3 /* zh-Hans */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -538,8 +533,18 @@
 			isa = PBXVariantGroup;
 			children = (
 				E6CF12131AFA398A004FBDB7 /* Base */,
+				E6DEA9A51AFF3BA7006E87C3 /* zh-Hans */,
 			);
 			name = LaunchScreen.xib;
+			sourceTree = "<group>";
+		};
+		E6DEA9A81AFF3BD5006E87C3 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E6DEA9A71AFF3BD5006E87C3 /* Base */,
+				E6DEA9A91AFF3BE0006E87C3 /* zh-Hans */,
+			);
+			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

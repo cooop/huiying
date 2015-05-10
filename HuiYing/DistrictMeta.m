@@ -20,4 +20,8 @@
     return self;
 }
 
+-(NSString *)description{
+    return [NSString stringWithFormat:@"DistrictMeta{\n\tcityID : %lld,\n\tdistrictID : %lld,\n\tdistrictName : %@\n}",_cityID,_districtID,_districtName];
+}
+
 @end

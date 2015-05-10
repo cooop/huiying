@@ -26,4 +26,8 @@
     }
     return self;
 }
+
+-(NSString *)description{
+    return [NSString stringWithFormat:@"CinemaMeta{\n\tcinemaID : %lld,\n\tcinemaName : %@,\n\tcityID : %lld,\n\tdistrictID : %lld,\n\taddress : %@,\n\tphone : %@,\n\tlongitude : %f,\n\tlatitude : %f,\n\tservice : %@,\n\trate : %d\n}",_cinemaID,_cinemaName,_cityID,_districtID,_address,_phone,_longitude,_latitude,_service,_rate];
+}
 @end
