@@ -119,4 +119,35 @@ sharedInstance = [[self alloc] init]; \
 return sharedInstance; \
 }
 
+#pragma mark - UI
+// 颜色
+#define UIColorFromRGB(rgbValue) \
+[UIColor colorWithRed:((float)(((rgbValue) & 0xFF0000) >> 16))/255.0 \
+green:((float)(((rgbValue) & 0xFF00) >> 8))/255.0 \
+blue:((float)((rgbValue) & 0xFF))/255.0 \
+alpha:1.0]
+
+#define UI_COLOR_PINK            UIColorFromRGB(0xFE6F80)
+
+#define UI_NAVIGATION_BAR_HEIGHT    44
+#define UI_STATUS_BAR_HEIGHT        20
+
+#define UI_SCREEN_WIDTH            ((IOS8 || !IsLandscape) ?[UIScreen mainScreen].bounds.size.width:[UIScreen mainScreen].bounds.size.height)
+#define UI_SCREEN_HEIGHT           ((IOS8 || !IsLandscape) ?[UIScreen mainScreen].bounds.size.height:[UIScreen mainScreen].bounds.size.width)
+
+// 获取版本号CFBundleShortVersionString
+#define APP_BUILD_VERSION   [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"]
+#define APP_VERSION         [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"]
+
+#pragma mark - 系统定义
+#define IOS8            ([[[UIDevice currentDevice] systemVersion] doubleValue] >= 8.0)
+
+#define IS_IPHONE4     (fabs(UI_SCREEN_HEIGHT - 480) < 0.01)
+#define IS_IPHONE5     (fabs(UI_SCREEN_HEIGHT - 568) < 0.01)
+#define IS_IPHONE6     (fabs(UI_SCREEN_HEIGHT - 667) < 0.01)
+#define IS_IPHONE6PLUS (fabs(UI_SCREEN_HEIGHT - 736) < 0.01)
+
+#define UIScreenScale   ([[UIScreen mainScreen] scale])
+#define IsLandscape     (UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation]))
+
 #endif

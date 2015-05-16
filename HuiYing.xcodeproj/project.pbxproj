@@ -10,7 +10,7 @@
 		E6CF12031AFA398A004FBDB7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E6CF12021AFA398A004FBDB7 /* main.m */; };
 		E6CF12061AFA398A004FBDB7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E6CF12051AFA398A004FBDB7 /* AppDelegate.m */; };
 		E6CF12091AFA398A004FBDB7 /* HuiYing.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E6CF12071AFA398A004FBDB7 /* HuiYing.xcdatamodeld */; };
-		E6CF120C1AFA398A004FBDB7 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E6CF120B1AFA398A004FBDB7 /* ViewController.m */; };
+		E6CF120C1AFA398A004FBDB7 /* MovieListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E6CF120B1AFA398A004FBDB7 /* MovieListViewController.m */; };
 		E6CF120F1AFA398A004FBDB7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E6CF120D1AFA398A004FBDB7 /* Main.storyboard */; };
 		E6CF12111AFA398A004FBDB7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E6CF12101AFA398A004FBDB7 /* Images.xcassets */; };
 		E6CF12141AFA398A004FBDB7 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = E6CF12121AFA398A004FBDB7 /* LaunchScreen.xib */; };
@@ -43,6 +43,8 @@
 		E6DEA9FD1AFF6D14006E87C3 /* UIProgressView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = E6DEA9F21AFF6D14006E87C3 /* UIProgressView+AFNetworking.m */; };
 		E6DEA9FE1AFF6D14006E87C3 /* UIRefreshControl+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = E6DEA9F41AFF6D14006E87C3 /* UIRefreshControl+AFNetworking.m */; };
 		E6DEA9FF1AFF6D14006E87C3 /* UIWebView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = E6DEA9F61AFF6D14006E87C3 /* UIWebView+AFNetworking.m */; };
+		E6EC8C721B07263F001316B6 /* MovieListTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E6EC8C711B07263F001316B6 /* MovieListTableViewCell.m */; };
+		E6EC8C781B077EC8001316B6 /* ODRefreshControl.m in Sources */ = {isa = PBXBuildFile; fileRef = E6EC8C771B077EC8001316B6 /* ODRefreshControl.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -62,8 +64,8 @@
 		E6CF12041AFA398A004FBDB7 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		E6CF12051AFA398A004FBDB7 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		E6CF12081AFA398A004FBDB7 /* HuiYing.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = HuiYing.xcdatamodel; sourceTree = "<group>"; };
-		E6CF120A1AFA398A004FBDB7 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		E6CF120B1AFA398A004FBDB7 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		E6CF120A1AFA398A004FBDB7 /* MovieListViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MovieListViewController.h; sourceTree = "<group>"; };
+		E6CF120B1AFA398A004FBDB7 /* MovieListViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MovieListViewController.m; sourceTree = "<group>"; };
 		E6CF120E1AFA398A004FBDB7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		E6CF12101AFA398A004FBDB7 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		E6CF12131AFA398A004FBDB7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
@@ -131,6 +133,10 @@
 		E6DEA9F41AFF6D14006E87C3 /* UIRefreshControl+AFNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIRefreshControl+AFNetworking.m"; path = "Utils/UIKit+AFNetworking/UIRefreshControl+AFNetworking.m"; sourceTree = "<group>"; };
 		E6DEA9F51AFF6D14006E87C3 /* UIWebView+AFNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIWebView+AFNetworking.h"; path = "Utils/UIKit+AFNetworking/UIWebView+AFNetworking.h"; sourceTree = "<group>"; };
 		E6DEA9F61AFF6D14006E87C3 /* UIWebView+AFNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIWebView+AFNetworking.m"; path = "Utils/UIKit+AFNetworking/UIWebView+AFNetworking.m"; sourceTree = "<group>"; };
+		E6EC8C701B07263F001316B6 /* MovieListTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MovieListTableViewCell.h; path = Controllers/MovieListTableViewCell.h; sourceTree = "<group>"; };
+		E6EC8C711B07263F001316B6 /* MovieListTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MovieListTableViewCell.m; path = Controllers/MovieListTableViewCell.m; sourceTree = "<group>"; };
+		E6EC8C761B077EC8001316B6 /* ODRefreshControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ODRefreshControl.h; path = views/ODRefreshControl.h; sourceTree = "<group>"; };
+		E6EC8C771B077EC8001316B6 /* ODRefreshControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ODRefreshControl.m; path = views/ODRefreshControl.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -225,10 +231,6 @@
 				E6CF122B1AFA39F6004FBDB7 /* Controllers */,
 				E6CF122A1AFA39ED004FBDB7 /* Views */,
 				E6CF12291AFA39E0004FBDB7 /* Models */,
-				E6CF12041AFA398A004FBDB7 /* AppDelegate.h */,
-				E6CF12051AFA398A004FBDB7 /* AppDelegate.m */,
-				E6CF120A1AFA398A004FBDB7 /* ViewController.h */,
-				E6CF120B1AFA398A004FBDB7 /* ViewController.m */,
 				E6CF120D1AFA398A004FBDB7 /* Main.storyboard */,
 				E6CF12101AFA398A004FBDB7 /* Images.xcassets */,
 				E6CF12121AFA398A004FBDB7 /* LaunchScreen.xib */,
@@ -242,6 +244,8 @@
 		E6CF12001AFA398A004FBDB7 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				E6CF12041AFA398A004FBDB7 /* AppDelegate.h */,
+				E6CF12051AFA398A004FBDB7 /* AppDelegate.m */,
 				E6CF12011AFA398A004FBDB7 /* Info.plist */,
 				E6CF12021AFA398A004FBDB7 /* main.m */,
 			);
@@ -282,6 +286,8 @@
 		E6CF122A1AFA39ED004FBDB7 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				E6EC8C761B077EC8001316B6 /* ODRefreshControl.h */,
+				E6EC8C771B077EC8001316B6 /* ODRefreshControl.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -289,6 +295,10 @@
 		E6CF122B1AFA39F6004FBDB7 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				E6CF120A1AFA398A004FBDB7 /* MovieListViewController.h */,
+				E6CF120B1AFA398A004FBDB7 /* MovieListViewController.m */,
+				E6EC8C701B07263F001316B6 /* MovieListTableViewCell.h */,
+				E6EC8C711B07263F001316B6 /* MovieListTableViewCell.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -485,11 +495,13 @@
 				E6DEA9C51AFF6C5E006E87C3 /* URLManager.m in Sources */,
 				E6DEA9F91AFF6D14006E87C3 /* UIActivityIndicatorView+AFNetworking.m in Sources */,
 				E6DEA9AF1AFF6BA5006E87C3 /* SessionMeta.m in Sources */,
+				E6EC8C721B07263F001316B6 /* MovieListTableViewCell.m in Sources */,
+				E6EC8C781B077EC8001316B6 /* ODRefreshControl.m in Sources */,
 				E6DEA9DA1AFF6CCC006E87C3 /* AFHTTPRequestOperation.m in Sources */,
 				E6DEA9E21AFF6CCC006E87C3 /* AFURLSessionManager.m in Sources */,
 				E6CF12031AFA398A004FBDB7 /* main.m in Sources */,
 				E6DEA9A11AFF3404006E87C3 /* Utils.m in Sources */,
-				E6CF120C1AFA398A004FBDB7 /* ViewController.m in Sources */,
+				E6CF120C1AFA398A004FBDB7 /* MovieListViewController.m in Sources */,
 				E6DEA9DE1AFF6CCC006E87C3 /* AFSecurityPolicy.m in Sources */,
 				E6DEA9E11AFF6CCC006E87C3 /* AFURLResponseSerialization.m in Sources */,
 				E6DEA9FE1AFF6D14006E87C3 /* UIRefreshControl+AFNetworking.m in Sources */,
