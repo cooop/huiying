@@ -41,8 +41,8 @@
 
 #pragma mark - movie query
 
-+(NSString *)movieList{
-    return [NSString stringWithFormat:@"%@/movie/", [URLManager huiyingURL]];
++(NSString *)movieListInCity:(int64_t)cityID{
+    return [NSString stringWithFormat:@"%@/movie/?city_id=%lld", [URLManager huiyingURL],cityID];
 }
 
 +(NSString *)movieListDetailWithID:(int64_t)movieID{

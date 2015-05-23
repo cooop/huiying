@@ -24,7 +24,7 @@ DECLARE_SHARED_INSTANCE(NetworkManager);
 -(void) cinemaListInCity:(int64_t)cityID inDistrict:(int64_t)districtID;
 
 //电影查询
--(void) movieList;
+-(void) movieListInCity:(int64_t)cityID;
 -(void) movieListDetailWithID:(int64_t)movieID;
 
 //场次查询

@@ -124,11 +124,11 @@ IMPLEMENT_SHARED_INSTANCE(NetworkManager);
 
 #pragma mark - movie queries
 
--(void)movieList{
-    [self GET:[URLManager movieList] parameters:nil
+-(void)movieListInCity:(int64_t)cityID{
+    [self GET:[NSString stringWithFormat:@"%@&page=%d",[URLManager movieListInCity:cityID],1] parameters:nil
       success:^(AFHTTPRequestOperation *operation, id responseObject) {
           NSMutableArray *movieMetas = [[NSMutableArray alloc]init];
-          for(id dict in (NSArray*)responseObject){
+          for(id dict in (NSArray*)[responseObject objectForKey:@"results"]){
               MovieMeta *movieMeta =[[MovieMeta alloc]initWithDict:dict];
               [movieMetas addObject:movieMeta];
           }
