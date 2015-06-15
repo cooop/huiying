@@ -46,7 +46,7 @@ IMPLEMENT_SHARED_INSTANCE(NetworkManager);
     [self GET:[URLManager districtListInCity:cityID] parameters:nil
       success:^(AFHTTPRequestOperation *operation, id responseObject) {
           NSMutableArray * districtMetas = [[NSMutableArray alloc]init];
-          for(id dict in (NSArray *)responseObject){
+          for(id dict in (NSArray *)[responseObject objectForKey:@"results"]){
               DistrictMeta * cityMeta = [[DistrictMeta alloc] initWithDict:(NSDictionary *)dict inCity:cityID];
               [districtMetas addObject:cityMeta];
           }
@@ -88,7 +88,7 @@ IMPLEMENT_SHARED_INSTANCE(NetworkManager);
     [self GET:[URLManager cinemaListInCity:cityID] parameters:nil
       success:^(AFHTTPRequestOperation *operation, id responseObject) {
           NSMutableArray *cinemaMetas = [[NSMutableArray alloc]init];
-          for(id dict in (NSArray*)responseObject){
+          for(id dict in (NSArray*)[responseObject objectForKey:@"results"]){
               CinemaMeta *cinemaMeta =[[CinemaMeta alloc]initWithDict:dict];
               [cinemaMetas addObject:cinemaMeta];
           }
@@ -107,7 +107,7 @@ IMPLEMENT_SHARED_INSTANCE(NetworkManager);
     [self GET:[URLManager cinemaListInCity:cityID inDistrict:districtID] parameters:nil
       success:^(AFHTTPRequestOperation *operation, id responseObject) {
           NSMutableArray *cinemaMetas = [[NSMutableArray alloc]init];
-          for(id dict in (NSArray*)responseObject){
+          for(id dict in (NSArray*)[responseObject objectForKey:@"results"]){
               CinemaMeta *cinemaMeta =[[CinemaMeta alloc]initWithDict:dict];
               [cinemaMetas addObject:cinemaMeta];
           }

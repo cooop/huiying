@@ -32,11 +32,11 @@
 }
 
 +(NSString *)cinemaListInCity:(int64_t)cityID{
-    return [NSString stringWithFormat:@"%@/cinema/%lld/",[URLManager huiyingURL],cityID];
+    return [NSString stringWithFormat:@"%@/cinema/?city_id=%lld",[URLManager huiyingURL],cityID];
 }
 
 +(NSString *)cinemaListInCity:(int64_t)cityID inDistrict:(int64_t)districtID{
-   return [NSString stringWithFormat:@"%@/cinema/%lld/%lld/",[URLManager huiyingURL],cityID,districtID];
+   return [NSString stringWithFormat:@"%@/cinema/?city_id=%lld&district_id=%lld",[URLManager huiyingURL],cityID,districtID];
 }
 
 #pragma mark - movie query

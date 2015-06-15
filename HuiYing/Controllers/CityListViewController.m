@@ -215,7 +215,7 @@
 }
 
 -(void)backToMovieListView{
-    [self.navigationController popToRootViewControllerAnimated:YES];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 -(void)getCity:(CLLocation*)location{

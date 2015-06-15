@@ -27,6 +27,8 @@
 #define kJSONKeyCinemaLatitude @"latitude"
 #define kJSONKeyCinemaService @"service"
 #define kJSONKeyCinemaRate @"rate"
+#define kJSONKeyCinemaDistance @"distance"
+#define kJSONKeyCinemaComing @"coming"
 
 #define kJSONKeyMovieID @"id"
 #define kJSONKeyMovieCName @"c_name"
@@ -38,7 +40,7 @@
 #define kJSONKeyMovieDate @"r_date"
 #define kJSONKeyMovieType @"type"
 #define kJSONKeyMovieNation @"nation"
-//Attention! 服务端返回jsonkey拼写错误，有可能被改正
+//TODO:Attention! 服务端返回jsonkey拼写错误，有可能被改正
 #define kJSONKeyMovieLanguage @"lanuage"
 #define kJSONKeyMovieDuration @"duration"
 #define kJSONKeyMovieDescription @"description"
@@ -97,6 +99,7 @@
 #define kSessionListFailedNotification @"kSessionListFailedNotification"
 #define kTicketListSuccessNotification @"kTicketListSuccessNotification"
 #define kTicketListFailedNotification @"kTicketListFailedNotification"
+#define kCinemaOrderTypeChangeNotification @"kkCinemaOrderTypeChangeNotification"
 
 #pragma mark - Utils
 
