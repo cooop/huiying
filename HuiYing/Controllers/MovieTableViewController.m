@@ -9,6 +9,7 @@
 #import "MovieTableViewController.h"
 #import "Constraits.h"
 #import "MovieMeta.h"
+#import "MovieDetailViewController.h"
 
 @interface MovieTableViewController ()
 
@@ -111,7 +112,7 @@
     versionView.image =[self versionImage:movieMeta];
     descriptionLabel.text = movieMeta.subtitle;
     infoLabal.text = [NSString stringWithFormat:@"今天%d家影院%d场",67,956];
-    ratingLabel.text =[NSString stringWithFormat:@"%.1f", (float)movieMeta.rate/10];
+    ratingLabel.text =[NSString stringWithFormat:@"%.1f", (float)movieMeta.rate];
     return cell;
 }
 
@@ -134,7 +135,11 @@
 }
 
 
-
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    MovieMeta *movie = self.movies[indexPath.row];
+    MovieDetailViewController* mdvc = [[MovieDetailViewController alloc] initWithMovieID:movie.movieID];
+    [self.navigationController pushViewController:mdvc animated:YES];
+}
 
 
 

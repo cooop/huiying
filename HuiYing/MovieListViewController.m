@@ -8,7 +8,6 @@
 
 #import "MovieListViewController.h"
 #import "NetworkManager.h"
-#import "ODRefreshControl.h"
 #import "CityListViewController.h"
 #import "ApplicationSettings.h"
 #import "MovieTableViewController.h"
@@ -20,8 +19,8 @@
 @property (nonatomic, copy) NSString *cityButtonTitle;
 @property (nonatomic, strong) MovieTableViewController * movieTableViewController;
 @property (nonatomic, strong) CinemaTableViewController * cinemaTableViewController;
-@property (nonatomic, strong) ODRefreshControl *refreshMovieControl;
-@property (nonatomic, strong) ODRefreshControl *refreshCinemaControl;
+//@property (nonatomic, strong) ODRefreshControl *refreshMovieControl;
+//@property (nonatomic, strong) ODRefreshControl *refreshCinemaControl;
 @property (nonatomic, assign) int64_t cityID;
 
 @property (nonatomic, strong) NSString * location;
@@ -35,7 +34,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     //TODO: read from settings
-    _cityID = 110100;
+    _cityID = 1000;
     _location = @"杭州";
     [ApplicationSettings sharedInstance].city = _location;
     
@@ -104,15 +103,16 @@
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(movieListSuccess:) name:kMovieListSuccessNotification object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(cinemaListSuccess:) name:kCinemaListInCitySuccessNotification object:nil];
     
-    _refreshMovieControl = [[ODRefreshControl alloc] initInScrollView:self.movieTableViewController.tableView];
-    [_refreshMovieControl addTarget:self action:@selector(dropViewDidBeginRefreshingMovies) forControlEvents:UIControlEventValueChanged];
-    _refreshCinemaControl = [[ODRefreshControl alloc] initInScrollView:self.cinemaTableViewController.tableView];
-    [_refreshCinemaControl addTarget:self action:@selector(dropViewDidBeginRefreshingCinemas) forControlEvents:UIControlEventValueChanged];
+//    _refreshMovieControl = [[ODRefreshControl alloc] initInScrollView:self.movieTableViewController.tableView];
+//    [_refreshMovieControl addTarget:self action:@selector(dropViewDidBeginRefreshingMovies) forControlEvents:UIControlEventValueChanged];
+//    _refreshCinemaControl = [[ODRefreshControl alloc] initInScrollView:self.cinemaTableViewController.tableView];
+//    [_refreshCinemaControl addTarget:self action:@selector(dropViewDidBeginRefreshingCinemas) forControlEvents:UIControlEventValueChanged];
 }
 
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     [[NSNotificationCenter defaultCenter]removeObserver:self name:kMovieListSuccessNotification object:nil];
+    [[NSNotificationCenter defaultCenter]removeObserver:self  name:kCinemaListInCitySuccessNotification object:nil];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -127,9 +127,9 @@
     
     double delayInSeconds = 0.5;
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
-    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-        [_refreshMovieControl endRefreshing];
-    });
+//    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+//        [_refreshMovieControl endRefreshing];
+//    });
 }
 
 - (void)cinemaListSuccess:(NSNotification*) notification{
@@ -139,9 +139,9 @@
     
     double delayInSeconds = 0.5;
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
-    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-        [_refreshCinemaControl endRefreshing];
-    });
+//    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+//        [_refreshCinemaControl endRefreshing];
+//    });
 }
 
 -(void)pushToCityListView {
@@ -160,5 +160,7 @@
         [self.movieTableViewController.tableView reloadData];
     }
 }
+
+
 
 @end

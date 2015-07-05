@@ -11,6 +11,7 @@
 #import "OrderPullDownViewController.h"
 #import "Constraits.h"
 #import "CinemaMeta.h"
+#import "SessionViewController.h"
 
 @interface CinemaTableViewController ()
 @property (nonatomic, strong) UIView* districtView;
@@ -158,7 +159,7 @@
     ratingLabel.textAlignment = NSTextAlignmentRight;
     ratingLabel.font = [UIFont fontWithName:@"HelveticaNeue-Italic" size:18];
     ratingLabel.textColor = UIColorFromRGB(0xFF7833);
-    ratingLabel.text = [NSString stringWithFormat:@"%.1f",(float)cinema.rate/10];
+    ratingLabel.text = [NSString stringWithFormat:@"%.1f",(float)cinema.rate];
     
     UILabel *distanceLabel = [[UILabel alloc]init];
     distanceLabel.text = [NSString stringWithFormat:@"%.1fkm",(float)cinema.distance/1000];
@@ -356,6 +357,12 @@
         self.orderViewController = nil;
     }];
 
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    CinemaMeta* cinema = self.cinemas[indexPath.row];
+    SessionViewController* svc = [[SessionViewController alloc]initWithCinemaMeta:cinema];
+    [self.navigationController pushViewController:svc animated:YES];
 }
 
 @end

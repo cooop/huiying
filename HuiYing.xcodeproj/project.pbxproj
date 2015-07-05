@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E60FD2ED1B2EF9B2001F13B8 /* MovieDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E60FD2EC1B2EF9B2001F13B8 /* MovieDetailViewController.m */; };
+		E6195D8B1B455A6B001DD9E4 /* SessionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E6195D8A1B455A6B001DD9E4 /* SessionViewController.m */; };
 		E620C6C71B0CB2F600DB4E55 /* citydict.plist in Resources */ = {isa = PBXBuildFile; fileRef = E620C6C61B0CB2F600DB4E55 /* citydict.plist */; };
 		E620C6CA1B0CB3A400DB4E55 /* CityListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E620C6C91B0CB3A400DB4E55 /* CityListViewController.m */; };
 		E6633B0F1B1063490087BE0D /* ApplicationSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = E6633B0E1B1063490087BE0D /* ApplicationSettings.m */; };
@@ -118,9 +120,9 @@
 		E6DF72891B1341A000299D61 /* CinemaTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E6DF72881B1341A000299D61 /* CinemaTableViewController.m */; };
 		E6E7A6241B1DCDDA00464A47 /* OrderPullDownViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E6E7A6231B1DCDDA00464A47 /* OrderPullDownViewController.m */; };
 		E6E951371B15E3360012CDA3 /* MovieTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E6E951361B15E3360012CDA3 /* MovieTableViewController.m */; };
-		E6EC8C781B077EC8001316B6 /* ODRefreshControl.m in Sources */ = {isa = PBXBuildFile; fileRef = E6EC8C771B077EC8001316B6 /* ODRefreshControl.m */; };
 		E6EF770D1B1746DA000BCB4C /* PullDownViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E6EF770C1B1746DA000BCB4C /* PullDownViewController.m */; };
 		E6EF77101B1748CE000BCB4C /* DistrictPullDownViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E6EF770F1B1748CE000BCB4C /* DistrictPullDownViewController.m */; };
+		E6F676C01B3AE2BE00698F4F /* UIImage+ImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = E6F676BF1B3AE2BE00698F4F /* UIImage+ImageEffects.m */; };
 		E6FC7EAD1B117403003FE34E /* CinemaDetailMeta.m in Sources */ = {isa = PBXBuildFile; fileRef = E6FC7EAC1B117403003FE34E /* CinemaDetailMeta.m */; };
 /* End PBXBuildFile section */
 
@@ -135,6 +137,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		E60FD2EB1B2EF9B2001F13B8 /* MovieDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MovieDetailViewController.h; path = Controllers/MovieDetailViewController.h; sourceTree = "<group>"; };
+		E60FD2EC1B2EF9B2001F13B8 /* MovieDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MovieDetailViewController.m; path = Controllers/MovieDetailViewController.m; sourceTree = "<group>"; };
+		E6195D891B455A6B001DD9E4 /* SessionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SessionViewController.h; path = Controllers/SessionViewController.h; sourceTree = "<group>"; };
+		E6195D8A1B455A6B001DD9E4 /* SessionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SessionViewController.m; path = Controllers/SessionViewController.m; sourceTree = "<group>"; };
 		E620C6C61B0CB2F600DB4E55 /* citydict.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = citydict.plist; sourceTree = "<group>"; };
 		E620C6C81B0CB3A400DB4E55 /* CityListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CityListViewController.h; path = Controllers/CityListViewController.h; sourceTree = "<group>"; };
 		E620C6C91B0CB3A400DB4E55 /* CityListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CityListViewController.m; path = Controllers/CityListViewController.m; sourceTree = "<group>"; };
@@ -290,12 +296,12 @@
 		E6E7A6231B1DCDDA00464A47 /* OrderPullDownViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OrderPullDownViewController.m; path = Controllers/OrderPullDownViewController.m; sourceTree = "<group>"; };
 		E6E951351B15E3360012CDA3 /* MovieTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MovieTableViewController.h; path = Controllers/MovieTableViewController.h; sourceTree = "<group>"; };
 		E6E951361B15E3360012CDA3 /* MovieTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MovieTableViewController.m; path = Controllers/MovieTableViewController.m; sourceTree = "<group>"; };
-		E6EC8C761B077EC8001316B6 /* ODRefreshControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ODRefreshControl.h; path = views/ODRefreshControl.h; sourceTree = "<group>"; };
-		E6EC8C771B077EC8001316B6 /* ODRefreshControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ODRefreshControl.m; path = views/ODRefreshControl.m; sourceTree = "<group>"; };
 		E6EF770B1B1746DA000BCB4C /* PullDownViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PullDownViewController.h; path = Controllers/PullDownViewController.h; sourceTree = "<group>"; };
 		E6EF770C1B1746DA000BCB4C /* PullDownViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PullDownViewController.m; path = Controllers/PullDownViewController.m; sourceTree = "<group>"; };
 		E6EF770E1B1748CE000BCB4C /* DistrictPullDownViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DistrictPullDownViewController.h; path = Controllers/DistrictPullDownViewController.h; sourceTree = "<group>"; };
 		E6EF770F1B1748CE000BCB4C /* DistrictPullDownViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DistrictPullDownViewController.m; path = Controllers/DistrictPullDownViewController.m; sourceTree = "<group>"; };
+		E6F676BE1B3AE2BE00698F4F /* UIImage+ImageEffects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+ImageEffects.h"; path = "views/UIImage+ImageEffects.h"; sourceTree = "<group>"; };
+		E6F676BF1B3AE2BE00698F4F /* UIImage+ImageEffects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+ImageEffects.m"; path = "views/UIImage+ImageEffects.m"; sourceTree = "<group>"; };
 		E6FC7EAB1B117403003FE34E /* CinemaDetailMeta.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CinemaDetailMeta.h; path = Models/Cinema/CinemaDetailMeta.h; sourceTree = "<group>"; };
 		E6FC7EAC1B117403003FE34E /* CinemaDetailMeta.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CinemaDetailMeta.m; path = Models/Cinema/CinemaDetailMeta.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -529,8 +535,8 @@
 		E6CF122A1AFA39ED004FBDB7 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				E6EC8C761B077EC8001316B6 /* ODRefreshControl.h */,
-				E6EC8C771B077EC8001316B6 /* ODRefreshControl.m */,
+				E6F676BE1B3AE2BE00698F4F /* UIImage+ImageEffects.h */,
+				E6F676BF1B3AE2BE00698F4F /* UIImage+ImageEffects.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -552,6 +558,10 @@
 				E6EF770F1B1748CE000BCB4C /* DistrictPullDownViewController.m */,
 				E6E7A6221B1DCDDA00464A47 /* OrderPullDownViewController.h */,
 				E6E7A6231B1DCDDA00464A47 /* OrderPullDownViewController.m */,
+				E60FD2EB1B2EF9B2001F13B8 /* MovieDetailViewController.h */,
+				E60FD2EC1B2EF9B2001F13B8 /* MovieDetailViewController.m */,
+				E6195D891B455A6B001DD9E4 /* SessionViewController.h */,
+				E6195D8A1B455A6B001DD9E4 /* SessionViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -802,6 +812,7 @@
 			files = (
 				E6DEA9BF1AFF6C38006E87C3 /* DistrictMeta.m in Sources */,
 				E6CF12061AFA398A004FBDB7 /* AppDelegate.m in Sources */,
+				E6F676C01B3AE2BE00698F4F /* UIImage+ImageEffects.m in Sources */,
 				E6DEA9FB1AFF6D14006E87C3 /* UIButton+AFNetworking.m in Sources */,
 				E6DEA9AC1AFF6B71006E87C3 /* TicketMeta.m in Sources */,
 				E6DEA9FF1AFF6D14006E87C3 /* UIWebView+AFNetworking.m in Sources */,
@@ -822,13 +833,14 @@
 				E6DEA9B51AFF6BCB006E87C3 /* MovieMeta.m in Sources */,
 				E6DEA9C51AFF6C5E006E87C3 /* URLManager.m in Sources */,
 				E6DEA9F91AFF6D14006E87C3 /* UIActivityIndicatorView+AFNetworking.m in Sources */,
+				E6195D8B1B455A6B001DD9E4 /* SessionViewController.m in Sources */,
 				E6DEA9AF1AFF6BA5006E87C3 /* SessionMeta.m in Sources */,
 				E6EF77101B1748CE000BCB4C /* DistrictPullDownViewController.m in Sources */,
 				E6E7A6241B1DCDDA00464A47 /* OrderPullDownViewController.m in Sources */,
-				E6EC8C781B077EC8001316B6 /* ODRefreshControl.m in Sources */,
 				E6DEA9DA1AFF6CCC006E87C3 /* AFHTTPRequestOperation.m in Sources */,
 				E6DEA9E21AFF6CCC006E87C3 /* AFURLSessionManager.m in Sources */,
 				E6CF12031AFA398A004FBDB7 /* main.m in Sources */,
+				E60FD2ED1B2EF9B2001F13B8 /* MovieDetailViewController.m in Sources */,
 				E6DEA9A11AFF3404006E87C3 /* Utils.m in Sources */,
 				E6CF120C1AFA398A004FBDB7 /* MovieListViewController.m in Sources */,
 				E6DEA9DE1AFF6CCC006E87C3 /* AFSecurityPolicy.m in Sources */,

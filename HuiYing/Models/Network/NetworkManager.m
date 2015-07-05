@@ -46,7 +46,7 @@ IMPLEMENT_SHARED_INSTANCE(NetworkManager);
     [self GET:[URLManager districtListInCity:cityID] parameters:nil
       success:^(AFHTTPRequestOperation *operation, id responseObject) {
           NSMutableArray * districtMetas = [[NSMutableArray alloc]init];
-          for(id dict in (NSArray *)[responseObject objectForKey:@"results"]){
+          for(id dict in (NSArray *)responseObject ){
               DistrictMeta * cityMeta = [[DistrictMeta alloc] initWithDict:(NSDictionary *)dict inCity:cityID];
               [districtMetas addObject:cityMeta];
           }

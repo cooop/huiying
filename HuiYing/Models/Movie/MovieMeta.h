@@ -23,7 +23,7 @@ typedef enum MovieVersion{
 @property (nonatomic,strong) NSString * subtitle;
 @property (nonatomic) MovieVersion version;
 @property (nonatomic,strong) NSString * coverImage;
-@property (nonatomic) int rate;
+@property (nonatomic) float rate;
 -(id)initWithDict:(NSDictionary *)dict;
 +(MovieVersion) translateMovieVersion:(NSString *) version;
 @end

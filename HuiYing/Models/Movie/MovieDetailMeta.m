@@ -14,8 +14,8 @@
 -(id)initWithDict:(NSDictionary *)dict{
     if (self = [super initWithDict:dict]) {
         _date = [Utils formatDate:[dict objectForKey:kJSONKeyMovieDate]];
-        _images = [[dict objectForKey:kJSONKeyMovieImages] componentsSeparatedByString:@";"];
-        _videos= [[dict objectForKey:kJSONKeyMovieVideos] componentsSeparatedByString:@";"];
+        _images = [[dict objectForKey:kJSONKeyMovieImages] componentsSeparatedByString:@","];
+        _videos= [[dict objectForKey:kJSONKeyMovieVideos] componentsSeparatedByString:@","];
         _type = [dict objectForKey:kJSONKeyMovieType];
         _nation = [dict objectForKey:kJSONKeyMovieNation];
         _language = [dict objectForKey:kJSONKeyMovieLanguage];

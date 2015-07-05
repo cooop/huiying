@@ -15,7 +15,7 @@
 #define kJSONKeyCityName  @"region_name"
 
 #define kJSONKeyDistrictID @"id"
-#define kJSONKeyDistrictName @"region_name"
+#define kJSONKeyDistrictName @"name"
 
 #define kJSONKeyCinemaID @"id"
 #define kJSONKeyCinemaName @"name"
