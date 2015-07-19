@@ -10,7 +10,7 @@
 #import "CinemaMeta.h"
 #import "MovieMeta.h"
 
-@interface SessionViewController : UIViewController<UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout>
+@interface SessionViewController : UIViewController<UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout,UITableViewDataSource,UITableViewDelegate>
 
 - (id)initWithCinemaMeta:(CinemaMeta*)cinema;
 

@@ -15,7 +15,10 @@
     if (self = [super init]) {
         _sessionID = [[dict objectForKey:kJSONKeySessionID]intValue];
         _version = [MovieMeta translateMovieVersion:[dict objectForKey:kJSONKeySessionVersion]];
-        _time = [Utils formatDate:[dict objectForKey:kJSONKeySessionTime]];
+        _startTime = [Utils formatDate:[dict objectForKey:kJSONKeySessionStartTime]];
+        _endTime = [Utils formatDate:[dict objectForKey:kJSONKeySessionEndTime]];
+        _maxPrice = [[dict objectForKey:kJSONKeySessionMaxPrice]integerValue];
+        _minPrice = [[dict objectForKey:kJSONKeySessionMinPrice]integerValue];
         _room = [dict objectForKey:kJSONKeySessionRoom];
         _cinemaID = cinemaID;
         _movieID = movieID;
@@ -24,6 +27,6 @@
 }
 
 -(NSString *)description{
-    return [NSString stringWithFormat:@"SessionMeta{\n\tsessionID : %lld,\n\tversion : %d,\n\ttime : %@,\n\troom : %@,\n\tcinemaID : %lld,\n\tmovieID : %lld\n}",_sessionID,_version,_time,_room,_cinemaID,_movieID];
+    return [NSString stringWithFormat:@"SessionMeta{\n\tsessionID : %lld,\n\tversion : %d,\n\ttime : %@,\n\troom : %@,\n\tcinemaID : %lld,\n\tmovieID : %lld\n}",_sessionID,_version,_startTime,_room,_cinemaID,_movieID];
 }
 @end

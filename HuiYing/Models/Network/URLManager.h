@@ -23,6 +23,7 @@
 
 //电影查询
 +(NSString *) movieListInCity:(int64_t)cityID;
++(NSString *)movieListInCinema:(int64_t)cinemaID;
 +(NSString *) movieListDetailWithID:(int64_t)movieID;
 
 //场次查询

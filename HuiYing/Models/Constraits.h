@@ -49,7 +49,10 @@
 
 #define kJSONKeySessionID @"id"
 #define kJSONKeySessionVersion @"version"
-#define kJSONKeySessionTime @"s_time"
+#define kJSONKeySessionStartTime @"s_time"
+#define kJSONKeySessionEndTime @"e_time"
+#define kJSONKeySessionMaxPrice @"price_max"
+#define kJSONKeySessionMinPrice @"price_min"
 #define kJSONKeySessionRoom @"room"
 
 #define kJSONKeyTicketSource @"source"

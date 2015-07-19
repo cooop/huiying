@@ -45,6 +45,10 @@
     return [NSString stringWithFormat:@"%@/movie/?city_id=%lld", [URLManager huiyingURL],cityID];
 }
 
++(NSString *)movieListInCinema:(int64_t)cinemaID{
+    return [NSString stringWithFormat:@"%@/movie/?cinema_id=%lld", [URLManager huiyingURL],cinemaID];
+}
+
 +(NSString *)movieListDetailWithID:(int64_t)movieID{
     return [NSString stringWithFormat:@"%@/movie/%lld/", [URLManager huiyingURL], movieID];
 }
@@ -52,7 +56,7 @@
 #pragma mark - session query
 
 + (NSString *)sessionOfMovie:(int64_t)movieID inCinema:(int64_t)cinemaID{
-    return [NSString stringWithFormat:@"%@/session/cinema_%lld/movie_%lld/",[URLManager huiyingURL],cinemaID, movieID];
+    return [NSString stringWithFormat:@"%@/session/?cinema_id=%lld&movie_id=%lld",[URLManager huiyingURL],cinemaID, movieID];
 }
 
 #pragma mark - ticket query

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2DCFCA711B5000320013F5B1 /* SessionsMeta.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DCFCA701B5000320013F5B1 /* SessionsMeta.m */; };
 		E60FD2ED1B2EF9B2001F13B8 /* MovieDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E60FD2EC1B2EF9B2001F13B8 /* MovieDetailViewController.m */; };
 		E6195D8B1B455A6B001DD9E4 /* SessionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E6195D8A1B455A6B001DD9E4 /* SessionViewController.m */; };
 		E620C6C71B0CB2F600DB4E55 /* citydict.plist in Resources */ = {isa = PBXBuildFile; fileRef = E620C6C61B0CB2F600DB4E55 /* citydict.plist */; };
@@ -137,6 +138,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2DCFCA6F1B5000320013F5B1 /* SessionsMeta.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SessionsMeta.h; path = Models/Session/SessionsMeta.h; sourceTree = "<group>"; };
+		2DCFCA701B5000320013F5B1 /* SessionsMeta.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SessionsMeta.m; path = Models/Session/SessionsMeta.m; sourceTree = "<group>"; };
 		E60FD2EB1B2EF9B2001F13B8 /* MovieDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MovieDetailViewController.h; path = Controllers/MovieDetailViewController.h; sourceTree = "<group>"; };
 		E60FD2EC1B2EF9B2001F13B8 /* MovieDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MovieDetailViewController.m; path = Controllers/MovieDetailViewController.m; sourceTree = "<group>"; };
 		E6195D891B455A6B001DD9E4 /* SessionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SessionViewController.h; path = Controllers/SessionViewController.h; sourceTree = "<group>"; };
@@ -399,6 +402,7 @@
 				E620C6C61B0CB2F600DB4E55 /* citydict.plist */,
 			);
 			name = Resource;
+			path = HuiYing;
 			sourceTree = "<group>";
 		};
 		E6372A871AFC730F00526393 /* Location */ = {
@@ -439,6 +443,8 @@
 			children = (
 				E6DEA9AD1AFF6BA5006E87C3 /* SessionMeta.h */,
 				E6DEA9AE1AFF6BA5006E87C3 /* SessionMeta.m */,
+				2DCFCA6F1B5000320013F5B1 /* SessionsMeta.h */,
+				2DCFCA701B5000320013F5B1 /* SessionsMeta.m */,
 			);
 			name = Session;
 			sourceTree = "<group>";
@@ -455,6 +461,7 @@
 		E6CF11F41AFA398A004FBDB7 = {
 			isa = PBXGroup;
 			children = (
+				E620C6C51B0CB2AE00DB4E55 /* Resource */,
 				E6CF11FF1AFA398A004FBDB7 /* HuiYing */,
 				E6CF121C1AFA398A004FBDB7 /* HuiYingTests */,
 				E6CF11FE1AFA398A004FBDB7 /* Products */,
@@ -473,7 +480,6 @@
 		E6CF11FF1AFA398A004FBDB7 /* HuiYing */ = {
 			isa = PBXGroup;
 			children = (
-				E620C6C51B0CB2AE00DB4E55 /* Resource */,
 				E6CF122E1AFA3EA3004FBDB7 /* Utils */,
 				E6CF122B1AFA39F6004FBDB7 /* Controllers */,
 				E6CF122A1AFA39ED004FBDB7 /* Views */,
@@ -816,6 +822,7 @@
 				E6DEA9FB1AFF6D14006E87C3 /* UIButton+AFNetworking.m in Sources */,
 				E6DEA9AC1AFF6B71006E87C3 /* TicketMeta.m in Sources */,
 				E6DEA9FF1AFF6D14006E87C3 /* UIWebView+AFNetworking.m in Sources */,
+				2DCFCA711B5000320013F5B1 /* SessionsMeta.m in Sources */,
 				E6DEA9FD1AFF6D14006E87C3 /* UIProgressView+AFNetworking.m in Sources */,
 				E6633B0F1B1063490087BE0D /* ApplicationSettings.m in Sources */,
 				E6DEA9BE1AFF6C38006E87C3 /* CityMeta.m in Sources */,

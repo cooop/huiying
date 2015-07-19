@@ -14,6 +14,7 @@
 #import "MovieMeta.h"
 #import "MovieDetailMeta.h"
 #import "SessionMeta.h"
+#import "SessionsMeta.h"
 #import "TicketMeta.h"
 
 @implementation NetworkManager
@@ -157,19 +158,31 @@ IMPLEMENT_SHARED_INSTANCE(NetworkManager);
       }];
 }
 
+-(void)movieListInCinema:(int64_t)cinemaID{
+    [self GET:[NSString stringWithFormat:@"%@",[URLManager movieListInCinema:cinemaID]] parameters:nil
+      success:^(AFHTTPRequestOperation *operation, id responseObject) {
+          NSMutableArray *movieMetas = [[NSMutableArray alloc]init];
+          for(id dict in (NSArray*)[responseObject objectForKey:@"results"]){
+              MovieMeta *movieMeta =[[MovieMeta alloc]initWithDict:dict];
+              [movieMetas addObject:movieMeta];
+          }
+          for(MovieMeta *movieMeta in movieMetas){
+              NSLog(@"%@",movieMeta);
+          }
+          NSDictionary * userInfo =@{kUserInfoKeyMethodLocation:@"movieList",kUserInfoKeyMovies:movieMetas};
+          [[NSNotificationCenter defaultCenter] postNotificationName:kMovieListSuccessNotification object:self userInfo:userInfo];
+      } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+          NSDictionary * userInfo  = @{kUserInfoKeyMethodLocation:@"movieList",kUserInfoKeyError:error.description};
+          [[NSNotificationCenter defaultCenter] postNotificationName:kMovieListFailedNotification object:self userInfo:userInfo];
+      }];
+}
+
 #pragma mark - session queries
 -(void)sessionOfMovie:(int64_t)movieID inCinema:(int64_t)cinemaID{
     [self GET:[URLManager sessionOfMovie:movieID inCinema:cinemaID] parameters:nil
       success:^(AFHTTPRequestOperation *operation, id responseObject) {
-          NSMutableArray *sessionMetas = [[NSMutableArray alloc]init];
-          for(id dict in (NSArray*)responseObject){
-              SessionMeta *sessionMeta =[[SessionMeta alloc]initWithDict:dict ofMovie:movieID inCinema:cinemaID];
-              [sessionMetas addObject:sessionMeta];
-          }
-          for (SessionMeta* sessionMeta in sessionMetas) {
-              NSLog(@"%@",sessionMeta);
-          }
-          NSDictionary * userInfo =@{kUserInfoKeyMethodLocation:@"sessionOfMovieInCinema",kUserInfoKeyMovieID: @(movieID),kUserInfoKeyCinemaID: @(cinemaID),kUserInfoKeySessions:sessionMetas};
+          SessionsMeta *sessionsMeta = [[SessionsMeta alloc]initWithArray:(NSArray*)responseObject ofMovie:movieID inCinema:cinemaID];
+          NSDictionary * userInfo =@{kUserInfoKeyMethodLocation:@"sessionOfMovieInCinema",kUserInfoKeyMovieID: @(movieID),kUserInfoKeyCinemaID: @(cinemaID),kUserInfoKeySessions:sessionsMeta};
           [[NSNotificationCenter defaultCenter] postNotificationName:kSessionListSuccessNotification object:self userInfo:userInfo];
       } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
           NSDictionary * userInfo  = @{kUserInfoKeyMethodLocation:@"cinemaListInDistrict",kUserInfoKeyMovieID: @(movieID),kUserInfoKeyCinemaID: @(cinemaID),kUserInfoKeyError:error.description};

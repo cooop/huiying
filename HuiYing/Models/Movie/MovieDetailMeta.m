@@ -26,7 +26,7 @@
 }
 
 -(NSString *)description{
-    return [NSString stringWithFormat:@"MovieDetailMeta{\n\tmovieID : %lld,\n\tchineseName : %@,\n\tenglishName : %@,\n\tsubtitle : %@,\n\tversion : %d,\n\trate : %d,\n\tcoverImage : %@\n\tdate : %@,\n\ttype : %@,\n\tnation : %@,\n\tlanguage : %@,\n\tduration : %lld,\n\tdescription : %@,\n\timages : %@,\n\tvideos : %@\n}",self.movieID,self.chineseName,self.englishName,self.subtitle,self.version,self.rate,self.coverImage,_date,_type,_nation,_language,_duration,_movieDescription,_images,_videos];
+    return [NSString stringWithFormat:@"MovieDetailMeta{\n\tmovieID : %lld,\n\tchineseName : %@,\n\tenglishName : %@,\n\tsubtitle : %@,\n\tversion : %d,\n\trate : %f,\n\tcoverImage : %@\n\tdate : %@,\n\ttype : %@,\n\tnation : %@,\n\tlanguage : %@,\n\tduration : %lld,\n\tdescription : %@,\n\timages : %@,\n\tvideos : %@\n}",self.movieID,self.chineseName,self.englishName,self.subtitle,self.version,self.rate,self.coverImage,_date,_type,_nation,_language,_duration,_movieDescription,_images,_videos];
 }
 
 @end

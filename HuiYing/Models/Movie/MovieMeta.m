@@ -17,7 +17,7 @@
         _englishName = [dict objectForKey:kJSONKeyMovieEName];
         _subtitle = [dict objectForKey:kJSONKeyMovieSubtitle];
         _version = [MovieMeta translateMovieVersion:[dict objectForKey:kJSONKeyMovieVersions]];
-        _rate = [[dict objectForKey:kJSONKeyMovieRate]intValue];
+        _rate = [[dict objectForKey:kJSONKeyMovieRate]floatValue];
         _coverImage = [dict objectForKey:kJSONKeyMovieCoverImage];
     }
     return self;
@@ -38,7 +38,7 @@
 }
 
 -(NSString *)description{
-    return [NSString stringWithFormat:@"MovieMeta{\n\tmovieID : %lld,\n\tchineseName : %@,\n\tenglishName : %@,\n\tsubtitle : %@,\n\tversion : %d,\n\trate : %d,\n\tcoverImage : %@\n}",_movieID,_chineseName,_englishName,_subtitle,_version,_rate,_coverImage];
+    return [NSString stringWithFormat:@"MovieMeta{\n\tmovieID : %lld,\n\tchineseName : %@,\n\tenglishName : %@,\n\tsubtitle : %@,\n\tversion : %d,\n\trate : %f,\n\tcoverImage : %@\n}",_movieID,_chineseName,_englishName,_subtitle,_version,_rate,_coverImage];
 }
 
 @end
