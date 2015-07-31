@@ -14,7 +14,7 @@
 @property (nonatomic) int64_t cityID;
 @property (nonatomic) int64_t districtID;
 @property (nonatomic,strong) NSString * address;
-@property (nonatomic) int rate;
+@property (nonatomic) float rate;
 @property (nonatomic) float distance;
 @property (nonatomic, strong) NSDate* coming;
 -(id)initWithDict:(NSDictionary *)dict;

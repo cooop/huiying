@@ -7,7 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2D79D4B91B5BF54F004AC143 /* CinemaViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D79D4B81B5BF54F004AC143 /* CinemaViewController.m */; };
+		2D79D4BC1B5C0DB4004AC143 /* MyPoint.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D79D4BB1B5C0DB4004AC143 /* MyPoint.m */; };
 		2DCFCA711B5000320013F5B1 /* SessionsMeta.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DCFCA701B5000320013F5B1 /* SessionsMeta.m */; };
+		2DD612141B653F2800D886F9 /* TicketViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DD612131B653F2800D886F9 /* TicketViewController.m */; };
 		E60FD2ED1B2EF9B2001F13B8 /* MovieDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E60FD2EC1B2EF9B2001F13B8 /* MovieDetailViewController.m */; };
 		E6195D8B1B455A6B001DD9E4 /* SessionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E6195D8A1B455A6B001DD9E4 /* SessionViewController.m */; };
 		E620C6C71B0CB2F600DB4E55 /* citydict.plist in Resources */ = {isa = PBXBuildFile; fileRef = E620C6C61B0CB2F600DB4E55 /* citydict.plist */; };
@@ -138,8 +141,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2D79D4B71B5BF54F004AC143 /* CinemaViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CinemaViewController.h; path = Controllers/CinemaViewController.h; sourceTree = "<group>"; };
+		2D79D4B81B5BF54F004AC143 /* CinemaViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CinemaViewController.m; path = Controllers/CinemaViewController.m; sourceTree = "<group>"; };
+		2D79D4BA1B5C0DB4004AC143 /* MyPoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MyPoint.h; path = views/MyPoint.h; sourceTree = "<group>"; };
+		2D79D4BB1B5C0DB4004AC143 /* MyPoint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MyPoint.m; path = views/MyPoint.m; sourceTree = "<group>"; };
 		2DCFCA6F1B5000320013F5B1 /* SessionsMeta.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SessionsMeta.h; path = Models/Session/SessionsMeta.h; sourceTree = "<group>"; };
 		2DCFCA701B5000320013F5B1 /* SessionsMeta.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SessionsMeta.m; path = Models/Session/SessionsMeta.m; sourceTree = "<group>"; };
+		2DD612121B653F2800D886F9 /* TicketViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TicketViewController.h; path = Controllers/TicketViewController.h; sourceTree = "<group>"; };
+		2DD612131B653F2800D886F9 /* TicketViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TicketViewController.m; path = Controllers/TicketViewController.m; sourceTree = "<group>"; };
 		E60FD2EB1B2EF9B2001F13B8 /* MovieDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MovieDetailViewController.h; path = Controllers/MovieDetailViewController.h; sourceTree = "<group>"; };
 		E60FD2EC1B2EF9B2001F13B8 /* MovieDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MovieDetailViewController.m; path = Controllers/MovieDetailViewController.m; sourceTree = "<group>"; };
 		E6195D891B455A6B001DD9E4 /* SessionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SessionViewController.h; path = Controllers/SessionViewController.h; sourceTree = "<group>"; };
@@ -543,6 +552,8 @@
 			children = (
 				E6F676BE1B3AE2BE00698F4F /* UIImage+ImageEffects.h */,
 				E6F676BF1B3AE2BE00698F4F /* UIImage+ImageEffects.m */,
+				2D79D4BA1B5C0DB4004AC143 /* MyPoint.h */,
+				2D79D4BB1B5C0DB4004AC143 /* MyPoint.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -568,6 +579,10 @@
 				E60FD2EC1B2EF9B2001F13B8 /* MovieDetailViewController.m */,
 				E6195D891B455A6B001DD9E4 /* SessionViewController.h */,
 				E6195D8A1B455A6B001DD9E4 /* SessionViewController.m */,
+				2D79D4B71B5BF54F004AC143 /* CinemaViewController.h */,
+				2D79D4B81B5BF54F004AC143 /* CinemaViewController.m */,
+				2DD612121B653F2800D886F9 /* TicketViewController.h */,
+				2DD612131B653F2800D886F9 /* TicketViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -830,10 +845,12 @@
 				E6DEA9DB1AFF6CCC006E87C3 /* AFHTTPRequestOperationManager.m in Sources */,
 				E6DEA9FC1AFF6D14006E87C3 /* UIImageView+AFNetworking.m in Sources */,
 				E620C6CA1B0CB3A400DB4E55 /* CityListViewController.m in Sources */,
+				2DD612141B653F2800D886F9 /* TicketViewController.m in Sources */,
 				E6DEA9B41AFF6BCB006E87C3 /* MovieDetailMeta.m in Sources */,
 				E6EF770D1B1746DA000BCB4C /* PullDownViewController.m in Sources */,
 				E6DEA9DC1AFF6CCC006E87C3 /* AFHTTPSessionManager.m in Sources */,
 				E6DEA9DD1AFF6CCC006E87C3 /* AFNetworkReachabilityManager.m in Sources */,
+				2D79D4BC1B5C0DB4004AC143 /* MyPoint.m in Sources */,
 				E6DEA9C41AFF6C5E006E87C3 /* NetworkManager.m in Sources */,
 				E6E951371B15E3360012CDA3 /* MovieTableViewController.m in Sources */,
 				E6DEA9DF1AFF6CCC006E87C3 /* AFURLConnectionOperation.m in Sources */,
@@ -857,6 +874,7 @@
 				E6DEA9E01AFF6CCC006E87C3 /* AFURLRequestSerialization.m in Sources */,
 				E6DF72891B1341A000299D61 /* CinemaTableViewController.m in Sources */,
 				E6DEA9B81AFF6BF4006E87C3 /* CinemaMeta.m in Sources */,
+				2D79D4B91B5BF54F004AC143 /* CinemaViewController.m in Sources */,
 				E6CF12091AFA398A004FBDB7 /* HuiYing.xcdatamodeld in Sources */,
 				E6DEA9F81AFF6D14006E87C3 /* AFNetworkActivityIndicatorManager.m in Sources */,
 			);

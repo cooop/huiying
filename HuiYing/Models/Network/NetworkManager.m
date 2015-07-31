@@ -11,6 +11,7 @@
 #import "CityMeta.h"
 #import "DistrictMeta.h"
 #import "CinemaMeta.h"
+#import "CinemaDetailMeta.h"
 #import "MovieMeta.h"
 #import "MovieDetailMeta.h"
 #import "SessionMeta.h"
@@ -123,6 +124,20 @@ IMPLEMENT_SHARED_INSTANCE(NetworkManager);
       }];
 }
 
+-(void)cinemaListDetailWithID:(int64_t)cinemaID{
+    [self GET:[URLManager cinemaListDetailWithID:cinemaID] parameters:nil
+      success:^(AFHTTPRequestOperation *operation, id responseObject) {
+          NSDictionary* dict =(NSDictionary*)responseObject;
+          CinemaDetailMeta *cinemaDetail = [[CinemaDetailMeta alloc]initWithDict:dict];
+          NSLog(@"%@",cinemaDetail);
+          NSDictionary * userInfo =@{kUserInfoKeyMethodLocation:@"cinemaListDetailWithID",kUserInfoKeyCinemaID:@(cinemaID),kUserInfoKeyCinemaDetail:cinemaDetail};
+          [[NSNotificationCenter defaultCenter] postNotificationName:kCinemaDetailListSuccessNotification object:self userInfo:userInfo];
+      } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+          NSDictionary * userInfo  = @{kUserInfoKeyMethodLocation:@"cinemaListDetailWithID",kUserInfoKeyMovieID:@(cinemaID),kUserInfoKeyError:error.description};
+          [[NSNotificationCenter defaultCenter] postNotificationName:kCinemaDetailListFailedNotification object:self userInfo:userInfo];
+      }];
+}
+
 #pragma mark - movie queries
 
 -(void)movieListInCity:(int64_t)cityID{
@@ -195,7 +210,7 @@ IMPLEMENT_SHARED_INSTANCE(NetworkManager);
     [self GET:[URLManager ticketPriceOfSession:sessionID] parameters:nil
       success:^(AFHTTPRequestOperation *operation, id responseObject) {
           NSMutableArray *ticketMetas = [[NSMutableArray alloc]init];
-          for(id dict in (NSArray*)responseObject){
+          for(id dict in (NSArray*)responseObject[@"results"]){
               TicketMeta *ticketMeta =[[TicketMeta alloc]initWithDict:dict ofSession:sessionID];
               [ticketMetas addObject:ticketMeta];
           }

@@ -59,6 +59,7 @@
 #define kJSONKeyTicketOriginalPrice @"yuanjia"
 #define kJSONKeyTicketCurrentPrice @"xianjia"
 #define kJSONKeyTicketAccessMethod @"method"
+#define kJSONKeyTicketImageUrl @"url"
 
 #pragma mark - Notification UserInfo Keys
 #define kUserInfoKeyCities @"cities"
@@ -74,6 +75,7 @@
 
 #define kUserInfoKeyMovieID @"movie_id"
 #define kUserInfoKeyCinemaID @"cinema_id"
+#define kUserInfoKeyCinemaDetail @"cinema"
 #define kUserInfoKeySessions @"sessions"
 
 #define kUserInfoKeySessionID @"session_id"
@@ -97,7 +99,9 @@
 #define kMovieListSuccessNotification @"kMovieListSuccessNotification"
 #define kMovieListFailedNotification @"kMovieListFailedNotification"
 #define kMovieDetailListSuccessNotification @"kMovieDetailListSuccessNotification"
+#define kCinemaDetailListSuccessNotification @"kCinemaDetailListSuccessNotification"
 #define kMovieDetailListFailedNotification @"kMovieDetailListFailedNotification"
+#define kCinemaDetailListFailedNotification @"kCinemaDetailListFailedNotification"
 #define kSessionListSuccessNotification @"kSessionListSuccessNotification"
 #define kSessionListFailedNotification @"kSessionListFailedNotification"
 #define kTicketListSuccessNotification @"kTicketListSuccessNotification"

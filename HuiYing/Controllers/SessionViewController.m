@@ -14,6 +14,8 @@
 #import "UIImageView+AFNetworking.h"
 #import "SessionMeta.h"
 #import "SessionsMeta.h"
+#import "CinemaViewController.h"
+#import "TicketViewController.h"
 
 @interface SessionViewController ()
 @property (nonatomic, strong) CinemaMeta* cinema;
@@ -157,6 +159,7 @@
         _cinemaAddress.frame = CGRectMake(10, 36, UI_SCREEN_WIDTH -30, size.height);
     }
     [_cinemaView addSubview:_cinemaAddress];
+    [_cinemaView addGestureRecognizer:[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(cinemaPressed:)]];
 }
 
 -(void)drawImageCollectionView{
@@ -398,6 +401,11 @@
     return cell;
 }
 
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    TicketViewController* vc = [[TicketViewController alloc]initWIthSession:self.sessions[self.selectedDate][indexPath.row]];
+    [self.navigationController pushViewController:vc animated:YES];
+}
+
 -(NSString*)stringOfTime:(NSDate*)date{
     NSDateFormatter* formatter = [[NSDateFormatter alloc]init];
     [formatter setDateFormat:@"HH:mm"];
@@ -439,6 +447,11 @@
             break;
     }
     return str;
+}
+
+-(void)cinemaPressed:(id)sender{
+    CinemaViewController* vc = [[CinemaViewController alloc]initWithCinemaID:self.cinema.cinemaID];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 @end

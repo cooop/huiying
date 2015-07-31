@@ -12,7 +12,7 @@
 @implementation CinemaDetailMeta
 
 -(id)initWithDict:(NSDictionary *)dict{
-    if (self = [super init]) {
+    if (self = [super initWithDict:dict]) {
         _phone = [dict objectForKey:kJSONKeyCinemaPhone];
         _longitude = [[dict objectForKey:kJSONKeyCinemaLongitude]floatValue];
         _latitude = [[dict objectForKey:kJSONKeyCinemaLatitude]floatValue];

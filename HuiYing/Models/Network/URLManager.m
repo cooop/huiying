@@ -39,6 +39,10 @@
    return [NSString stringWithFormat:@"%@/cinema/?city_id=%lld&district_id=%lld",[URLManager huiyingURL],cityID,districtID];
 }
 
++(NSString *)cinemaListDetailWithID:(int64_t)cinemaID{
+    return [NSString stringWithFormat:@"%@/cinema/%lld/", [URLManager huiyingURL], cinemaID];
+}
+
 #pragma mark - movie query
 
 +(NSString *)movieListInCity:(int64_t)cityID{
