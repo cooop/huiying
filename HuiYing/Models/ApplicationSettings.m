@@ -13,11 +13,17 @@ IMPLEMENT_SHARED_INSTANCE(ApplicationSettings)
 
 - (void)loadSettings {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    self.city = [defaults stringForKey:@"city"];
+    self.cityID = [defaults integerForKey:@"cityID"];
+    self.cityName = [defaults stringForKey:@"cityName"];
+    self.timestamp = [defaults integerForKey:@"timestamp"];
+    self.cityList = [defaults objectForKey:@"cityList"];
 }
 
 - (void)saveSettings {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setObject:self.city forKey:@"city"];
+    [defaults setInteger:self.cityID forKey:@"cityID"];
+    [defaults setObject:self.cityName forKey:@"cityName"];
+    [defaults setInteger:self.timestamp forKey:@"timestamp"];
+    [defaults setObject:self.cityList forKey:@"cityList"];
 }
 @end

@@ -12,7 +12,7 @@
 #pragma mark - JSON Keys
 
 #define kJSONKeyCityID   @"id"
-#define kJSONKeyCityName  @"region_name"
+#define kJSONKeyCityName  @"name"
 
 #define kJSONKeyDistrictID @"id"
 #define kJSONKeyDistrictName @"name"
@@ -40,8 +40,7 @@
 #define kJSONKeyMovieDate @"r_date"
 #define kJSONKeyMovieType @"type"
 #define kJSONKeyMovieNation @"nation"
-//TODO:Attention! 服务端返回jsonkey拼写错误，有可能被改正
-#define kJSONKeyMovieLanguage @"lanuage"
+#define kJSONKeyMovieLanguage @"language"
 #define kJSONKeyMovieDuration @"duration"
 #define kJSONKeyMovieDescription @"description"
 #define kJSONKeyMovieImages @"images"
@@ -63,6 +62,7 @@
 
 #pragma mark - Notification UserInfo Keys
 #define kUserInfoKeyCities @"cities"
+#define kUserInfoKeyCityVersion @"city_version"
 
 #define kUserInfoKeyCityID @"city_id"
 #define kUserInfoKeyDistricts @"districts"
@@ -88,6 +88,8 @@
 
 #define kCityListSuccessNotification @"kCityListSuccessNotification"
 #define kCityListFailedNotification @"kCityListFailedNotification"
+#define kCityVersionSuccessNotification @"kCityVersionSuccessNotification"
+#define kCityVersionFailedNotification @"kCityVersionFailedNotification"
 #define kDistrictListInCitySuccessNotification @"kDistrictListInCitySuccessNotification"
 #define kDistrictListInCityFailedNotification @"kDistrictListInCityFailedNotification"
 #define kCinemaListSuccessNotification @"kCinemaListSuccessNotification"

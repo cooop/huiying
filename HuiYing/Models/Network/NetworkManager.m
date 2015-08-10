@@ -17,6 +17,7 @@
 #import "SessionMeta.h"
 #import "SessionsMeta.h"
 #import "TicketMeta.h"
+#import "Utils.h"
 
 @implementation NetworkManager
 
@@ -26,21 +27,28 @@ IMPLEMENT_SHARED_INSTANCE(NetworkManager);
 -(void)cityList{
     [self GET:[URLManager cityList] parameters:nil
       success:^(AFHTTPRequestOperation *operation, id responseObject) {
-          NSMutableArray * cityMetas = [[NSMutableArray alloc]init];
-          for(id dict in (NSArray *)responseObject){
-              CityMeta * cityMeta = [[CityMeta alloc] initWithDict:(NSDictionary *)dict];
-              [cityMetas addObject:cityMeta];
-          }
-          
-          for(CityMeta* cityMeta in cityMetas){
-              NSLog(@"%@",cityMeta);
-          }
-          NSDictionary * userInfo = @{kUserInfoKeyMethodLocation:@"cityList",kUserInfoKeyCities:cityMetas};
+          NSDictionary * userInfo = @{kUserInfoKeyMethodLocation:@"cityList",kUserInfoKeyCities:(NSArray *)responseObject};
           [[NSNotificationCenter defaultCenter] postNotificationName:kCityListSuccessNotification object:self userInfo:userInfo];
       }
       failure:^(AFHTTPRequestOperation *operation, NSError *error) {
           NSDictionary * userInfo  = @{kUserInfoKeyMethodLocation:@"cityList",kUserInfoKeyError:error.description};
           [[NSNotificationCenter defaultCenter] postNotificationName:kCityListFailedNotification object:self userInfo:userInfo];
+      }];
+}
+
+- (void) cityVersion{
+    [self GET:[URLManager cityVersion] parameters:nil
+      success:^(AFHTTPRequestOperation *operation, id responseObject) {
+          int64_t timestamp = 0;
+          if(responseObject){
+              timestamp = [[Utils formatDate:responseObject[@"version"]] timeIntervalSince1970];
+          }
+          NSDictionary * userInfo = @{kUserInfoKeyMethodLocation:@"cityVersion",kUserInfoKeyCityVersion:@(timestamp)};
+          [[NSNotificationCenter defaultCenter] postNotificationName:kCityVersionSuccessNotification object:self userInfo:userInfo];
+      }
+      failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+          NSDictionary * userInfo  = @{kUserInfoKeyMethodLocation:@"cityVerion",kUserInfoKeyError:error.description};
+          [[NSNotificationCenter defaultCenter] postNotificationName:kCityVersionFailedNotification object:self userInfo:userInfo];
       }];
 }
 

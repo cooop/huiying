@@ -9,32 +9,34 @@
 #import "CityListViewController.h"
 #import "ApplicationSettings.h"
 #import "Constraits.h"
+#import "CityMeta.h"
+#import "NetworkManager.h"
 
 
 @interface CityListViewController ()
 @property (nonatomic, strong) CLLocationManager *locationManager;//定义Manager
+@property (nonatomic, assign) NSInteger timestamp;
+@property (nonatomic, strong) NSArray* cityList;
 @end
 
 @implementation CityListViewController
 
-- (id)init
-{
-    self = [super init];
-    if (self) {
-        // Custom initialization
-        self.arrayHotCity = [NSMutableArray arrayWithObjects:@"上海",@"北京",@"广州",@"深圳",@"武汉",@"天津",@"西安",@"南京",@"杭州",@"成都",@"重庆", nil];
-        self.keys = [NSMutableArray array];
-        self.arrayCitys = [NSMutableArray array];
+-(id)init{
+    if(self = [super init]){
+        _cities = [NSMutableDictionary dictionary];
+        _keys = [NSMutableArray array];
     }
     return self;
 }
 
+#pragma mark - life cycle
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    [self getCityData];
-    
+    _timestamp = [[ApplicationSettings sharedInstance] timestamp];
+    _cityList = [[ApplicationSettings sharedInstance] cityList];
+    [self parseCityList:self.cityList];
     
     self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
     
@@ -58,7 +60,6 @@
     self.navigationItem.leftBarButtonItem = backBarButton;
     
     _tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
-//    _tableView.autoresizingMask = (UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight);
     _tableView.backgroundColor = [UIColor whiteColor];
     _tableView.sectionIndexBackgroundColor = [UIColor clearColor];
     _tableView.sectionIndexColor = UIColorFromRGB(0x008BFF);
@@ -85,32 +86,29 @@
     }
     // 开始定位
     [_locationManager startUpdatingLocation];
+    [[NetworkManager sharedInstance]cityVersion];
+}
+
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(versionGet:) name:kCityVersionSuccessNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(cityListSuccess:) name:kCityListSuccessNotification object:nil];
 }
 
 -(void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kCityVersionSuccessNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kCityListSuccessNotification object:nil];
     _locationManager = nil;
 }
 
-#pragma mark - 获取城市数据
--(void)getCityData
+- (void)didReceiveMemoryWarning
 {
-    NSString *path=[[NSBundle mainBundle] pathForResource:@"citydict"
-                                                   ofType:@"plist"];
-    self.cities = [NSMutableDictionary dictionaryWithContentsOfFile:path];
-    
-    [self.keys addObjectsFromArray:[[self.cities allKeys] sortedArrayUsingSelector:@selector(compare:)]];
-    
-    //添加热门城市
-    NSString *strHot = @"热门";
-    NSString *local = @"定位";
-    [self.keys insertObject:local atIndex:0];
-    [self.keys insertObject:strHot atIndex:1];
-    [self.cities setObject:@[@"正在定位..."] forKey:local];
-    [self.cities setObject:_arrayHotCity forKey:strHot];
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
 }
 
-#pragma mark - tableView
+#pragma mark - tableView delegate & datesource
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
     return 24.0;
@@ -170,6 +168,7 @@
     static NSString *CellIdentifier = @"Cell";
     
     NSString *key = [_keys objectAtIndex:indexPath.section];
+    NSArray* citiesInSection = [_cities objectForKey:key];
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
@@ -181,13 +180,15 @@
         [cell.textLabel setTextColor:UIColorFromRGB(0x333333)];
         cell.textLabel.font = [UIFont systemFontOfSize:17];
     }
-    cell.textLabel.text = [[_cities objectForKey:key] objectAtIndex:indexPath.row];
+    cell.textLabel.text = ((CityMeta*)[citiesInSection objectAtIndex:indexPath.row]).cityName;
     return cell;
 }
 
-
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    [ApplicationSettings sharedInstance].city = self.cities[self.keys[indexPath.section]][indexPath.row];
+    CityMeta * city = self.cities[self.keys[indexPath.section]][indexPath.row];
+    [ApplicationSettings sharedInstance].cityID = city.cityID;
+    [ApplicationSettings sharedInstance].cityName = city.cityName;
+    [[ApplicationSettings sharedInstance] saveSettings];
     [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
@@ -208,10 +209,61 @@
     }
 }
 
-- (void)didReceiveMemoryWarning
+#pragma mark - notification handler
+-(void)versionGet:(NSNotification*)notification{
+    NSDictionary * userInfo = [notification userInfo];
+    NSInteger timestamp = [userInfo[kUserInfoKeyCityVersion] integerValue];
+    if (timestamp > self.timestamp) {
+        [ApplicationSettings sharedInstance].timestamp = timestamp;
+        [[ApplicationSettings sharedInstance] saveSettings];
+        [[NetworkManager sharedInstance] cityList];
+    }
+}
+
+-(void)cityListSuccess:(NSNotification*)notification{
+    NSDictionary * userInfo = [notification userInfo];
+    [self parseCityList:userInfo[kUserInfoKeyCities]];
+    self.cityList = userInfo[kUserInfoKeyCities];
+    [ApplicationSettings sharedInstance].cityList = self.cityList;
+    [[ApplicationSettings sharedInstance] saveSettings];
+    [self.tableView reloadData];
+}
+
+#pragma mark - private methods
+-(void)getCityData
 {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    NSString *local = @"定位";
+    if (![self.keys containsObject:local]) {
+        [self.keys insertObject:local atIndex:0];
+    }
+    CityMeta* cityMeta = [[CityMeta alloc] init];
+    cityMeta.cityName =@"正在定位...";
+    cityMeta.cityID = -100;
+    [self.cities setValue:@[cityMeta] forKey:local];
+}
+
+
+-(void)parseCityList:(NSArray*)cityList{
+    
+    for(NSDictionary* cityDict in cityList){
+        NSEnumerator* enumerator = [cityDict keyEnumerator];
+        NSString* cityKey = nil;
+        if ((cityKey = enumerator.nextObject) != nil) {
+            if ([cityKey isEqualToString:@"hot"]) {
+                [self.keys addObject:@"热门"];
+                cityKey = @"热门";
+            }else{
+                [self.keys addObject:cityKey];
+            }
+            NSMutableArray * cityArray = [NSMutableArray array];
+            for(NSDictionary* city in cityDict[cityKey]){
+                CityMeta* cityMeta =[[CityMeta alloc]initWithDict:city];
+                [cityArray addObject:cityMeta];
+            }
+            [self.cities setValue:cityArray forKey:cityKey];
+        }
+    }
+    [self getCityData];
 }
 
 -(void)backToMovieListView{
@@ -225,8 +277,7 @@
             CLPlacemark *placemark = [placemarks objectAtIndex:0];
             NSString *cityStr = placemark.locality;
             cityStr = cityStr?cityStr:placemark.administrativeArea;
-            cityStr = [self formatCityName:cityStr];
-            [self.cities setObject:@[cityStr] forKey:self.keys[0]];
+            [self.cities setObject:[self formatCityName:cityStr] forKey:self.keys[0]];
             [self.tableView reloadData];
         }else if (error == nil &&[placemarks count] == 0){
             NSLog(@"No results were returned.");
@@ -242,15 +293,15 @@
     }];
 }
 
--(NSString*)formatCityName:(NSString*)cityStr{
+-(CityMeta*)formatCityName:(NSString*)cityStr{
     for(NSString* key in self.keys){
-        for(NSString* city in self.cities[key]){
-            if ([cityStr hasPrefix:city]) {
+        for(CityMeta* city in self.cities[key]){
+            if ([cityStr hasPrefix:city.cityName]) {
                 return city;
             }
         }
     }
-    return cityStr;
+    return nil;
 }
 
 @end

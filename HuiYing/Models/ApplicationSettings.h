@@ -11,7 +11,10 @@
 
 @interface ApplicationSettings : NSObject
 DECLARE_SHARED_INSTANCE(ApplicationSettings)
-@property (nonatomic, assign) NSString* city;
+@property (nonatomic, strong) NSString* cityName;
+@property (nonatomic, assign) NSInteger cityID;
+@property (nonatomic, assign) NSInteger timestamp;
+@property (nonatomic, strong) NSArray* cityList;
 - (void)loadSettings;
 - (void)saveSettings;
 @end

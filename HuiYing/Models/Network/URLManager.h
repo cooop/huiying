@@ -14,6 +14,7 @@
 
 //位置查询
 +(NSString *) cityList;
++(NSString *) cityVersion;
 +(NSString *) districtListInCity:(int64_t)cityID;
 
 //影院查询

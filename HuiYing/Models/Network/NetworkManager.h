@@ -16,6 +16,7 @@ DECLARE_SHARED_INSTANCE(NetworkManager);
 
 //位置查询
 -(void) cityList;
+-(void) cityVersion;
 -(void) districtListInCity:(int64_t)cityID;
 
 //影院查询

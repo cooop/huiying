@@ -7,8 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <CoreLocation/CoreLocation.h>
+#import <MapKit/MapKit.h>
 
-@interface MovieListViewController : UIViewController
+@interface MovieListViewController : UIViewController<CLLocationManagerDelegate>
 
 
 @end

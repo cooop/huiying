@@ -22,6 +22,10 @@
     return [NSString stringWithFormat:@"%@/city/",[URLManager huiyingURL]];
 }
 
++(NSString *)cityVersion{
+    return [NSString stringWithFormat:@"%@/city/version/",[URLManager huiyingURL]];
+}
+
 +(NSString *)districtListInCity:(int64_t)cityID{
     return [NSString stringWithFormat:@"%@/city/%lld/",[URLManager huiyingURL],cityID];
 }
