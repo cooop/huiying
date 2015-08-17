@@ -9,12 +9,17 @@
 #import "URLManager.h"
 
 #define SERVER_ADDRESS @"http://182.92.219.92:8000"
+#define IMAGE_ADDRESS @"http://182.92.219.92:8001"
 
 @implementation URLManager
 
 +(NSString *)huiyingURL{
     //TODO: 做一些可连接性的检查
     return SERVER_ADDRESS;
+}
+
++(NSString*)huiyingImageURL{
+    return IMAGE_ADDRESS;
 }
 
 #pragma mark - location query
@@ -72,4 +77,10 @@
 + (NSString *)ticketPriceOfSession:(int64_t)sessionID{
     return [NSString stringWithFormat:@"%@/ticket/%lld/", [URLManager huiyingURL], sessionID];
 }
+
+#pragma mark - image query
++ (NSString *)fullImageURL:(NSString*)imageURL{
+    return [NSString stringWithFormat:@"%@/%@",[URLManager huiyingImageURL],imageURL];
+}
+
 @end

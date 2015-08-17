@@ -19,6 +19,8 @@
         _version = [MovieMeta translateMovieVersion:[dict objectForKey:kJSONKeyMovieVersions]];
         _rate = [[dict objectForKey:kJSONKeyMovieRate]floatValue];
         _coverImage = [dict objectForKey:kJSONKeyMovieCoverImage];
+        _cinemaNum = [[dict objectForKey:kJSONKeyMovieCinemaNum]intValue];
+        _sessionNum = [[dict objectForKey:kJSONKeyMovieSessionNum]intValue];
     }
     return self;
 }

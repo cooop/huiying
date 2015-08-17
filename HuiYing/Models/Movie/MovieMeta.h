@@ -17,13 +17,16 @@ typedef enum MovieVersion{
 } MovieVersion;
 
 @interface MovieMeta : NSObject
-@property (nonatomic) int64_t movieID;
+@property (nonatomic,assign) int64_t movieID;
 @property (nonatomic,strong) NSString* chineseName;
 @property (nonatomic,strong) NSString* englishName;
 @property (nonatomic,strong) NSString * subtitle;
-@property (nonatomic) MovieVersion version;
+@property (nonatomic,assign) MovieVersion version;
 @property (nonatomic,strong) NSString * coverImage;
-@property (nonatomic) float rate;
+@property (nonatomic,assign) float rate;
+@property (nonatomic,assign) NSUInteger cinemaNum;
+@property (nonatomic,assign) NSUInteger sessionNum;
+
 -(id)initWithDict:(NSDictionary *)dict;
 +(MovieVersion) translateMovieVersion:(NSString *) version;
 @end

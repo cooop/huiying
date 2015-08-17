@@ -10,6 +10,10 @@
 #import "Constraits.h"
 #import "MovieMeta.h"
 #import "MovieDetailViewController.h"
+#import "UIImageView+AFNetworking.h"
+#import "URLManager.h"
+#import "MJRefresh.h"
+#import "NetworkManager.h"
 
 @interface MovieTableViewController ()
 
@@ -17,6 +21,13 @@
 
 @implementation MovieTableViewController
 
+-(instancetype)initWithCityId:(int64_t)cityId{
+    if (self = [super init]) {
+        _cityID = cityId;
+        _moviePage = 1;
+    }
+    return self;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -27,6 +38,19 @@
     self.tableView.rowHeight = 105;
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
+    self.tableView.header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(refreshMovies)];
+    self.tableView.footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreMovies)];
+}
+
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(movieListSuccess:) name:kMovieListSuccessNotification object:nil];
+    [[NetworkManager sharedInstance] movieListInCity:self.cityID page:1];
+}
+
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:kMovieListSuccessNotification object:nil];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -104,14 +128,14 @@
     [cell addSubview:buyButton];
     
     MovieMeta* movieMeta = self.movies[indexPath.row];
-    coverImageView.image = [UIImage imageNamed:@"image"];
+    [coverImageView setImageWithURL:[NSURL URLWithString:[URLManager fullImageURL: movieMeta.coverImage]] placeholderImage:[UIImage imageNamed:@"defult_img1"]];
     titleLabel.text = movieMeta.chineseName;
     CGFloat titleWidth = [titleLabel.text sizeWithAttributes:@{NSFontAttributeName:titleLabel.font}].width;
     titleLabel.frame = CGRectMake(CGRectGetMaxX(coverImageView.frame)+10, 20, titleWidth, 20);
     versionView.frame= CGRectMake(CGRectGetMaxX(titleLabel.frame)+4, 20, 50, 20);
     versionView.image =[self versionImage:movieMeta];
     descriptionLabel.text = movieMeta.subtitle;
-    infoLabal.text = [NSString stringWithFormat:@"今天%d家影院%d场",67,956];
+    infoLabal.text = [NSString stringWithFormat:@"今天%lu家影院%lu场",movieMeta.cinemaNum,movieMeta.sessionNum];
     ratingLabel.text =[NSString stringWithFormat:@"%.1f", (float)movieMeta.rate];
     return cell;
 }
@@ -141,6 +165,38 @@
     [self.navigationController pushViewController:mdvc animated:YES];
 }
 
+#pragma mark - notification handler
 
+- (void)movieListSuccess:(NSNotification*) notification{
+    NSDictionary* userInfo = [notification userInfo];
+    int64_t page = [userInfo[kUserInfoKeyPage] longLongValue];
+    if(page > self.moviePage){
+        self.moviePage = page;
+        NSMutableArray *movies = [NSMutableArray array];
+        [movies addObjectsFromArray:self.movies];
+        [movies addObjectsFromArray:userInfo[kUserInfoKeyMovies]];
+        self.movies = movies;
+    }else if(page == self.moviePage && page == 1){
+        self.movies = userInfo[kUserInfoKeyMovies];
+    }
+    [self.tableView reloadData];
+    [self.tableView.header endRefreshing];
+}
+
+#pragma mark - refresh
+- (void) refreshMovies
+{
+    NetworkManager *networkManager = [NetworkManager sharedInstance];
+    [networkManager movieListInCity:self.cityID page:1];
+    self.moviePage = 1;
+}
+
+#pragma mark - load more
+- (void) loadMoreMovies
+{
+    NetworkManager *networkManager = [NetworkManager sharedInstance];
+    [networkManager movieListInCity:self.cityID page:self.moviePage+1];
+    [self.tableView.footer endRefreshing];
+}
 
 @end

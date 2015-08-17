@@ -12,6 +12,5 @@
 
 @interface MovieListViewController : UIViewController<CLLocationManagerDelegate>
 
-
 @end
 

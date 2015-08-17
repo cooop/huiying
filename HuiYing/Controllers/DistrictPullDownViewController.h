@@ -10,8 +10,8 @@
 #import "DistrictMeta.h"
 
 @interface DistrictPullDownViewController : PullDownViewController
-@property (nonatomic,assign) ino64_t cityId;
+@property (nonatomic,assign) int64_t cityId;
 @property (nonatomic,strong) NSArray* districts;
 @property (nonatomic,strong) DistrictMeta* selectedDistrict;
--(instancetype)initWithCityID:(ino64_t)cityId;
+-(instancetype)initWithCityID:(int64_t)cityId;
 @end

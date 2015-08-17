@@ -34,4 +34,6 @@
 //票价查询
 +(NSString *) ticketPriceOfSession:(int64_t)sessionID;
 
++(NSString *)fullImageURL:(NSString*)imageURL;
+
 @end

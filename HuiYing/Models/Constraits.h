@@ -29,6 +29,7 @@
 #define kJSONKeyCinemaRate @"rate"
 #define kJSONKeyCinemaDistance @"distance"
 #define kJSONKeyCinemaComing @"coming"
+#define kJSONKeyCinemaMovieNum @"movie_num"
 
 #define kJSONKeyMovieID @"id"
 #define kJSONKeyMovieCName @"c_name"
@@ -37,6 +38,8 @@
 #define kJSONKeyMovieVersions @"versions"
 #define kJSONKeyMovieRate @"rate"
 #define kJSONKeyMovieCoverImage @"cover_image"
+#define kJSONKeyMovieCinemaNum @"cinema_num"
+#define kJSONKeyMovieSessionNum @"session_num"
 #define kJSONKeyMovieDate @"r_date"
 #define kJSONKeyMovieType @"type"
 #define kJSONKeyMovieNation @"nation"
@@ -61,6 +64,7 @@
 #define kJSONKeyTicketImageUrl @"url"
 
 #pragma mark - Notification UserInfo Keys
+#define kUserInfoKeyPage @"page"
 #define kUserInfoKeyCities @"cities"
 #define kUserInfoKeyCityVersion @"city_version"
 
@@ -108,7 +112,8 @@
 #define kSessionListFailedNotification @"kSessionListFailedNotification"
 #define kTicketListSuccessNotification @"kTicketListSuccessNotification"
 #define kTicketListFailedNotification @"kTicketListFailedNotification"
-#define kCinemaOrderTypeChangeNotification @"kkCinemaOrderTypeChangeNotification"
+#define kCinemaOrderTypeChangeNotification @"kCinemaOrderTypeChangeNotification"
+#define kLocationDidChangeNotification @"kLocationDidChangeNotification"
 
 #pragma mark - Utils
 
@@ -138,6 +143,12 @@ return sharedInstance; \
 green:((float)(((rgbValue) & 0xFF00) >> 8))/255.0 \
 blue:((float)((rgbValue) & 0xFF))/255.0 \
 alpha:1.0]
+
+#define UIColorFromRGBA(rgbValue, alphaValue) \
+[UIColor colorWithRed:((float)(((rgbValue) & 0xFF0000) >> 16))/255.0 \
+green:((float)(((rgbValue) & 0xFF00) >> 8))/255.0 \
+blue:((float)((rgbValue) & 0xFF))/255.0 \
+alpha:(alphaValue)]
 
 #define UI_COLOR_PINK            UIColorFromRGB(0xFE6F80)
 

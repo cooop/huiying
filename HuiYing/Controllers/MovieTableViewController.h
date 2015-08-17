@@ -9,5 +9,8 @@
 #import <UIKit/UIKit.h>
 
 @interface MovieTableViewController : UITableViewController
+@property (nonatomic, assign) int64_t cityID;
 @property (nonatomic, strong) NSArray * movies;
+@property (nonatomic, assign) int64_t moviePage;
+-(instancetype)initWithCityId:(int64_t)cityId;
 @end

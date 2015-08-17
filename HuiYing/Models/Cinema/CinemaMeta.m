@@ -21,6 +21,7 @@
         _rate = [[dict objectForKey:kJSONKeyCinemaRate]floatValue];
         _coming = [dict objectForKey:kJSONKeyCinemaComing];
         _distance = [[dict objectForKey:kJSONKeyCinemaDistance]floatValue];
+        _movieNum = [[dict objectForKey:kJSONKeyCinemaMovieNum] intValue];
     }
     return self;
 }

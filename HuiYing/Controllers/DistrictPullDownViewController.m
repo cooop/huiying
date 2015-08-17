@@ -10,6 +10,7 @@
 #import "Constraits.h"
 #import "NetworkManager.h"
 #import "DistrictMeta.h"
+#import "CinemaListViewController.h"
 
 @interface DistrictPullDownViewController ()
 @property (nonatomic,assign) NSInteger selectedIndex;
@@ -17,7 +18,7 @@
 
 @implementation DistrictPullDownViewController
 
--(instancetype)initWithCityID:(ino64_t)cityId{
+-(instancetype)initWithCityID:(int64_t)cityId{
     if(self = [super init]){
         _cityId = cityId;
     }
@@ -89,14 +90,30 @@
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    CLLocation* location = nil;
+    CinemaOrderType order = CinemaOrderTypeDefault;
+    int64_t movie = -1;
+    if ([self.parentViewController isKindOfClass:[CinemaListViewController class]]) {
+        location = ((CinemaListViewController*)self.parentViewController).currentLocation;
+        order = ((CinemaListViewController*)self.parentViewController).selectedOrderType;
+        movie = ((CinemaListViewController*)self.parentViewController).movieId;
+    }
+    
     self.selectedIndex = indexPath.row;
     if (indexPath.row == 0) {
         self.selectedDistrict = nil;
-        [[NetworkManager sharedInstance] cinemaListInCity:self.cityId];
+        [[NetworkManager sharedInstance] cinemaListInCity:self.cityId movie:movie inDistrict:-1 page:1 location:location orderBy:order];
     }else{
         self.selectedDistrict = self.districts[indexPath.row -1];
-        [[NetworkManager sharedInstance]cinemaListInCity:self.cityId inDistrict:self.selectedDistrict.districtID];
+        [[NetworkManager sharedInstance] cinemaListInCity:self.cityId movie:movie inDistrict:self.selectedDistrict.districtID page:1 location:location orderBy:order];
     }
+    
+    if([self.parentViewController isKindOfClass:[CinemaListViewController class]]){
+        ((CinemaListViewController*)self.parentViewController).cinemaPage = 1;
+        ((CinemaListViewController*)self.parentViewController).selectedDistrict = self.selectedDistrict;
+    }
+    
     [tableView reloadData];
 
 }

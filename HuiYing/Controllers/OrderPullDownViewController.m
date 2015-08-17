@@ -7,7 +7,9 @@
 //
 
 #import "OrderPullDownViewController.h"
+#import "CinemaListViewController.h"
 #import "Constraits.h"
+#import "NetworkManager.h"
 
 @interface OrderPullDownViewController ()
 
@@ -66,9 +68,28 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     self.selectedOrderType = (int)indexPath.row;
-    [[NSNotificationCenter defaultCenter] postNotificationName:kCinemaOrderTypeChangeNotification object:nil];
-    [tableView reloadData];
     
+    CLLocation* location = nil;
+    int64_t movie = -1;
+    int64_t city = -1;
+    int64_t district = -1;
+    if ([self.parentViewController isKindOfClass:[CinemaListViewController class]]) {
+        location = ((CinemaListViewController*)self.parentViewController).currentLocation;
+        district = ((CinemaListViewController*)self.parentViewController).selectedDistrict?((CinemaListViewController*)self.parentViewController).selectedDistrict.districtID:-1;
+        movie = ((CinemaListViewController*)self.parentViewController).movieId;
+        city = ((CinemaListViewController*)self.parentViewController).cityID;
+    }
+    
+    
+    [[NetworkManager sharedInstance] cinemaListInCity:city movie:movie inDistrict:district page:1 location:location orderBy:self.selectedOrderType];
+    
+    
+    if([self.parentViewController isKindOfClass:[CinemaListViewController class]]){
+        ((CinemaListViewController*)self.parentViewController).cinemaPage = 1;
+        ((CinemaListViewController*)self.parentViewController).selectedOrderType = self.selectedOrderType;
+    }
+    
+    [tableView reloadData];
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{

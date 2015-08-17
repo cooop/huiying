@@ -9,6 +9,8 @@
 #import <Foundation/Foundation.h>
 #import "AFHTTPRequestOperationManager.h"
 #import "Constraits.h"
+#import <CoreLocation/CoreLocation.h>
+#import "OrderPullDownViewController.h"
 
 @interface NetworkManager : AFHTTPRequestOperationManager
 
@@ -21,12 +23,11 @@ DECLARE_SHARED_INSTANCE(NetworkManager);
 
 //影院查询
 -(void) cinemaList;
--(void) cinemaListInCity:(int64_t)cityID;
--(void) cinemaListInCity:(int64_t)cityID inDistrict:(int64_t)districtID;
--(void)cinemaListDetailWithID:(int64_t)cinemaID;
+-(void) cinemaListInCity:(int64_t)cityID movie:(int64_t)movieID inDistrict:(int64_t)districtID page:(int64_t)page location:(CLLocation*)location orderBy:(CinemaOrderType)order;
+-(void) cinemaListDetailWithID:(int64_t)cinemaID;
 
 //电影查询
--(void) movieListInCity:(int64_t)cityID;
+-(void)movieListInCity:(int64_t)cityID page:(int64_t)page;
 -(void)movieListInCinema:(int64_t)cinemaID;
 -(void) movieListDetailWithID:(int64_t)movieID;
 

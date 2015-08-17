@@ -19,6 +19,7 @@
 #import "TicketMeta.h"
 #import "Utils.h"
 
+
 @implementation NetworkManager
 
 IMPLEMENT_SHARED_INSTANCE(NetworkManager);
@@ -94,8 +95,32 @@ IMPLEMENT_SHARED_INSTANCE(NetworkManager);
       }];
 }
 
--(void)cinemaListInCity:(int64_t)cityID{
-    [self GET:[URLManager cinemaListInCity:cityID] parameters:nil
+-(void)cinemaListInCity:(int64_t)cityID movie:(int64_t)movieID inDistrict:(int64_t)districtID page:(int64_t)page location:(CLLocation*)location orderBy:(CinemaOrderType)order{
+    NSString* url = [NSString stringWithFormat:@"%@&page=%lld",[URLManager cinemaListInCity:cityID],page];
+    if (movieID >= 0) {
+        url = [url stringByAppendingString:[NSString stringWithFormat:@"&movid_id=%lld",movieID]];
+    }
+    if (districtID >= 0) {
+        url = [url stringByAppendingString:[NSString stringWithFormat:@"&district_id=%lld",districtID]];
+    }
+    if (location) {
+        url = [url stringByAppendingString:[NSString stringWithFormat:@"&user_position=%f,%f",location.coordinate.latitude,location.coordinate.longitude]];
+    }
+    
+    switch (order) {
+        case CinemaOrderTypeDistance:
+            if (location) {
+                url = [url stringByAppendingString:@"&sort_by=distance"];
+            }
+            break;
+        case CinemaOrderTypeRate:
+            url = [url stringByAppendingString:@"&sort_by=rate"];
+            break;
+        default:
+            break;
+    }
+    
+    [self GET:url parameters:nil
       success:^(AFHTTPRequestOperation *operation, id responseObject) {
           NSMutableArray *cinemaMetas = [[NSMutableArray alloc]init];
           for(id dict in (NSArray*)[responseObject objectForKey:@"results"]){
@@ -105,30 +130,11 @@ IMPLEMENT_SHARED_INSTANCE(NetworkManager);
           for (CinemaMeta* cinemaMeta in cinemaMetas) {
               NSLog(@"%@",cinemaMeta);
           }
-          NSDictionary * userInfo =@{kUserInfoKeyMethodLocation:@"cinemaListInCity",kUserInfoKeyCityID: @(cityID),kUserInfoKeyCinemas:cinemaMetas};
+          NSDictionary * userInfo =@{kUserInfoKeyMethodLocation:@"cinemaListInCity",kUserInfoKeyCityID: @(cityID),kUserInfoKeyCinemas:cinemaMetas,kUserInfoKeyPage:@(page)};
           [[NSNotificationCenter defaultCenter] postNotificationName:kCinemaListInCitySuccessNotification object:self userInfo:userInfo];
       } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
           NSDictionary * userInfo  = @{kUserInfoKeyMethodLocation:@"cinemaListInCity",kUserInfoKeyCityID: @(cityID),kUserInfoKeyError:error.description};
           [[NSNotificationCenter defaultCenter] postNotificationName:kCinemaListInCityFailedNotification object:self userInfo:userInfo];
-      }];
-}
-
--(void)cinemaListInCity:(int64_t)cityID inDistrict:(int64_t)districtID{
-    [self GET:[URLManager cinemaListInCity:cityID inDistrict:districtID] parameters:nil
-      success:^(AFHTTPRequestOperation *operation, id responseObject) {
-          NSMutableArray *cinemaMetas = [[NSMutableArray alloc]init];
-          for(id dict in (NSArray*)[responseObject objectForKey:@"results"]){
-              CinemaMeta *cinemaMeta =[[CinemaMeta alloc]initWithDict:dict];
-              [cinemaMetas addObject:cinemaMeta];
-          }
-          for (CinemaMeta* cinemaMeta in cinemaMetas) {
-              NSLog(@"%@",cinemaMeta);
-          }
-          NSDictionary * userInfo =@{kUserInfoKeyMethodLocation:@"cinemaListInDistrict",kUserInfoKeyCityID: @(cityID),kUserInfoKeyDistrictID: @(districtID),kUserInfoKeyCinemas:cinemaMetas};
-          [[NSNotificationCenter defaultCenter] postNotificationName:kCinemaListInDistrictSuccessNotification object:self userInfo:userInfo];
-      } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-          NSDictionary * userInfo  = @{kUserInfoKeyMethodLocation:@"cinemaListInDistrict",kUserInfoKeyCityID: @(cityID),kUserInfoKeyDistrictID: @(districtID),kUserInfoKeyError:error.description};
-          [[NSNotificationCenter defaultCenter] postNotificationName:kCinemaListInDistrictFailedNotification object:self userInfo:userInfo];
       }];
 }
 
@@ -148,8 +154,8 @@ IMPLEMENT_SHARED_INSTANCE(NetworkManager);
 
 #pragma mark - movie queries
 
--(void)movieListInCity:(int64_t)cityID{
-    [self GET:[NSString stringWithFormat:@"%@&page=%d",[URLManager movieListInCity:cityID],1] parameters:nil
+-(void)movieListInCity:(int64_t)cityID page:(int64_t)page{
+    [self GET:[NSString stringWithFormat:@"%@&page=%lld",[URLManager movieListInCity:cityID],page] parameters:nil
       success:^(AFHTTPRequestOperation *operation, id responseObject) {
           NSMutableArray *movieMetas = [[NSMutableArray alloc]init];
           for(id dict in (NSArray*)[responseObject objectForKey:@"results"]){
@@ -159,7 +165,7 @@ IMPLEMENT_SHARED_INSTANCE(NetworkManager);
           for(MovieMeta *movieMeta in movieMetas){
               NSLog(@"%@",movieMeta);
           }
-          NSDictionary * userInfo =@{kUserInfoKeyMethodLocation:@"movieList",kUserInfoKeyMovies:movieMetas};
+          NSDictionary * userInfo =@{kUserInfoKeyMethodLocation:@"movieList",kUserInfoKeyMovies:movieMetas,kUserInfoKeyPage:@(page)};
           [[NSNotificationCenter defaultCenter] postNotificationName:kMovieListSuccessNotification object:self userInfo:userInfo];
       } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
           NSDictionary * userInfo  = @{kUserInfoKeyMethodLocation:@"movieList",kUserInfoKeyError:error.description};

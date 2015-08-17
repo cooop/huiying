@@ -11,20 +11,19 @@
 #import "CityListViewController.h"
 #import "ApplicationSettings.h"
 #import "MovieTableViewController.h"
-#import "CinemaTableViewController.h"
+#import "CinemaListViewController.h"
+#import "MJRefresh.h"
 
 @interface MovieListViewController ()
 
+@property (nonatomic, strong) CLLocationManager *locationManager;//定义Manager
 @property (nonatomic, strong) UIButton *cityButton;
 @property (nonatomic, copy) NSString *cityButtonTitle;
 @property (nonatomic, strong) MovieTableViewController * movieTableViewController;
-@property (nonatomic, strong) CinemaTableViewController * cinemaTableViewController;
-//@property (nonatomic, strong) ODRefreshControl *refreshMovieControl;
-//@property (nonatomic, strong) ODRefreshControl *refreshCinemaControl;
+@property (nonatomic, strong) CinemaListViewController * cinemaListViewController;
 @property (nonatomic, assign) int64_t cityID;
 @property (nonatomic, strong) NSString * location;
 @property (strong, nonatomic) IBOutlet UISegmentedControl *segmentedControl;
-@property (nonatomic, strong) CLLocationManager *locationManager;
 
 @end
 
@@ -34,32 +33,60 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    _movieTableViewController = [[MovieTableViewController alloc]initWithStyle:UITableViewStylePlain];
-    [self addChildViewController:_movieTableViewController];
-    [self.view addSubview:self.movieTableViewController.tableView];
+    self.cityID = [[ApplicationSettings sharedInstance]cityID];
+    self.location = [[ApplicationSettings sharedInstance]cityName];
+    if (!self.cityID) {
+        self.location = @"北京";
+        self.cityID  = 100005;
+    }
     
-    _cinemaTableViewController = [[CinemaTableViewController alloc]initWithCityId:self.cityID];
-    [self addChildViewController:_cinemaTableViewController ];
-    [self.view addSubview:self.cinemaTableViewController.tableView];
-    _cinemaTableViewController.tableView.hidden = YES;
+    if([CLLocationManager locationServicesEnabled]) {
+        _locationManager = [[CLLocationManager alloc] init];
+        _locationManager.delegate = self;
+    }else {
+        //TODO:提示用户无法进行定位操作,未测试
+        UIAlertView * alert = [[UIAlertView alloc]initWithTitle:@"定位未开启" message:@"请前往系统设置开启定位" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil];
+        [alert show];
+    }
     
-    [_segmentedControl addTarget:self action:@selector(switchBetweenMovieAndCinema) forControlEvents:UIControlEventValueChanged];
-    
+    if ([[[UIDevice currentDevice] systemVersion] doubleValue] > 8.0)
+    {
+        //设置定位权限 仅ios8有意义
+        [self.locationManager requestWhenInUseAuthorization];// 前台定位
+        
+        //  [locationManager requestAlwaysAuthorization];// 前后台同时定位
+    }
+    // 开始定位
+    [_locationManager startUpdatingLocation];
 }
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     
+    int64_t oldCityID = self.cityID;
     self.cityID = [[ApplicationSettings sharedInstance]cityID];
     self.location = [[ApplicationSettings sharedInstance]cityName];
     if (!self.cityID) {
-        self.location = @"定位中";
-        
+        self.location = @"北京";
+        self.cityID = 100005;
     }
     
-    NetworkManager *networkManager = [NetworkManager sharedInstance];
-    [networkManager movieListInCity:self.cityID];
-    [networkManager cinemaListInCity:self.cityID];
+    if (!_movieTableViewController || oldCityID != self.cityID) {
+        _movieTableViewController = [[MovieTableViewController alloc]initWithCityId:self.cityID];
+        [self addChildViewController:_movieTableViewController];
+    }
+    [self.view addSubview:self.movieTableViewController.tableView];
+    
+    if (!_cinemaListViewController || oldCityID != self.cityID) {
+        _cinemaListViewController = [[CinemaListViewController alloc]initWithCityId:self.cityID];
+        [self addChildViewController:_cinemaListViewController ];
+    }
+    [self.view addSubview:self.cinemaListViewController.view];
+    
+    [self switchBetweenMovieAndCinema];
+    
+    [_segmentedControl addTarget:self action:@selector(switchBetweenMovieAndCinema) forControlEvents:UIControlEventValueChanged];
+
     
     self.navigationController.navigationBar.barTintColor = UI_COLOR_PINK;
     self.navigationController.navigationBar.translucent = NO;
@@ -90,14 +117,11 @@
     
     self.edgesForExtendedLayout= UIRectEdgeNone;
     
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(movieListSuccess:) name:kMovieListSuccessNotification object:nil];
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(cinemaListSuccess:) name:kCinemaListInCitySuccessNotification object:nil];
 }
 
 - (void)viewWillDisappear:(BOOL)animated{
-    [super viewWillDisappear:animated];
-    [[NSNotificationCenter defaultCenter]removeObserver:self name:kMovieListSuccessNotification object:nil];
-    [[NSNotificationCenter defaultCenter]removeObserver:self  name:kCinemaListInCitySuccessNotification object:nil];
+    [self.movieTableViewController.tableView removeFromSuperview];
+    [self.cinemaListViewController.view removeFromSuperview];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -105,47 +129,8 @@
     // Dispose of any resources that can be recreated.
 }
 
-#pragma mark -location
--(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations{
-    CLLocation *currentLocation = [locations lastObject];
-//    [self getCity:currentLocation];
-}
-
-- (void)locationManager:(CLLocationManager *)manager
-       didFailWithError:(NSError *)error {
-    
-    if (error.code == kCLErrorDenied) {
-        // 提示用户出错原因，可按住Option键点击 KCLErrorDenied的查看更多出错信息，可打印error.code值查找原因所在
-        UIAlertView * alert = [[UIAlertView alloc]initWithTitle:@"错误" message:@"定位失败" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil];
-        [alert show];
-        //TODO: 加入重试按钮
-    }
-}
-
-#pragma mark - notification handler
-
-- (void)movieListSuccess:(NSNotification*) notification{
-    NSDictionary* userInfo = [notification userInfo];
-    self.movieTableViewController.movies = userInfo[kUserInfoKeyMovies];
-    [self.movieTableViewController.tableView reloadData];
-}
-
-- (void)cinemaListSuccess:(NSNotification*) notification{
-    NSDictionary* userInfo = [notification userInfo];
-    self.cinemaTableViewController.cinemas = userInfo[kUserInfoKeyCinemas];
-    [self.cinemaTableViewController.tableView reloadData];
-}
 
 #pragma mark - private methods
-- (void)dropViewDidBeginRefreshingMovies
-{
-    [[NetworkManager sharedInstance] movieListInCity:self.cityID];
-}
-
-- (void)dropViewDidBeginRefreshingCinemas
-{
-    [[NetworkManager sharedInstance] cinemaListInCity:self.cityID];
-}
 
 -(void)pushToCityListView {
     CityListViewController * cityListViewController = [[CityListViewController alloc]init];
@@ -155,34 +140,33 @@
 -(void)switchBetweenMovieAndCinema{
     if (self.segmentedControl.selectedSegmentIndex == 1) {
         self.movieTableViewController.tableView.hidden = YES;
-        self.cinemaTableViewController.tableView.hidden = NO;
-        [self.cinemaTableViewController.tableView reloadData];
+        self.cinemaListViewController.view.hidden = NO;
+        [self.cinemaListViewController.tableView reloadData];
     }else{
-        self.cinemaTableViewController.tableView.hidden = YES;
+        self.cinemaListViewController.view.hidden = YES;
         self.movieTableViewController.tableView.hidden = NO;
         [self.movieTableViewController.tableView reloadData];
     }
 }
 
--(void)startToLocate{
-    if([CLLocationManager locationServicesEnabled]) {
-        _locationManager = [[CLLocationManager alloc] init];
-        _locationManager.delegate = self;
-    }else {
-        //TODO:提示用户无法进行定位操作,未测试
-        UIAlertView * alert = [[UIAlertView alloc]initWithTitle:@"定位未开启" message:@"请前往系统设置开启定位" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil];
-        [alert show];
+#pragma mark -location
+-(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations{
+    CLLocation* oldLocation = self.cinemaListViewController.currentLocation;
+    self.cinemaListViewController.currentLocation = [locations lastObject];
+    if ([oldLocation distanceFromLocation:self.cinemaListViewController.currentLocation] > 1000) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:kLocationDidChangeNotification object:nil];
     }
+}
+
+- (void)locationManager:(CLLocationManager *)manager
+       didFailWithError:(NSError *)error {
     
-    if ([[[UIDevice currentDevice] systemVersion] doubleValue] > 8.0)
-    {
-        //设置定位权限 仅ios8有意义
-        [self.locationManager requestWhenInUseAuthorization];// 前台定位
-        
-        //  [locationManager requestAlwaysAuthorization];// 前后台同时定位
-    }
-    // 开始定位
-    [_locationManager startUpdatingLocation];
+    //    if (error.code == kCLErrorDenied) {
+    //        // 提示用户出错原因，可按住Option键点击 KCLErrorDenied的查看更多出错信息，可打印error.code值查找原因所在
+    //        UIAlertView * alert = [[UIAlertView alloc]initWithTitle:@"错误" message:@"定位失败" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil];
+    //        [alert show];
+    //        //TODO: 加入重试按钮
+    //    }
 }
 
 @end

@@ -201,12 +201,12 @@
 - (void)locationManager:(CLLocationManager *)manager
        didFailWithError:(NSError *)error {
     
-    if (error.code == kCLErrorDenied) {
-        // 提示用户出错原因，可按住Option键点击 KCLErrorDenied的查看更多出错信息，可打印error.code值查找原因所在
-        UIAlertView * alert = [[UIAlertView alloc]initWithTitle:@"错误" message:@"定位失败" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil];
-        [alert show];
-        //TODO: 加入重试按钮
-    }
+//    if (error.code == kCLErrorDenied) {
+//        // 提示用户出错原因，可按住Option键点击 KCLErrorDenied的查看更多出错信息，可打印error.code值查找原因所在
+//        UIAlertView * alert = [[UIAlertView alloc]initWithTitle:@"错误" message:@"定位失败" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil];
+//        [alert show];
+//        //TODO: 加入重试按钮
+//    }
 }
 
 #pragma mark - notification handler
@@ -249,9 +249,10 @@
         NSEnumerator* enumerator = [cityDict keyEnumerator];
         NSString* cityKey = nil;
         if ((cityKey = enumerator.nextObject) != nil) {
+            NSString* key = cityKey;
             if ([cityKey isEqualToString:@"hot"]) {
                 [self.keys addObject:@"热门"];
-                cityKey = @"热门";
+                key = @"热门";
             }else{
                 [self.keys addObject:cityKey];
             }
@@ -260,7 +261,7 @@
                 CityMeta* cityMeta =[[CityMeta alloc]initWithDict:city];
                 [cityArray addObject:cityMeta];
             }
-            [self.cities setValue:cityArray forKey:cityKey];
+            [self.cities setValue:cityArray forKey:key];
         }
     }
     [self getCityData];
@@ -277,18 +278,18 @@
             CLPlacemark *placemark = [placemarks objectAtIndex:0];
             NSString *cityStr = placemark.locality;
             cityStr = cityStr?cityStr:placemark.administrativeArea;
-            [self.cities setObject:[self formatCityName:cityStr] forKey:self.keys[0]];
+            [self.cities setObject:@[[self formatCityName:cityStr]] forKey:self.keys[0]];
             [self.tableView reloadData];
         }else if (error == nil &&[placemarks count] == 0){
-            NSLog(@"No results were returned.");
-            UIAlertView * alert = [[UIAlertView alloc]initWithTitle:@"错误" message:@"定位失败" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil];
-            [alert show];
-            //TODO: 加入重试按钮
+//            NSLog(@"No results were returned.");
+//            UIAlertView * alert = [[UIAlertView alloc]initWithTitle:@"错误" message:@"定位失败" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil];
+//            [alert show];
+//            //TODO: 加入重试按钮
         }else if (error != nil){
-            NSLog(@"An error occurred = %@", error);
-            UIAlertView * alert = [[UIAlertView alloc]initWithTitle:@"错误" message:@"定位失败" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil];
-            [alert show];
-            //TODO: 加入重试按钮
+//            NSLog(@"An error occurred = %@", error);
+//            UIAlertView * alert = [[UIAlertView alloc]initWithTitle:@"错误" message:@"定位失败" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil];
+//            [alert show];
+//            //TODO: 加入重试按钮
         }
     }];
 }
