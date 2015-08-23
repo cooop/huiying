@@ -14,13 +14,26 @@
 -(id)initWithDict:(NSDictionary *)dict{
     if (self = [super initWithDict:dict]) {
         _date = [Utils formatDate:[dict objectForKey:kJSONKeyMovieDate]];
-        _images = [[dict objectForKey:kJSONKeyMovieImages] componentsSeparatedByString:@","];
-        _videos= [[dict objectForKey:kJSONKeyMovieVideos] componentsSeparatedByString:@","];
+        if ([dict objectForKey:kJSONKeyMovieImages] != [NSNull null]) {
+            _images = [[dict objectForKey:kJSONKeyMovieImages] componentsSeparatedByString:@","];
+        }
+        if ([dict objectForKey:kJSONKeyMovieVideos] != [NSNull null]) {
+            _videos= [[dict objectForKey:kJSONKeyMovieVideos] componentsSeparatedByString:@","];
+        }
         _type = [dict objectForKey:kJSONKeyMovieType];
         _nation = [dict objectForKey:kJSONKeyMovieNation];
         _language = [dict objectForKey:kJSONKeyMovieLanguage];
         _duration = [[dict objectForKey:kJSONKeyMovieDuration]intValue];
         _movieDescription = [dict objectForKey:kJSONKeyMovieDescription];
+        _director = [dict objectForKey:kJSONKeyMovieDirector];
+//        NSMutableString* actorStr = [@"主演： " mutableCopy];
+//        if ([dict objectForKey:kJSONKeyMovieActors] != [NSNull null]) {
+//            NSArray* actors = [[dict objectForKey:kJSONKeyMovieActors] componentsSeparatedByString:@","];
+//            for(NSString* actor in actors){
+//                [actorStr appendFormat:@"%@ ", actor];
+//            }
+//        }
+        _actors = [dict objectForKey:kJSONKeyMovieActors];
     }
     return self;
 }

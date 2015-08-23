@@ -26,13 +26,13 @@
 }
 
 +(MovieVersion) translateMovieVersion:(NSString *) version{
-    if ([version isEqualToString:@"2D"]) {
+    if ([version isEqualToString:@"2d"]) {
         return kMovieVersion2D;
-    }else if([version isEqualToString:@"2DIMAX"]){
+    }else if([version isEqualToString:@"2dimax"]){
         return kMovieVersion2DIMAX;
-    }else if ([version isEqualToString:@"3D"]){
+    }else if ([version isEqualToString:@"3d"]){
         return kMovieVersion3D;
-    }else if ([version isEqualToString:@"3DIMAX"]){
+    }else if ([version isEqualToString:@"3dimax"]){
         return kMovieVersion3DIMAX;
     }else{
         return kMovieVersionUnknown;

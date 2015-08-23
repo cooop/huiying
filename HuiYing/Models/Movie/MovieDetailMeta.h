@@ -17,5 +17,7 @@
 @property (nonatomic,strong) NSString* movieDescription;
 @property (nonatomic,strong) NSArray* images;
 @property (nonatomic,strong) NSArray* videos;
+@property (nonatomic,strong) NSString* director;
+@property (nonatomic,strong) NSString* actors;
 -(id)initWithDict:(NSDictionary *)dict;
 @end

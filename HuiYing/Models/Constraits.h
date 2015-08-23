@@ -48,6 +48,8 @@
 #define kJSONKeyMovieDescription @"description"
 #define kJSONKeyMovieImages @"images"
 #define kJSONKeyMovieVideos @"videos"
+#define kJSONKeyMovieDirector @"director"
+#define kJSONKeyMovieActors @"actors"
 
 #define kJSONKeySessionID @"id"
 #define kJSONKeySessionVersion @"version"

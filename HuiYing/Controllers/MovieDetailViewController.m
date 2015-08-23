@@ -11,6 +11,7 @@
 #import "NetworkManager.h"
 #import "UIImage+ImageEffects.h"
 #import "UIImageView+AFNetworking.h"
+#import "URLManager.h"
 
 @interface MovieDetailViewController ()
 @property (nonatomic, strong) MovieDetailMeta * movieDetail;
@@ -41,7 +42,10 @@
 @property (nonatomic, strong) UILabel* imageTitleView;
 @property (nonatomic, strong) UIScrollView* myScrollView;
 
-@property (nonatomic, strong) UIImagePickerController * imagePicker;
+@property (nonatomic, strong) UIView* actorsView;
+@property (nonatomic, strong) UILabel* directorLabel;
+@property (nonatomic, strong) UILabel* actorsLabel;
+
 @property (nonatomic, strong) UIButton * buyButton;
 @end
 
@@ -86,6 +90,7 @@
     [self drawHeaderView];
     [self drawMovieDesciption];
     [self drawImages];
+    [self drawActors];
     _scrollView.contentSize = CGSizeMake(UI_SCREEN_WIDTH, CGRectGetHeight(_headerView.frame)+CGRectGetHeight(_descriptionView.frame)+ CGRectGetHeight(_imagesView.frame));
     
     
@@ -239,7 +244,8 @@
         self.fullDescription = YES;
     }
     _imagesView.frame = CGRectMake(0, CGRectGetMaxY(_descriptionView.frame), UI_SCREEN_WIDTH, 110);
-    _scrollView.contentSize = CGSizeMake(UI_SCREEN_WIDTH, CGRectGetHeight(_headerView.frame)+CGRectGetHeight(_descriptionView.frame)+CGRectGetHeight(_imagesView.frame));
+    _actorsView.frame = CGRectMake(0, CGRectGetMaxY(_imagesView.frame), UI_SCREEN_WIDTH, CGRectGetHeight(_actorsView.frame));
+    _scrollView.contentSize = CGSizeMake(UI_SCREEN_WIDTH, CGRectGetHeight(_headerView.frame)+CGRectGetHeight(_descriptionView.frame)+CGRectGetHeight(_imagesView.frame)+CGRectGetHeight(_actorsView.frame));
 }
 
 - (void)drawImages{
@@ -277,6 +283,36 @@
     
 }
 
+- (void)drawActors{
+    _actorsView = [[UIView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(self.imagesView.frame), UI_SCREEN_WIDTH, CGRectGetHeight(self.scrollView.frame) - CGRectGetMaxY(self.imagesView.frame))];
+    [self.scrollView addSubview:self.actorsView];
+    
+    UILabel* titleLabel = [[UILabel alloc]init];
+    titleLabel = [[UILabel alloc]init];
+    titleLabel.text = @"演职人员";
+    titleLabel.font = [UIFont systemFontOfSize:15];
+    titleLabel.textColor = UIColorFromRGB(0x333333);
+    CGSize size = [titleLabel.text sizeWithAttributes:@{NSFontAttributeName:titleLabel.font}];
+    titleLabel.frame = CGRectMake(10, 15, size.width, size.height);
+    [self.actorsView addSubview:titleLabel];
+    
+    _directorLabel = [[UILabel alloc]init];
+    _directorLabel.text = @"导演：";
+    _directorLabel.font = [UIFont systemFontOfSize:14];
+    _directorLabel.textColor = UIColorFromRGB(0x6E6E6E);
+    size = [_directorLabel.text sizeWithAttributes:@{NSFontAttributeName:_directorLabel.font}];
+    _directorLabel.frame = CGRectMake(10, CGRectGetMaxY(titleLabel.frame) + 15, size.width, size.height);
+    [self.actorsView addSubview:_directorLabel];
+    
+    _actorsLabel = [[UILabel alloc]init];
+    _actorsLabel.text = @"主演：";
+    _actorsLabel.font = [UIFont systemFontOfSize:14];
+    _actorsLabel.textColor = UIColorFromRGB(0x6E6E6E);
+    size = [_actorsLabel.text sizeWithAttributes:@{NSFontAttributeName:_actorsLabel.font}];
+    _actorsLabel.frame = CGRectMake(10, CGRectGetMaxY(_directorLabel.frame) + 10, size.width, size.height);
+    [self.actorsView addSubview:_actorsLabel];
+
+}
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
@@ -292,7 +328,7 @@
         _movieDetail = userInfo[kUserInfoKeyMovieDetail];
     }
     
-    NSURL * url = [NSURL URLWithString:self.movieDetail.coverImage];
+    NSURL * url = [NSURL URLWithString:[URLManager fullImageURL:self.movieDetail.coverImage]];
 
     __weak __typeof__(self) weakSelf = self;
     [_coverImageView setImageWithURLRequest:[[NSURLRequest alloc]initWithURL:url] placeholderImage:[UIImage imageNamed:@"defult_img1"]success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
@@ -366,11 +402,11 @@
                                  NSForegroundColorAttributeName:UIColorFromRGB(0x6E6E6E),
                                  NSParagraphStyleAttributeName:paragraphStyle
                                  };
-    //TODO:self.movieDetail.movieDescription
-    _movieDescriptionView.attributedText = [[NSAttributedString alloc] initWithString:@"生活在日本东京的野比大雄（大原惠美 配音），是一个学习不上进、日常迷迷糊糊并且饱受同学欺负的男孩。他的性格不仅左右着自己的事业和婚姻，还对未来子孙产生莫大的影响。为此，大雄孙子的孙子世修（松本さち 配音）带着猫型机器人哆啦A梦（水田山葵 配音）乘坐时光机突然来访，期望彻底改变大雄及整个家族的命运。在哆啦A梦的帮助下，大雄不再受到胖虎（木村昴 配音）和小夫（关智一 配音）等人的欺负，他喜欢美丽的女孩源静香（嘉数由美 配音）。为了实现和静香结婚的命运，他和哆啦A梦穿越时空，见证了决定人生的最关键的时刻和事件。当大雄慢慢开始变得幸福之际，哆啦A梦也到了必须返回22世纪的时候……" attributes:attributes];
+
+    _movieDescriptionView.attributedText = [[NSAttributedString alloc] initWithString:self.movieDetail.movieDescription attributes:attributes];
     
     for (int i = 0; i< self.imageViews.count; i++) {
-        NSURL * url = [NSURL URLWithString:self.movieDetail.images[i]];
+        NSURL * url = [NSURL URLWithString: [URLManager fullImageURL:self.movieDetail.images[i]]];
         [self.imageViews[i] setImageWithURLRequest:[[NSURLRequest alloc]initWithURL:url] placeholderImage:[UIImage imageNamed:@"defult_img2"]success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
             ((UIImageView*)weakSelf.imageViews[i]).image = image;
         } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
@@ -378,6 +414,31 @@
         }];
     }
     
+    _directorLabel.text = self.movieDetail.director;
+    size = [_directorLabel.text sizeWithAttributes:@{NSFontAttributeName:_directorLabel.font}];
+    _directorLabel.frame = CGRectMake(10, CGRectGetMinY(_directorLabel.frame), size.width, size.height);
+    [self.actorsView addSubview:_directorLabel];
+    
+    CGFloat lastMaxX = CGRectGetMaxX(self.actorsLabel.frame) - 12;
+    CGFloat lastMaxY = CGRectGetMaxY(self.directorLabel.frame);
+    for(NSString* actor in [self.movieDetail.actors componentsSeparatedByString:@","]){
+        UILabel* actorLabel = [[UILabel alloc]init];
+        actorLabel.text = actor;
+        actorLabel.font = [UIFont systemFontOfSize:14];
+        actorLabel.textColor = UIColorFromRGB(0x6E6E6E);
+        size = [actorLabel.text sizeWithAttributes:@{NSFontAttributeName:actorLabel.font}];
+        actorLabel.frame = CGRectMake(lastMaxX + 12, lastMaxY + 10, size.width, size.height);
+        lastMaxX = CGRectGetMaxX(actorLabel.frame);
+        if (lastMaxX > UI_SCREEN_WIDTH - 10) {
+            lastMaxY = CGRectGetMaxY(actorLabel.frame);
+            actorLabel.frame = CGRectMake(CGRectGetMaxX(self.actorsLabel.frame), lastMaxY + 10, size.width, size.height);
+            lastMaxX = CGRectGetMaxX(actorLabel.frame);
+        }
+        [self.actorsView addSubview:actorLabel];
+        
+        self.actorsView.frame  = CGRectMake(CGRectGetMinX(self.actorsView.frame), CGRectGetMinY(self.actorsView.frame), UI_SCREEN_WIDTH, CGRectGetMaxY(actorLabel.frame) + 5);
+        _scrollView.contentSize = CGSizeMake(UI_SCREEN_WIDTH, CGRectGetHeight(_headerView.frame)+CGRectGetHeight(_descriptionView.frame)+CGRectGetHeight(_imagesView.frame)+CGRectGetHeight(_actorsView.frame));
+    }
 }
 
 -(void)backToMovieListView{

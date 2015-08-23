@@ -232,6 +232,7 @@
     
     self.orderBg = [[UIView alloc]initWithFrame:CGRectMake(0, 36, UI_SCREEN_WIDTH, 0)];
     self.orderBg.backgroundColor = UIColorFromRGBA(0x808080 , .8);
+    [self.orderBg addGestureRecognizer:[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(orderPullDown)]];
     [self.view addSubview:self.orderBg];
     
     self.orderViewController.view.frame = CGRectMake(0, 36, UI_SCREEN_WIDTH, 170);
@@ -265,6 +266,7 @@
     
     self.districtBg = [[UIView alloc]initWithFrame:CGRectMake(0, 36, UI_SCREEN_WIDTH, 0)];
     self.districtBg.backgroundColor = UIColorFromRGBA(0x808080 , .8);
+    [self.districtBg addGestureRecognizer:[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(districtPullDown)]];
     [self.view addSubview:self.districtBg];
    
     self.districtViewController.view.frame = CGRectMake(0, 36, UI_SCREEN_WIDTH, 350);
