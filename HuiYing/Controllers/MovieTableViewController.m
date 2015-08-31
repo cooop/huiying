@@ -117,6 +117,7 @@
     buyButton.frame = CGRectMake(UI_SCREEN_WIDTH - 10 - buttonImage.size.width, 56, buttonImage.size.width, buttonImage.size.height);
     [buyButton setBackgroundImage:buttonImage forState:UIControlStateNormal];
     NSAttributedString* title = [[NSAttributedString alloc]initWithString:@"购票" attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:14],NSForegroundColorAttributeName:UIColorFromRGB(0xFE6F80)}];
+//    [buyButton addTarget:self action:@selector(buyButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     [buyButton setAttributedTitle:title forState:UIControlStateNormal];
     
     [cell addSubview:coverImageView];

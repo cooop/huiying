@@ -22,6 +22,7 @@
         _room = [dict objectForKey:kJSONKeySessionRoom];
         _cinemaID = cinemaID;
         _movieID = movieID;
+        _language = [dict objectForKey:kJSONKeySessionLanguage];
     }
     return self;
 }

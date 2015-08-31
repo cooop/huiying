@@ -58,6 +58,7 @@
 #define kJSONKeySessionMaxPrice @"price_max"
 #define kJSONKeySessionMinPrice @"price_min"
 #define kJSONKeySessionRoom @"room"
+#define kJSONKeySessionLanguage @"language"
 
 #define kJSONKeyTicketSource @"source"
 #define kJSONKeyTicketOriginalPrice @"yuanjia"

@@ -98,7 +98,7 @@ IMPLEMENT_SHARED_INSTANCE(NetworkManager);
 -(void)cinemaListInCity:(int64_t)cityID movie:(int64_t)movieID inDistrict:(int64_t)districtID page:(int64_t)page location:(CLLocation*)location orderBy:(CinemaOrderType)order{
     NSString* url = [NSString stringWithFormat:@"%@&page=%lld",[URLManager cinemaListInCity:cityID],page];
     if (movieID >= 0) {
-        url = [url stringByAppendingString:[NSString stringWithFormat:@"&movid_id=%lld",movieID]];
+        url = [url stringByAppendingString:[NSString stringWithFormat:@"&movie_id=%lld",movieID]];
     }
     if (districtID >= 0) {
         url = [url stringByAppendingString:[NSString stringWithFormat:@"&district_id=%lld",districtID]];
@@ -130,10 +130,10 @@ IMPLEMENT_SHARED_INSTANCE(NetworkManager);
           for (CinemaMeta* cinemaMeta in cinemaMetas) {
               NSLog(@"%@",cinemaMeta);
           }
-          NSDictionary * userInfo =@{kUserInfoKeyMethodLocation:@"cinemaListInCity",kUserInfoKeyCityID: @(cityID),kUserInfoKeyCinemas:cinemaMetas,kUserInfoKeyPage:@(page)};
+          NSDictionary * userInfo =@{kUserInfoKeyMethodLocation:@"cinemaListInCity",kUserInfoKeyCityID: @(cityID),kUserInfoKeyMovieID:@(movieID), kUserInfoKeyCinemas:cinemaMetas,kUserInfoKeyPage:@(page)};
           [[NSNotificationCenter defaultCenter] postNotificationName:kCinemaListInCitySuccessNotification object:self userInfo:userInfo];
       } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-          NSDictionary * userInfo  = @{kUserInfoKeyMethodLocation:@"cinemaListInCity",kUserInfoKeyCityID: @(cityID),kUserInfoKeyError:error.description};
+          NSDictionary * userInfo  = @{kUserInfoKeyMethodLocation:@"cinemaListInCity",kUserInfoKeyCityID: @(cityID),kUserInfoKeyMovieID:@(movieID),kUserInfoKeyError:error.description};
           [[NSNotificationCenter defaultCenter] postNotificationName:kCinemaListInCityFailedNotification object:self userInfo:userInfo];
       }];
 }

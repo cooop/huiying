@@ -69,6 +69,9 @@
     if (!self.cityID) {
         self.location = @"北京";
         self.cityID = 100005;
+        [ApplicationSettings sharedInstance].cityID = self.cityID;
+        [ApplicationSettings sharedInstance].cityName = self.location;
+        [[ApplicationSettings sharedInstance] saveSettings];
     }
     
     if (!_movieTableViewController || oldCityID != self.cityID) {
@@ -151,11 +154,10 @@
 
 #pragma mark -location
 -(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations{
-    CLLocation* oldLocation = self.cinemaListViewController.currentLocation;
-    self.cinemaListViewController.currentLocation = [locations lastObject];
-    if ([oldLocation distanceFromLocation:self.cinemaListViewController.currentLocation] > 1000) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:kLocationDidChangeNotification object:nil];
-    }
+    CLLocation* location = [locations lastObject];
+    NSMutableDictionary* userInfo = [NSMutableDictionary dictionary];
+    [userInfo setValue:location forKey:@"currentLocation"];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kLocationDidChangeNotification object:nil userInfo:userInfo];
 }
 
 - (void)locationManager:(CLLocationManager *)manager

@@ -31,6 +31,9 @@
                 [dateSessionsDic setValue:sessions forKey:date];
             }
         }
+        [dateArray sortUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+            return [(NSDate*)obj1 compare:(NSDate*)obj2];
+        }];
         _dates = dateArray;
         _dateSessionsDic = dateSessionsDic;
     }

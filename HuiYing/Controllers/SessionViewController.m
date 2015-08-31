@@ -16,6 +16,7 @@
 #import "SessionsMeta.h"
 #import "CinemaViewController.h"
 #import "TicketViewController.h"
+#import "URLManager.h"
 
 @interface SessionViewController ()
 @property (nonatomic, strong) CinemaMeta* cinema;
@@ -35,6 +36,7 @@
 @property (nonatomic, strong) UILabel* movieRate;
 @property (nonatomic, strong) UICollectionView * dateCollectionView;
 @property (nonatomic, strong) UITableView * sessionTableView;
+@property (nonatomic, strong) UIImageView * selectedDateBackground;
 @end
 
 @implementation SessionViewController
@@ -164,7 +166,6 @@
 
 -(void)drawImageCollectionView{
     UICollectionViewFlowLayout *flowLayout=[[UICollectionViewFlowLayout alloc] init];
-    flowLayout.itemSize=CGSizeMake(100,100);
     [flowLayout setScrollDirection:UICollectionViewScrollDirectionHorizontal];
     _imageCollectionView = [[UICollectionView alloc]initWithFrame:CGRectMake(0, 60, UI_SCREEN_WIDTH, 115) collectionViewLayout:flowLayout];
     _imageCollectionView.backgroundColor = UIColorFromRGB(0x646464);
@@ -175,13 +176,16 @@
 
 -(void)drawDateCollectionView{
     UICollectionViewFlowLayout *flowLayout=[[UICollectionViewFlowLayout alloc] init];
-    flowLayout.itemSize=CGSizeMake(100,100);
     [flowLayout setScrollDirection:UICollectionViewScrollDirectionHorizontal];
     _dateCollectionView = [[UICollectionView alloc]initWithFrame:CGRectMake(0, 221, UI_SCREEN_WIDTH, 46) collectionViewLayout:flowLayout];
     _dateCollectionView.backgroundColor = [UIColor whiteColor];
     _dateCollectionView.dataSource=self;
     _dateCollectionView.delegate=self;
     [_dateCollectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"SessionDateCollectionViewIdentifier"];
+    CGFloat lineHeight = 1.0f/[UIScreen mainScreen].scale;
+    UIView* line = [[UIView alloc]initWithFrame:CGRectMake(0, 46 - lineHeight, UI_SCREEN_WIDTH, lineHeight)];
+    line.backgroundColor = UIColorFromRGB(0xDCDCDC);
+    [_dateCollectionView addSubview:line];
 }
 
 -(void)drawSessionTableView{
@@ -206,6 +210,12 @@
     _movieRate.font = [UIFont fontWithName:@"HelveticaNeue-Italic" size:18];
     _movieRate.textColor = UIColorFromRGB(0xFF7833);
     [_movieView addSubview:_movieRate];
+    
+    CGFloat lineHeight = 1.0f/[UIScreen mainScreen].scale;
+    UIView* line = [[UIView alloc]initWithFrame:CGRectMake(0, 46 - lineHeight, UI_SCREEN_WIDTH, lineHeight)];
+    line.backgroundColor = UIColorFromRGB(0xDCDCDC);
+    [_movieView addSubview:line];
+    
 }
 
 -(void)refreshMoviewView{
@@ -260,7 +270,11 @@
         }
         UIImageView* imageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 65, 85)];
         MovieMeta * movie = self.movies[indexPath.row];
-        NSURL * url = [NSURL URLWithString:movie.coverImage];
+        if (movie.movieID == self.selectedMovie.movieID) {
+            imageView.layer.borderColor = [UIColor whiteColor].CGColor;
+            imageView.layer.borderWidth = 2;
+        }
+        NSURL * url = [NSURL URLWithString:[URLManager fullImageURL:movie.coverImage]];
         __weak UIImageView* weakImageView = imageView;
         [imageView setImageWithURLRequest:[[NSURLRequest alloc]initWithURL:url] placeholderImage:[UIImage imageNamed:@"defult_img1"]success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
             weakImageView.image = image;
@@ -271,22 +285,30 @@
         return cell;
     }else{
         UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"SessionDateCollectionViewIdentifier" forIndexPath:indexPath];
-        UILabel* dateLabel = [[UILabel alloc]init];
         if (!cell) {
             cell = [[UICollectionViewCell alloc]init];
         }else{
-            UIView* subview = [cell viewWithTag:1];
-            [subview removeFromSuperview];
+            [[cell viewWithTag:1] removeFromSuperview];
+            [[cell viewWithTag:2] removeFromSuperview];
         }
         
+        UILabel* dateLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 83, 46)];
+
         NSDate* date = self.dates[indexPath.row];
         dateLabel.text = [self stringOfDate:date];
         dateLabel.textAlignment = NSTextAlignmentCenter;
         dateLabel.font = [UIFont systemFontOfSize:13];
-        dateLabel.textColor = UIColorFromRGB(0x6E6E6E);
-        CGSize size = [dateLabel.text sizeWithAttributes:@{NSFontAttributeName:dateLabel.font}];
-        dateLabel.frame = CGRectMake(0, 0, size.width, 46);
+        UIImageView* selectedDateBackground = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"museum_date_select"]];
+        selectedDateBackground.frame = CGRectMake(0, 7, 83, 31);
+        if ([date isEqual:self.selectedDate]) {
+            [cell addSubview:selectedDateBackground];
+            [cell sendSubviewToBack:selectedDateBackground];
+            dateLabel.textColor = [UIColor whiteColor];
+        }else{
+            dateLabel.textColor = UIColorFromRGB(0x6E6E6E);
+        }
         dateLabel.tag = 1;
+        selectedDateBackground.tag = 2;
         [cell addSubview:dateLabel];
         return cell;
     }
@@ -297,8 +319,33 @@
     [formatter setDateFormat:@"MM-dd"];
     [formatter setTimeZone:[NSTimeZone systemTimeZone]];
     NSString* dateStr = [formatter stringFromDate:date];
+    
+    NSString* today = [formatter stringFromDate:[NSDate date]];
+    NSString* tomorrow = [formatter stringFromDate:[NSDate dateWithTimeIntervalSinceNow:60*60*24]];
+    NSString* dayAfterTomorrow = [formatter stringFromDate:[NSDate dateWithTimeIntervalSinceNow:60*60*24*2]];
+
+    if ([dateStr isEqualToString:today]) {
+        dateStr = [NSString stringWithFormat:@"今天%@",dateStr];
+    }else if ([dateStr isEqualToString:tomorrow]){
+        dateStr = [NSString stringWithFormat:@"明天%@",dateStr];
+    }else if ([dateStr isEqualToString:dayAfterTomorrow]){
+        dateStr = [NSString stringWithFormat:@"后天%@",dateStr];
+    }else{
+        dateStr = [NSString stringWithFormat:@"%@%@",[self weekdayStringFromDate:date],dateStr];
+    }
     return dateStr;
 }
+
+- (NSString*)weekdayStringFromDate:(NSDate*)inputDate {
+    NSArray *weekdays = [NSArray arrayWithObjects: [NSNull null], @"周日", @"周一", @"周二", @"周三", @"周四", @"周五", @"周六", nil];
+    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    NSTimeZone *timeZone = [NSTimeZone systemTimeZone];
+    [calendar setTimeZone: timeZone];
+    NSCalendarUnit calendarUnit = NSWeekdayCalendarUnit;
+    NSDateComponents *theComponents = [calendar components:calendarUnit fromDate:inputDate];
+    return [weekdays objectAtIndex:theComponents.weekday];
+}
+
 
 
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
@@ -314,11 +361,7 @@
     if ([collectionView isEqual:self.imageCollectionView]) {
         return CGSizeMake(65, 85);
     }else{
-        UILabel* dateLabel = [[UILabel alloc]init];
-        NSDate* date = self.dates[indexPath.row];
-        dateLabel.text = [self stringOfDate:date];
-        dateLabel.font = [UIFont systemFontOfSize:13];
-        return [dateLabel.text sizeWithAttributes:@{NSFontAttributeName:dateLabel.font}];
+        return CGSizeMake(83, 46);
     }
 }
 
@@ -326,7 +369,7 @@
     if ([collectionView isEqual:self.imageCollectionView]) {
         return UIEdgeInsetsMake(15, 5, 15, 5);
     }else{
-        return UIEdgeInsetsMake(0, 20, 0, 20);
+        return UIEdgeInsetsMake(0, 10, 0, 0);
     }
 }
 
@@ -334,8 +377,10 @@
     if ([collectionView isEqual:self.imageCollectionView]) {
         self.selectedMovie = self.movies[indexPath.row];
         [self refreshMoviewView];
+        [self.imageCollectionView reloadData];
     }else{
         self.selectedDate = self.dates[indexPath.row];
+        [self.dateCollectionView reloadData];
         [self.sessionTableView reloadData];
     }
 }
@@ -364,7 +409,7 @@
     endTimeLabel.frame = CGRectMake(15, 44, size.width, size.height);
     
     UILabel* movieLabel = [[UILabel alloc]init];
-    movieLabel.text = [NSString stringWithFormat:@"%@", [self versionString:self.selectedMovie]];
+    movieLabel.text = [NSString stringWithFormat:@"%@/%@", [self versionString:session.version],session.language];
     movieLabel.font = [UIFont systemFontOfSize:13];
     movieLabel.textColor = UIColorFromRGB(0x6E6E6E);
     size = [movieLabel.text sizeWithAttributes:@{NSFontAttributeName:movieLabel.font}];
@@ -431,9 +476,9 @@
     return nil;
 }
 
--(NSString*)versionString:(MovieMeta*)movieMeta{
+-(NSString*)versionString:(MovieVersion)movieVersion{
     NSString* str = @"2D";
-    switch (movieMeta.version) {
+    switch (movieVersion) {
         case kMovieVersion2DIMAX:
             str = @"2D IMAX";
             break;

@@ -12,6 +12,8 @@
 #import "UIImage+ImageEffects.h"
 #import "UIImageView+AFNetworking.h"
 #import "URLManager.h"
+#import "CinemaListViewController.h"
+#import "ApplicationSettings.h"
 
 @interface MovieDetailViewController ()
 @property (nonatomic, strong) MovieDetailMeta * movieDetail;
@@ -78,6 +80,7 @@
     _buyButton = [[UIButton alloc]initWithFrame:CGRectMake(10, UI_SCREEN_HEIGHT-UI_NAVIGATION_BAR_HEIGHT-UI_STATUS_BAR_HEIGHT-50, UI_SCREEN_WIDTH-20, 40)];
     NSAttributedString * title = [[NSAttributedString alloc]initWithString:@"购票" attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:16],NSForegroundColorAttributeName:UIColorFromRGB(0xFFFFFF)}];
     [_buyButton setAttributedTitle:title forState:UIControlStateNormal];
+    [_buyButton addTarget:self action:@selector(buyButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     _buyButton.backgroundColor = UI_COLOR_PINK;
     _buyButton.layer.cornerRadius = 20;
     [self.view addSubview:_buyButton];
@@ -131,7 +134,7 @@
     
     UIImage* defaultImage = [UIImage imageNamed:@"defult_img1"];
     _coverImageView.image = defaultImage;
-    UIImage* blurDefautImage =[defaultImage applyBlurWithRadius:0.5f tintColor:[UIColor colorWithWhite:0.85f alpha:0.75f] saturationDeltaFactor:1.8 maskImage:nil];
+    UIImage* blurDefautImage =[defaultImage applyBlurWithRadius:0.5f tintColor:[UIColor colorWithWhite:0.85f alpha:0.75f] saturationDeltaFactor:1.8f maskImage:nil];
     _headerView.image = blurDefautImage;
     
     CALayer *imageLayer = _coverImageView.layer;
@@ -466,6 +469,11 @@
             break;
     }
     return image;
+}
+
+-(void)buyButtonPressed:(id)sender{
+    CinemaListViewController* clvc = [[CinemaListViewController alloc]initWithCityId:[[ApplicationSettings sharedInstance] cityID] movieId:self.movieID];
+    [self.navigationController pushViewController:clvc animated:YES];
 }
 
 @end

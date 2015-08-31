@@ -66,7 +66,13 @@
     _tableView.delegate = self;
     _tableView.dataSource = self;
     [self.view addSubview:_tableView];
+    
+    [[NetworkManager sharedInstance]cityVersion];
+}
 
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    
     // 判断定位操作是否被允许
     if([CLLocationManager locationServicesEnabled]) {
         _locationManager = [[CLLocationManager alloc] init];
@@ -86,13 +92,10 @@
     }
     // 开始定位
     [_locationManager startUpdatingLocation];
-    [[NetworkManager sharedInstance]cityVersion];
-}
-
--(void)viewWillAppear:(BOOL)animated{
-    [super viewWillAppear:animated];
+    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(versionGet:) name:kCityVersionSuccessNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(cityListSuccess:) name:kCityListSuccessNotification object:nil];
+    
 }
 
 -(void)viewWillDisappear:(BOOL)animated{
@@ -186,10 +189,13 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     CityMeta * city = self.cities[self.keys[indexPath.section]][indexPath.row];
-    [ApplicationSettings sharedInstance].cityID = city.cityID;
-    [ApplicationSettings sharedInstance].cityName = city.cityName;
-    [[ApplicationSettings sharedInstance] saveSettings];
-    [self.navigationController popToRootViewControllerAnimated:YES];
+    if (city.cityID >= 0) {
+        [ApplicationSettings sharedInstance].cityID = city.cityID;
+        [ApplicationSettings sharedInstance].cityName = city.cityName;
+        [[ApplicationSettings sharedInstance] saveSettings];
+        [self.navigationController popToRootViewControllerAnimated:YES];
+
+    }
 }
 
 #pragma mark -location
@@ -236,9 +242,7 @@
     if (![self.keys containsObject:local]) {
         [self.keys insertObject:local atIndex:0];
     }
-    CityMeta* cityMeta = [[CityMeta alloc] init];
-    cityMeta.cityName =@"正在定位...";
-    cityMeta.cityID = -100;
+    CityMeta* cityMeta = [self locatingCityMeta];
     [self.cities setValue:@[cityMeta] forKey:local];
 }
 
@@ -274,11 +278,11 @@
 -(void)getCity:(CLLocation*)location{
     CLGeocoder *geocoder = [[CLGeocoder alloc]init];
     [geocoder reverseGeocodeLocation:location completionHandler:^(NSArray *placemarks, NSError *error) {
-        if (error == nil &&[placemarks count] > 0){
+        if (error == nil && [placemarks count] > 0){
             CLPlacemark *placemark = [placemarks objectAtIndex:0];
             NSString *cityStr = placemark.locality;
             cityStr = cityStr?cityStr:placemark.administrativeArea;
-            [self.cities setObject:@[[self formatCityName:cityStr]] forKey:self.keys[0]];
+            [self.cities setValue:@[[self formatCityName:cityStr]] forKey:self.keys[0]];
             [self.tableView reloadData];
         }else if (error == nil &&[placemarks count] == 0){
 //            NSLog(@"No results were returned.");
@@ -295,6 +299,9 @@
 }
 
 -(CityMeta*)formatCityName:(NSString*)cityStr{
+    if (cityStr== nil) {
+        return [self locatingCityMeta];
+    }
     for(NSString* key in self.keys){
         for(CityMeta* city in self.cities[key]){
             if ([cityStr hasPrefix:city.cityName]) {
@@ -302,7 +309,14 @@
             }
         }
     }
-    return nil;
+    return [self locatingCityMeta];
+}
+
+-(CityMeta*)locatingCityMeta{
+    CityMeta* cityMeta = [[CityMeta alloc] init];
+    cityMeta.cityName =@"正在定位...";
+    cityMeta.cityID = -100;
+    return  cityMeta;
 }
 
 @end

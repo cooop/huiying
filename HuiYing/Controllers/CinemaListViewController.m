@@ -49,6 +49,11 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    if (self.movieId >= 0) {
+        [self drawNavigationBar];
+    }
+    
     self.view.backgroundColor = [UIColor whiteColor];
     self.tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
@@ -114,6 +119,30 @@
     [self.view addSubview:self.tableView];
 }
 
+- (void)drawNavigationBar{
+    //navi bar
+    self.navigationController.navigationBar.barTintColor = UI_COLOR_PINK;
+    UILabel *titleLabel = [[UILabel alloc]init];
+    titleLabel.font = [UIFont boldSystemFontOfSize:18];
+    titleLabel.text = @"影院列表";
+    titleLabel.textColor = UIColorFromRGB(0xFFFFFF);
+    
+    CGFloat titleWidth = [titleLabel.text sizeWithAttributes:@{NSFontAttributeName:titleLabel.font}].width;
+    CGFloat titleHeight = [titleLabel.text sizeWithAttributes:@{NSFontAttributeName:titleLabel.font}].height;
+    
+    titleLabel.frame = CGRectMake(0, 0, titleWidth, titleHeight);
+    self.navigationItem.titleView = titleLabel;
+    
+    
+    UIImage * image = [UIImage imageNamed:@"nav_back"];
+    UIImageView * view = [[UIImageView alloc]initWithImage:image];
+    view.frame = CGRectMake(10,UI_STATUS_BAR_HEIGHT+UI_NAVIGATION_BAR_HEIGHT/2-image.size.height/2, image.size.width, image.size.height);
+    [view addGestureRecognizer:[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(backToParentView)]];
+    
+    UIBarButtonItem *backBarButton = [[UIBarButtonItem alloc]initWithCustomView:view];
+    self.navigationItem.leftBarButtonItem = backBarButton;
+}
+
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(observeCinemaList:) name:kCinemaListInCitySuccessNotification object:nil];
@@ -168,6 +197,8 @@
     UILabel *comingLabel = [[UILabel alloc]init];
     NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
     formatter.dateFormat = @"HH:mm";
+    [formatter setTimeZone:[NSTimeZone systemTimeZone]];
+    
     if (self.movieId >= 0) {
         comingLabel.text = [NSString stringWithFormat:@"最近场次%@",[formatter stringFromDate:cinema.coming]];
     }else{
@@ -301,13 +332,23 @@
 
 -(void)locationDidChange:(NSNotification*)notification
 {
-    [[NetworkManager sharedInstance]cinemaListInCity:self.cityID movie:self.movieId inDistrict:(self.selectedDistrict?self.selectedDistrict.districtID:-1) page:1 location:self.currentLocation orderBy:self.selectedOrderType];
+    CLLocation* location = (CLLocation*)notification.userInfo[@"currentLocation"];
+    if (!self.currentLocation || [location distanceFromLocation:self.currentLocation] > 1000) {
+        self.currentLocation = location;
+        [[NetworkManager sharedInstance]cinemaListInCity:self.cityID movie:self.movieId inDistrict:(self.selectedDistrict?self.selectedDistrict.districtID:-1) page:1 location:self.currentLocation orderBy:self.selectedOrderType];
+    }
 }
 
 -(void)observeCinemaList:(NSNotification*)notification
 {
     NSDictionary* userInfo = [notification userInfo];
     int64_t page = [userInfo[kUserInfoKeyPage] longLongValue];
+    int64_t movieID = [userInfo[kUserInfoKeyMovieID] longLongValue];
+    
+    if (self.movieId != movieID) {
+        return;
+    }
+    
     if(page > self.cinemaPage){
         self.cinemaPage = page;
         NSMutableArray *cinemas = [NSMutableArray array];
@@ -413,6 +454,10 @@
         [networkManager cinemaListInCity:self.cityID movie:self.movieId inDistrict:-1 page:self.cinemaPage+1 location:self.currentLocation orderBy:self.selectedOrderType];
     }
     [self.tableView.footer endRefreshing];
+}
+
+-(void)backToParentView{
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 @end

@@ -8,6 +8,7 @@
 
 #import "CinemaMeta.h"
 #import "Constraits.h"
+#import "Utils.h"
 
 @implementation CinemaMeta
 
@@ -22,6 +23,7 @@
         _coming = [dict objectForKey:kJSONKeyCinemaComing];
         _distance = [[dict objectForKey:kJSONKeyCinemaDistance]floatValue];
         _movieNum = [[dict objectForKey:kJSONKeyCinemaMovieNum] intValue];
+        _coming = [Utils formatDate:[dict objectForKey:kJSONKeyCinemaComing]];
     }
     return self;
 }

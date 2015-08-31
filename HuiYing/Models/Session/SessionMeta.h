@@ -19,6 +19,7 @@
 @property (nonatomic,strong) NSString* room;
 @property (nonatomic) int64_t movieID;
 @property (nonatomic) int64_t cinemaID;
+@property (nonatomic) NSString *language;
 
 -(id) initWithDict:(NSDictionary*)dict ofMovie:(int64_t)movieID inCinema:(int64_t)cinemaID;
 

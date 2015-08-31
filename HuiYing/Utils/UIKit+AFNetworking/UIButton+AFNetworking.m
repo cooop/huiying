@@ -184,7 +184,7 @@ static const char * af_backgroundImageRequestOperationKeyForState(UIControlState
             [self setImage:placeholderImage forState:state];
         }
 
-        __weak __typeof(self)weakSelf = self;
+        __weak __typeof__(self)weakSelf = self;
         AFHTTPRequestOperation *imageRequestOperation = [[AFHTTPRequestOperation alloc] initWithRequest:urlRequest];
         imageRequestOperation.responseSerializer = self.imageResponseSerializer;
         [imageRequestOperation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -250,7 +250,7 @@ static const char * af_backgroundImageRequestOperationKeyForState(UIControlState
             [self setBackgroundImage:placeholderImage forState:state];
         }
 
-        __weak __typeof(self)weakSelf = self;
+        __weak __typeof__(self)weakSelf = self;
         AFHTTPRequestOperation *backgroundImageRequestOperation = [[AFHTTPRequestOperation alloc] initWithRequest:urlRequest];
         backgroundImageRequestOperation.responseSerializer = self.imageResponseSerializer;
         [backgroundImageRequestOperation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
