@@ -37,6 +37,7 @@
 @property (nonatomic, strong) UICollectionView * dateCollectionView;
 @property (nonatomic, strong) UITableView * sessionTableView;
 @property (nonatomic, strong) UIImageView * selectedDateBackground;
+@property (nonatomic, assign) int64_t selectedMovieId;
 @end
 
 @implementation SessionViewController
@@ -44,14 +45,15 @@
 - (id)initWithCinemaMeta:(CinemaMeta*)cinema{
     if (self = [super init]) {
         _cinema =  cinema;
+        _selectedMovieId = -1;
     }
     return self;
 }
 
-- (id)initWithCinemaMeta:(CinemaMeta*)cinema andMovieMeta:(MovieMeta*)movie{
+- (id)initWithCinemaMeta:(CinemaMeta*)cinema andMovieId:(int64_t)movieId{
     if (self = [super init]) {
         _cinema =  cinema;
-        _selectedMovie = movie;
+        _selectedMovieId = movieId;
     }
     return self;
 }
@@ -94,9 +96,23 @@
     self.movies = userInfo[kUserInfoKeyMovies];
     [self.imageCollectionView reloadData];
     if (!self.selectedMovie && self.movies.count >0) {
-        self.selectedMovie = self.movies[0];
+        if (self.selectedMovieId >= 0) {
+            self.selectedMovie = [self findSelectMovieByMovieId:self.selectedMovieId];
+        }
+        if (!self.selectedMovie) {
+            self.selectedMovie = self.movies[0];
+        }
         [self refreshMoviewView];
     }
+}
+
+-(MovieMeta*)findSelectMovieByMovieId:(int64_t)movieId{
+    for (MovieMeta* movie in self.movies) {
+        if (movie.movieID == movieId) {
+            return movie;
+        }
+    }
+    return nil;
 }
 
 -(void)sessionListSuccess:(NSNotification*)notification{
@@ -193,6 +209,7 @@
     _sessionTableView.dataSource = self;
     _sessionTableView.delegate = self;
     _sessionTableView.tableFooterView = [[UIView alloc]init];
+    _sessionTableView.separatorInset = UIEdgeInsetsMake(0, 15, 0, 15);
 }
 
 -(void)drawMovieView{

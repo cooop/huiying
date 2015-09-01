@@ -115,6 +115,17 @@
     [headerView addSubview:_districtView];
     [headerView addSubview:_orderView];
     
+    CGFloat lineHeight = 1.0f/[UIScreen mainScreen].scale;
+    UIView* line = [[UIView alloc]initWithFrame:CGRectMake(0, 36- lineHeight, UI_SCREEN_WIDTH, lineHeight)];
+    line.backgroundColor = UIColorFromRGB(0xDCDCDC);
+    
+    CGFloat lineWidth = 1.0f/[UIScreen mainScreen].scale;
+    UIView* line1 = [[UIView alloc]initWithFrame:CGRectMake(UI_SCREEN_WIDTH/2, 11, lineWidth, 14)];
+    line1.backgroundColor = UIColorFromRGB(0xDCDCDC);
+
+    [headerView addSubview:line];
+    [headerView addSubview:line1];
+    
     [self.view addSubview: headerView];
     [self.view addSubview:self.tableView];
 }
@@ -428,7 +439,12 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     CinemaMeta* cinema = self.cinemas[indexPath.row];
-    SessionViewController* svc = [[SessionViewController alloc]initWithCinemaMeta:cinema];
+    SessionViewController* svc = nil;
+    if (self.movieId >= 0) {
+        svc = [[SessionViewController alloc]initWithCinemaMeta:cinema andMovieId:self.movieId];
+    }else{
+        svc = [[SessionViewController alloc]initWithCinemaMeta:cinema];
+    }
     [self.navigationController pushViewController:svc animated:YES];
 }
 

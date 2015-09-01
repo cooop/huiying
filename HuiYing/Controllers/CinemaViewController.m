@@ -112,6 +112,12 @@
     [self.ratingView addSubview:self.star3];
     [self.ratingView addSubview:self.star4];
     [self.ratingView addSubview:self.star5];
+    
+    CGFloat lineHeight = 1.0f/[UIScreen mainScreen].scale;
+    UIView* line = [[UIView alloc]initWithFrame:CGRectMake(0, 45- lineHeight, UI_SCREEN_WIDTH-20, lineHeight)];
+    line.backgroundColor = UIColorFromRGB(0xDCDCDC);
+
+    [self.ratingView addSubview:line];
     [self.ratingView addSubview:self.ratingLabel];
 }
 
@@ -119,6 +125,7 @@
     _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 245, UI_SCREEN_WIDTH, UI_SCREEN_HEIGHT-UI_STATUS_BAR_HEIGHT-UI_NAVIGATION_BAR_HEIGHT-245)];
     _tableView.dataSource = self;
     _tableView.delegate = self;
+    _tableView.separatorInset = UIEdgeInsetsMake(0, 10, 0, 10);
     self.tableView.tableFooterView = [[UIView alloc]init];
     [self.view addSubview:self.tableView];
 }
@@ -200,11 +207,40 @@
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (indexPath.row <2) {
-        return 45;
+    return [self introductionHeight:indexPath];
+}
+
+-(CGFloat)introductionHeight:(NSIndexPath*)indexPath{
+    NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+    paragraphStyle.lineSpacing = 8;// 字体的行间距
+
+    NSDictionary *attributes = @{
+                                 NSFontAttributeName:[UIFont systemFontOfSize:15],
+                                 NSForegroundColorAttributeName:UIColorFromRGB(0x6E6E6E),
+                                 NSParagraphStyleAttributeName:paragraphStyle
+                                 };
+    
+    NSString* labelText = nil;
+    
+    if (indexPath.row == 0) {
+        labelText = self.cinema.address;
+    }else if(indexPath.row == 1){
+        labelText = self.cinema.phone;
     }else{
-        return UI_SCREEN_HEIGHT - UI_NAVIGATION_BAR_HEIGHT- UI_STATUS_BAR_HEIGHT -290;
+        labelText = self.cinema.service;
     }
+    
+    if (labelText == nil) {
+        labelText = @"";
+    }
+    
+    NSAttributedString* attributedText = [[NSAttributedString alloc] initWithString:labelText attributes:attributes];
+    CGRect textRect = [attributedText boundingRectWithSize:CGSizeMake(UI_SCREEN_WIDTH - 55, 1000) options:NSStringDrawingUsesLineFragmentOrigin context:nil];
+    CGFloat introductionHeight = 30 + textRect.size.height;
+    if (introductionHeight < 45) {
+        introductionHeight = 45;
+    }
+    return introductionHeight;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -217,24 +253,41 @@
 
     UIImageView *imageView = [[UIImageView alloc]init];
     UILabel* label = [[UILabel alloc]init];
-    label.textColor = UIColorFromRGB(0x6E6E6E);
-    label.font = [UIFont systemFontOfSize:15];
-    label.textAlignment = NSTextAlignmentLeft;
+    
+    NSString* labelText = nil;
     if (indexPath.row == 0) {
         imageView.image = [UIImage imageNamed:@"intro_museum_ico_place"];
-        label.text = self.cinema.address;
+        labelText = self.cinema.address;
     }else if(indexPath.row == 1){
         imageView.image = [UIImage imageNamed:@"intro_museum_ico_phone"];
-        label.text = self.cinema.phone;
+        labelText = self.cinema.phone;
     }else{
         imageView.image = [UIImage imageNamed:@"intro_museum_ico_park"];
-        label.text = self.cinema.service;
+        labelText = self.cinema.service;
     }
+    
+    if (labelText == nil) {
+        labelText = @"";
+    }
+    
+    label.numberOfLines = 0;
+    label.textAlignment = NSTextAlignmentLeft;
+    
+    NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+    paragraphStyle.lineSpacing = 8;// 字体的行间距
+    NSDictionary *attributes = @{
+                                 NSFontAttributeName:[UIFont systemFontOfSize:15],
+                                 NSForegroundColorAttributeName:UIColorFromRGB(0x6E6E6E),
+                                 NSParagraphStyleAttributeName:paragraphStyle
+                                 };
+    
+    label.attributedText = [[NSAttributedString alloc] initWithString:labelText attributes:attributes];
+    
     imageView.frame = CGRectMake(14, (45-imageView.image.size.height)/2, imageView.image.size.width, imageView.image.size.height);
-    CGSize size = [label.text sizeWithAttributes:@{NSFontAttributeName:label.font}];
-    label.frame = CGRectMake(CGRectGetMaxX(imageView.frame)+10, (45- size.height)/2, size.width, size.height);
+    label.frame = CGRectMake(CGRectGetMaxX(imageView.frame)+10, 14, UI_SCREEN_WIDTH - 55, [self introductionHeight:indexPath]-28);
     [cell addSubview:imageView];
     [cell addSubview:label];
+    
     return cell;
 }
 

@@ -7,11 +7,14 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
 @interface Utils : NSObject
 
 +(NSDate*)formatDate:(NSString*)date;
 +(NSDate*)formatDate:(NSString*)dateString format:(NSString*)format;
 +(NSString*)formatDateToString:(NSDate*)date format:(NSString*)format;
++(UIImage *)image:(UIImage *)image rotation:(UIImageOrientation)orientation;
++(UIImage*)defaultBlurImage:(UIImage*)image;
 
 @end

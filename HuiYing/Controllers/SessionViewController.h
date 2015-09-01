@@ -14,6 +14,5 @@
 
 - (id)initWithCinemaMeta:(CinemaMeta*)cinema;
 
-- (id)initWithCinemaMeta:(CinemaMeta*)cinema andMovieMeta:(MovieMeta*)movie;
-
+- (id)initWithCinemaMeta:(CinemaMeta*)cinema andMovieId:(int64_t)movieId;
 @end

@@ -14,6 +14,7 @@
 #import "URLManager.h"
 #import "CinemaListViewController.h"
 #import "ApplicationSettings.h"
+#import "Utils.h"
 
 @interface MovieDetailViewController ()
 @property (nonatomic, strong) MovieDetailMeta * movieDetail;
@@ -49,6 +50,8 @@
 @property (nonatomic, strong) UILabel* actorsLabel;
 
 @property (nonatomic, strong) UIButton * buyButton;
+@property (nonatomic, strong) UIView* line;
+
 @end
 
 @implementation MovieDetailViewController
@@ -84,6 +87,11 @@
     _buyButton.backgroundColor = UI_COLOR_PINK;
     _buyButton.layer.cornerRadius = 20;
     [self.view addSubview:_buyButton];
+    
+    CGFloat lineHeight = 1.0f/[UIScreen mainScreen].scale;
+    UIView* line = [[UIView alloc]initWithFrame:CGRectMake(0, UI_SCREEN_HEIGHT-UI_NAVIGATION_BAR_HEIGHT-UI_STATUS_BAR_HEIGHT-60 - lineHeight, UI_SCREEN_WIDTH, lineHeight)];
+    line.backgroundColor = UIColorFromRGB(0xDCDCDC);
+    [self.view addSubview:line];
     
     _scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0,0,UI_SCREEN_WIDTH, UI_SCREEN_HEIGHT-UI_NAVIGATION_BAR_HEIGHT-UI_STATUS_BAR_HEIGHT-60)];
     
@@ -134,7 +142,7 @@
     
     UIImage* defaultImage = [UIImage imageNamed:@"defult_img1"];
     _coverImageView.image = defaultImage;
-    UIImage* blurDefautImage =[defaultImage applyBlurWithRadius:0.5f tintColor:[UIColor colorWithWhite:0.85f alpha:0.75f] saturationDeltaFactor:1.8f maskImage:nil];
+    UIImage* blurDefautImage =[Utils defaultBlurImage:defaultImage];
     _headerView.image = blurDefautImage;
     
     CALayer *imageLayer = _coverImageView.layer;
@@ -219,8 +227,11 @@
     _movieDescriptionView.editable = NO;
     [_descriptionView addSubview:_movieDescriptionView];
     
-    _descriptionView.layer.borderColor = UIColorFromRGB(0xDCDCDC).CGColor;
-    _descriptionView.layer.borderWidth = 1;
+    CGFloat lineHeight = 1.0f/[UIScreen mainScreen].scale;
+    UIView* line = [[UIView alloc]initWithFrame:CGRectMake(0, 160 - lineHeight, UI_SCREEN_WIDTH, lineHeight)];
+    line.backgroundColor = UIColorFromRGB(0xDCDCDC);
+    [_descriptionView addSubview:line];
+    self.line = line;
     
     [self.scrollView addSubview:_descriptionView];
 }
@@ -230,6 +241,7 @@
     UIImage * downArrowImage = [UIImage imageNamed:@"intro_movie_arrow"];
     
     if ([self isFullDescription]) {
+        [_moreButton setImage:downArrowImage forState:UIControlStateNormal];
         _descriptionView.frame = CGRectMake(0, 132, UI_SCREEN_WIDTH, 160);
         _moreButton.frame = CGRectMake((UI_SCREEN_WIDTH - downArrowImage.size.width)/2, 150 -downArrowImage.size.height, downArrowImage.size.width, downArrowImage.size.height);
         _movieDescriptionView.frame = CGRectMake(10, CGRectGetMaxY(_tipLabel.frame)+5, UI_SCREEN_WIDTH -20, 130 - size.height - downArrowImage.size.height);
@@ -237,7 +249,7 @@
         self.fullDescription = NO;
     }else{
         CGSize deSize = [_movieDescriptionView sizeThatFits:CGSizeMake(_movieDescriptionView.frame.size.width,CGFLOAT_MAX)];
-        
+        [_moreButton setImage:[Utils image:downArrowImage rotation:UIImageOrientationDown] forState:UIControlStateNormal];
         if (deSize.height > 130 - size.height - downArrowImage.size.height) {
             CGFloat height = 30+size.height+downArrowImage.size.height+ deSize.height;
             _descriptionView.frame = CGRectMake(0, 132, UI_SCREEN_WIDTH,height);
@@ -246,6 +258,10 @@
         }
         self.fullDescription = YES;
     }
+    
+    CGFloat lineHeight = 1.0f/[UIScreen mainScreen].scale;
+    self.line.frame = CGRectMake(0, CGRectGetHeight(_descriptionView.frame) - lineHeight, UI_SCREEN_WIDTH, lineHeight);
+    
     _imagesView.frame = CGRectMake(0, CGRectGetMaxY(_descriptionView.frame), UI_SCREEN_WIDTH, 110);
     _actorsView.frame = CGRectMake(0, CGRectGetMaxY(_imagesView.frame), UI_SCREEN_WIDTH, CGRectGetHeight(_actorsView.frame));
     _scrollView.contentSize = CGSizeMake(UI_SCREEN_WIDTH, CGRectGetHeight(_headerView.frame)+CGRectGetHeight(_descriptionView.frame)+CGRectGetHeight(_imagesView.frame)+CGRectGetHeight(_actorsView.frame));
@@ -275,8 +291,10 @@
         [_imagesView addSubview:imageView];
     }
     
-    _descriptionView.layer.borderColor = UIColorFromRGB(0xDCDCDC).CGColor;
-    _descriptionView.layer.borderWidth = 1;
+    CGFloat lineHeight = 1.0f/[UIScreen mainScreen].scale;
+    UIView* line = [[UIView alloc]initWithFrame:CGRectMake(0, 110 - lineHeight, UI_SCREEN_WIDTH, lineHeight)];
+    line.backgroundColor = UIColorFromRGB(0xDCDCDC);
+    [_imagesView addSubview:line];
     
     [self.scrollView addSubview:_imagesView];
 }
@@ -336,10 +354,10 @@
     __weak __typeof__(self) weakSelf = self;
     [_coverImageView setImageWithURLRequest:[[NSURLRequest alloc]initWithURL:url] placeholderImage:[UIImage imageNamed:@"defult_img1"]success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
         weakSelf.coverImageView.image = image;
-        weakSelf.headerView.image = [image applyBlurWithRadius:0.5f tintColor:[UIColor colorWithWhite:0.85f alpha:0.75f] saturationDeltaFactor:1.8 maskImage:nil];
+        weakSelf.headerView.image =[Utils defaultBlurImage:image];
     } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
         weakSelf.coverImageView.image = [UIImage imageNamed:@"defult_img1"];
-        weakSelf.headerView.image = [[UIImage imageNamed:@"defult_img1"]applyBlurWithRadius:0.5f tintColor:[UIColor colorWithWhite:0.85f alpha:0.75f] saturationDeltaFactor:1.8 maskImage:nil];
+        weakSelf.headerView.image = [Utils defaultBlurImage:[UIImage imageNamed:@"defult_img1"]];
     }];
     
     _titleLabel.text = self.movieDetail.chineseName;
