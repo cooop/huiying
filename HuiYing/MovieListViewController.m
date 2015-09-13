@@ -13,6 +13,8 @@
 #import "MovieTableViewController.h"
 #import "CinemaListViewController.h"
 #import "MJRefresh.h"
+#import "CityMeta.h"
+#import "LocationManager.h"
 
 @interface MovieListViewController ()
 
@@ -25,6 +27,12 @@
 @property (nonatomic, strong) NSString * location;
 @property (strong, nonatomic) IBOutlet UISegmentedControl *segmentedControl;
 
+//for locating
+@property (nonatomic, assign) NSInteger timestamp;
+@property (nonatomic, strong) NSArray* cityList;
+@property (nonatomic, strong) NSMutableDictionary *cities;
+@property (nonatomic, strong) NSMutableArray *keys; //城市首字母
+
 @end
 
 @implementation MovieListViewController
@@ -33,31 +41,21 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.cityID = [[ApplicationSettings sharedInstance]cityID];
-    self.location = [[ApplicationSettings sharedInstance]cityName];
+    _timestamp = [[ApplicationSettings sharedInstance] timestamp];
+    _cityList = [[ApplicationSettings sharedInstance] cityList];
+    [self parseCityList:self.cityList];
+    
+    _cityID = [[ApplicationSettings sharedInstance]cityID];
+    _location = [[ApplicationSettings sharedInstance]cityName];
     if (!self.cityID) {
         self.location = @"北京";
         self.cityID  = 100005;
     }
     
-    if([CLLocationManager locationServicesEnabled]) {
-        _locationManager = [[CLLocationManager alloc] init];
-        _locationManager.delegate = self;
-    }else {
-        //TODO:提示用户无法进行定位操作,未测试
-        UIAlertView * alert = [[UIAlertView alloc]initWithTitle:@"定位未开启" message:@"请前往系统设置开启定位" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil];
-        [alert show];
-    }
+    [[LocationManager sharedInstance] startLocate];
     
-    if ([[[UIDevice currentDevice] systemVersion] doubleValue] > 8.0)
-    {
-        //设置定位权限 仅ios8有意义
-        [self.locationManager requestWhenInUseAuthorization];// 前台定位
-        
-        //  [locationManager requestAlwaysAuthorization];// 前后台同时定位
-    }
-    // 开始定位
-    [_locationManager startUpdatingLocation];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(versionGet:) name:kCityVersionSuccessNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(cityListSuccess:) name:kCityListSuccessNotification object:nil];
 }
 
 -(void)viewWillAppear:(BOOL)animated{
@@ -82,7 +80,7 @@
     
     if (!_cinemaListViewController || oldCityID != self.cityID) {
         _cinemaListViewController = [[CinemaListViewController alloc]initWithCityId:self.cityID];
-        [self addChildViewController:_cinemaListViewController ];
+        [self addChildViewController:_cinemaListViewController];
     }
     [self.view addSubview:self.cinemaListViewController.view];
     
@@ -90,7 +88,6 @@
     
     [_segmentedControl addTarget:self action:@selector(switchBetweenMovieAndCinema) forControlEvents:UIControlEventValueChanged];
 
-    
     self.navigationController.navigationBar.barTintColor = UI_COLOR_PINK;
     self.navigationController.navigationBar.translucent = NO;
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
@@ -119,7 +116,6 @@
     self.navigationItem.leftBarButtonItem = locationBarButton;
     
     self.edgesForExtendedLayout= UIRectEdgeNone;
-    
 }
 
 - (void)viewWillDisappear:(BOOL)animated{
@@ -127,11 +123,11 @@
     [self.cinemaListViewController.view removeFromSuperview];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+-(void)dealloc{
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kCityVersionSuccessNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kCityListSuccessNotification object:nil];
+    [[LocationManager sharedInstance] endLocate];
 }
-
 
 #pragma mark - private methods
 
@@ -152,23 +148,78 @@
     }
 }
 
-#pragma mark -location
--(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations{
-    CLLocation* location = [locations lastObject];
-    NSMutableDictionary* userInfo = [NSMutableDictionary dictionary];
-    [userInfo setValue:location forKey:@"currentLocation"];
-    [[NSNotificationCenter defaultCenter] postNotificationName:kLocationDidChangeNotification object:nil userInfo:userInfo];
+-(void)getCityData
+{
+    NSString *local = @"定位";
+    if (![self.keys containsObject:local]) {
+        [self.keys insertObject:local atIndex:0];
+    }
+    CityMeta* cityMeta = [self locatingCityMeta];
+    [self.cities setValue:@[cityMeta] forKey:local];
 }
 
-- (void)locationManager:(CLLocationManager *)manager
-       didFailWithError:(NSError *)error {
+-(void)parseCityList:(NSArray*)cityList{
     
-    //    if (error.code == kCLErrorDenied) {
-    //        // 提示用户出错原因，可按住Option键点击 KCLErrorDenied的查看更多出错信息，可打印error.code值查找原因所在
-    //        UIAlertView * alert = [[UIAlertView alloc]initWithTitle:@"错误" message:@"定位失败" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil];
-    //        [alert show];
-    //        //TODO: 加入重试按钮
-    //    }
+    for(NSDictionary* cityDict in cityList){
+        NSEnumerator* enumerator = [cityDict keyEnumerator];
+        NSString* cityKey = nil;
+        if ((cityKey = enumerator.nextObject) != nil) {
+            NSString* key = cityKey;
+            if ([cityKey isEqualToString:@"hot"]) {
+                [self.keys addObject:@"热门"];
+                key = @"热门";
+            }else{
+                [self.keys addObject:cityKey];
+            }
+            NSMutableArray * cityArray = [NSMutableArray array];
+            for(NSDictionary* city in cityDict[cityKey]){
+                CityMeta* cityMeta =[[CityMeta alloc]initWithDict:city];
+                [cityArray addObject:cityMeta];
+            }
+            [self.cities setValue:cityArray forKey:key];
+        }
+    }
+    [self getCityData];
+}
+
+-(CityMeta*)formatCityName:(NSString*)cityStr{
+    if (cityStr== nil) {
+        return [self locatingCityMeta];
+    }
+    for(NSString* key in self.keys){
+        for(CityMeta* city in self.cities[key]){
+            if ([cityStr hasPrefix:city.cityName]) {
+                return city;
+            }
+        }
+    }
+    return [self locatingCityMeta];
+}
+
+-(CityMeta*)locatingCityMeta{
+    CityMeta* cityMeta = [[CityMeta alloc] init];
+    cityMeta.cityName =@"正在定位...";
+    cityMeta.cityID = -100;
+    return  cityMeta;
+}
+
+#pragma mark - notification
+-(void)versionGet:(NSNotification*)notification{
+    NSDictionary * userInfo = [notification userInfo];
+    NSInteger timestamp = [userInfo[kUserInfoKeyCityVersion] integerValue];
+    if (timestamp > self.timestamp) {
+        [ApplicationSettings sharedInstance].timestamp = timestamp;
+        [[ApplicationSettings sharedInstance] saveSettings];
+        [[NetworkManager sharedInstance] cityList];
+    }
+}
+
+-(void)cityListSuccess:(NSNotification*)notification{
+    NSDictionary * userInfo = [notification userInfo];
+    [self parseCityList:userInfo[kUserInfoKeyCities]];
+    self.cityList = userInfo[kUserInfoKeyCities];
+    [ApplicationSettings sharedInstance].cityList = self.cityList;
+    [[ApplicationSettings sharedInstance] saveSettings];
 }
 
 @end

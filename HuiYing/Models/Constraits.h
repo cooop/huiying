@@ -116,7 +116,8 @@
 #define kTicketListSuccessNotification @"kTicketListSuccessNotification"
 #define kTicketListFailedNotification @"kTicketListFailedNotification"
 #define kCinemaOrderTypeChangeNotification @"kCinemaOrderTypeChangeNotification"
-#define kLocationDidChangeNotification @"kLocationDidChangeNotification"
+#define kLocateSuccessNotification @"kLocateSuccessNotification"
+#define kLocateFailedNotification @"kLocateFailedNotification"
 
 #pragma mark - Utils
 

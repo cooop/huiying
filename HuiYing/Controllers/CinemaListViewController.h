@@ -20,6 +20,9 @@
 @property (nonatomic, assign) CinemaOrderType selectedOrderType;
 @property (nonatomic, strong) CLLocation *currentLocation;
 @property (nonatomic, assign) int64_t movieId;
+@property (nonatomic, assign) int64_t oldCityID;
+@property (nonatomic,strong) NSArray* districts;
+
 -(instancetype)initWithCityId:(int64_t)cityId;
 -(instancetype)initWithCityId:(int64_t)cityId movieId:(int64_t)movieId;
 @end

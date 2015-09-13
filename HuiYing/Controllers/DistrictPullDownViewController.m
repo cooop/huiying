@@ -18,9 +18,10 @@
 
 @implementation DistrictPullDownViewController
 
--(instancetype)initWithCityID:(int64_t)cityId{
+-(instancetype)initWithCityID:(int64_t)cityId oldCityID:(int64_t)oldCityID{
     if(self = [super init]){
         _cityId = cityId;
+        _oldCityId = oldCityID;
     }
     return self;
 }
@@ -35,7 +36,12 @@
     self.tableView.dataSource = self;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(districtListInCitySuccess:) name:kDistrictListInCitySuccessNotification object:nil];
-    [[NetworkManager sharedInstance] districtListInCity:self.cityId];
+    if (self.oldCityId == self.cityId && self.districts && [self.districts count]) {
+        [self findSelectedIndex];
+        [self.tableView reloadData];
+    }else{
+        [[NetworkManager sharedInstance] districtListInCity:self.cityId];
+    }
 }
 
 - (void)districtListInCitySuccess:(NSNotification*)notification{
@@ -44,13 +50,19 @@
     if (self.cityId == cityId) {
         self.districts = userInfo[kUserInfoKeyDistricts];
     }
+    
+    [self findSelectedIndex];
+   
+    [self.tableView reloadData];
+}
+
+-(void)findSelectedIndex{
     for (DistrictMeta* district in  self.districts){
         if (self.selectedDistrict.districtID == district.districtID) {
             self.selectedIndex = [self.districts indexOfObject:district] + 1;
             break;
         }
     }
-    [self.tableView reloadData];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -112,6 +124,10 @@
     if([self.parentViewController isKindOfClass:[CinemaListViewController class]]){
         ((CinemaListViewController*)self.parentViewController).cinemaPage = 1;
         ((CinemaListViewController*)self.parentViewController).selectedDistrict = self.selectedDistrict;
+        ((CinemaListViewController*)self.parentViewController).oldCityID = self.cityId;
+        if (self.districts && [self.districts count]) {
+            ((CinemaListViewController*)self.parentViewController).districts = self.districts;
+        }
     }
     
     [tableView reloadData];

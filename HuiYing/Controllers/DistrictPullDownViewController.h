@@ -13,5 +13,6 @@
 @property (nonatomic,assign) int64_t cityId;
 @property (nonatomic,strong) NSArray* districts;
 @property (nonatomic,strong) DistrictMeta* selectedDistrict;
--(instancetype)initWithCityID:(int64_t)cityId;
+@property (nonatomic,assign) int64_t oldCityId;
+-(instancetype)initWithCityID:(int64_t)cityId oldCityID:(int64_t)oldCityID;
 @end

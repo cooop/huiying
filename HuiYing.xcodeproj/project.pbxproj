@@ -31,6 +31,7 @@
 		2DCE30F81B7CFED3003D6AEE /* Reveal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DCE30F71B7CFED3003D6AEE /* Reveal.framework */; };
 		2DCFCA711B5000320013F5B1 /* SessionsMeta.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DCFCA701B5000320013F5B1 /* SessionsMeta.m */; };
 		2DD612141B653F2800D886F9 /* TicketViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DD612131B653F2800D886F9 /* TicketViewController.m */; };
+		2DF0FB9B1B9C84D800A80905 /* LocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DF0FB9A1B9C84D800A80905 /* LocationManager.m */; };
 		E60FD2ED1B2EF9B2001F13B8 /* MovieDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E60FD2EC1B2EF9B2001F13B8 /* MovieDetailViewController.m */; };
 		E6195D8B1B455A6B001DD9E4 /* SessionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E6195D8A1B455A6B001DD9E4 /* SessionViewController.m */; };
 		E620C6C71B0CB2F600DB4E55 /* citydict.plist in Resources */ = {isa = PBXBuildFile; fileRef = E620C6C61B0CB2F600DB4E55 /* citydict.plist */; };
@@ -208,6 +209,8 @@
 		2DCFCA701B5000320013F5B1 /* SessionsMeta.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SessionsMeta.m; path = Models/Session/SessionsMeta.m; sourceTree = "<group>"; };
 		2DD612121B653F2800D886F9 /* TicketViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TicketViewController.h; path = Controllers/TicketViewController.h; sourceTree = "<group>"; };
 		2DD612131B653F2800D886F9 /* TicketViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TicketViewController.m; path = Controllers/TicketViewController.m; sourceTree = "<group>"; };
+		2DF0FB991B9C84D800A80905 /* LocationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LocationManager.h; path = Models/Location/LocationManager.h; sourceTree = "<group>"; };
+		2DF0FB9A1B9C84D800A80905 /* LocationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LocationManager.m; path = Models/Location/LocationManager.m; sourceTree = "<group>"; };
 		E60FD2EB1B2EF9B2001F13B8 /* MovieDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MovieDetailViewController.h; path = Controllers/MovieDetailViewController.h; sourceTree = "<group>"; };
 		E60FD2EC1B2EF9B2001F13B8 /* MovieDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MovieDetailViewController.m; path = Controllers/MovieDetailViewController.m; sourceTree = "<group>"; };
 		E6195D891B455A6B001DD9E4 /* SessionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SessionViewController.h; path = Controllers/SessionViewController.h; sourceTree = "<group>"; };
@@ -574,6 +577,8 @@
 				E6DEA9BB1AFF6C38006E87C3 /* CityMeta.m */,
 				E6DEA9BC1AFF6C38006E87C3 /* DistrictMeta.h */,
 				E6DEA9BD1AFF6C38006E87C3 /* DistrictMeta.m */,
+				2DF0FB991B9C84D800A80905 /* LocationManager.h */,
+				2DF0FB9A1B9C84D800A80905 /* LocationManager.m */,
 			);
 			name = Location;
 			sourceTree = "<group>";
@@ -1039,6 +1044,7 @@
 				E6DEA9A11AFF3404006E87C3 /* Utils.m in Sources */,
 				E6CF120C1AFA398A004FBDB7 /* MovieListViewController.m in Sources */,
 				E6DEA9DE1AFF6CCC006E87C3 /* AFSecurityPolicy.m in Sources */,
+				2DF0FB9B1B9C84D800A80905 /* LocationManager.m in Sources */,
 				E6DEA9E11AFF6CCC006E87C3 /* AFURLResponseSerialization.m in Sources */,
 				2DB3A6241B7BA4E100EABB03 /* UIView+MJExtension.m in Sources */,
 				E6DEA9FE1AFF6D14006E87C3 /* UIRefreshControl+AFNetworking.m in Sources */,

@@ -117,6 +117,9 @@ IMPLEMENT_SHARED_INSTANCE(NetworkManager);
             url = [url stringByAppendingString:@"&sort_by=rate"];
             break;
         default:
+            if (location) {
+                url = [url stringByAppendingString:@"&sort_by=distance"];
+            }
             break;
     }
     

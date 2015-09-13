@@ -14,6 +14,7 @@
 #import "URLManager.h"
 #import "MJRefresh.h"
 #import "NetworkManager.h"
+#import "CinemaListViewController.h"
 
 @interface MovieTableViewController ()
 
@@ -75,6 +76,9 @@
     if (!cell) {
         cell = [[UITableViewCell alloc] init];
     }
+    
+    MovieMeta* movieMeta = self.movies[indexPath.row];
+    
     UIImageView *coverImageView = [[UIImageView alloc]init];
     coverImageView.contentMode = UIViewContentModeScaleToFill;
     coverImageView.opaque = YES;
@@ -117,7 +121,8 @@
     buyButton.frame = CGRectMake(UI_SCREEN_WIDTH - 10 - buttonImage.size.width, 56, buttonImage.size.width, buttonImage.size.height);
     [buyButton setBackgroundImage:buttonImage forState:UIControlStateNormal];
     NSAttributedString* title = [[NSAttributedString alloc]initWithString:@"购票" attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:14],NSForegroundColorAttributeName:UIColorFromRGB(0xFE6F80)}];
-//    [buyButton addTarget:self action:@selector(buyButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    [buyButton addTarget:self action:@selector(buyButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    buyButton.tag = movieMeta.movieID;
     [buyButton setAttributedTitle:title forState:UIControlStateNormal];
     
     [cell addSubview:coverImageView];
@@ -128,7 +133,6 @@
     [cell addSubview:ratingLabel];
     [cell addSubview:buyButton];
     
-    MovieMeta* movieMeta = self.movies[indexPath.row];
     [coverImageView setImageWithURL:[NSURL URLWithString:[URLManager fullImageURL: movieMeta.coverImage]] placeholderImage:[UIImage imageNamed:@"defult_img1"]];
     titleLabel.text = movieMeta.chineseName;
     CGFloat titleWidth = [titleLabel.text sizeWithAttributes:@{NSFontAttributeName:titleLabel.font}].width;
@@ -164,6 +168,12 @@
     MovieMeta *movie = self.movies[indexPath.row];
     MovieDetailViewController* mdvc = [[MovieDetailViewController alloc] initWithMovieID:movie.movieID];
     [self.navigationController pushViewController:mdvc animated:YES];
+}
+
+-(void)buyButtonPressed:(id)sender{
+    int64_t movieId = [sender tag];
+    CinemaListViewController * cinemaListVC = [[CinemaListViewController alloc]initWithCityId:self.cityID movieId:movieId];
+    [self.navigationController pushViewController:cinemaListVC animated:YES];
 }
 
 #pragma mark - notification handler

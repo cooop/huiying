@@ -11,10 +11,10 @@
 #import "Constraits.h"
 #import "CityMeta.h"
 #import "NetworkManager.h"
+#import "LocationManager.h"
 
 
 @interface CityListViewController ()
-@property (nonatomic, strong) CLLocationManager *locationManager;//定义Manager
 @property (nonatomic, assign) NSInteger timestamp;
 @property (nonatomic, strong) NSArray* cityList;
 @end
@@ -72,37 +72,12 @@
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    
-    // 判断定位操作是否被允许
-    if([CLLocationManager locationServicesEnabled]) {
-        _locationManager = [[CLLocationManager alloc] init];
-        _locationManager.delegate = self;
-    }else {
-        //TODO:提示用户无法进行定位操作,未测试
-        UIAlertView * alert = [[UIAlertView alloc]initWithTitle:@"定位未开启" message:@"请前往系统设置开启定位" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil];
-        [alert show];
-    }
-    
-    if ([[[UIDevice currentDevice] systemVersion] doubleValue] > 8.0)
-    {
-        //设置定位权限 仅ios8有意义
-        [self.locationManager requestWhenInUseAuthorization];// 前台定位
-        
-        //  [locationManager requestAlwaysAuthorization];// 前后台同时定位
-    }
-    // 开始定位
-    [_locationManager startUpdatingLocation];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(versionGet:) name:kCityVersionSuccessNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(cityListSuccess:) name:kCityListSuccessNotification object:nil];
-    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(locateSuccess:) name:kLocateSuccessNotification object:nil];
 }
 
 -(void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:kCityVersionSuccessNotification object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:kCityListSuccessNotification object:nil];
-    _locationManager = nil;
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kLocateSuccessNotification object:nil];
 }
 
 - (void)didReceiveMemoryWarning

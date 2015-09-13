@@ -33,6 +33,7 @@
 
 -(instancetype)initWithCityId:(int64_t)cityId{
     if (self = [super init]) {
+        _oldCityID = -1;
         _cityID = cityId;
         _cinemaPage = 1;
         _movieId = -1;
@@ -157,14 +158,14 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(observeCinemaList:) name:kCinemaListInCitySuccessNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(locationDidChange:) name:kLocationDidChangeNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(locationDidChange:) name:kLocateSuccessNotification object:nil];
     [[NetworkManager sharedInstance]cinemaListInCity:self.cityID movie:self.movieId inDistrict:(self.selectedDistrict?self.selectedDistrict.districtID:-1) page:1 location:self.currentLocation orderBy:self.selectedOrderType];
 }
 
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kCinemaListInCitySuccessNotification object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:kLocationDidChangeNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kLocateSuccessNotification object:nil];
 }
 
 #pragma mark - Table view data source
@@ -297,12 +298,15 @@
 }
 
 -(void)showDistrictView{
-    DistrictPullDownViewController *districtVC = [[DistrictPullDownViewController alloc] initWithCityID:self.cityID];
+    DistrictPullDownViewController *districtVC = [[DistrictPullDownViewController alloc] initWithCityID:self.cityID oldCityID:self.oldCityID];
+    districtVC.selectedDistrict = _selectedDistrict;
+    if (self.cityID == self.oldCityID && self.districts &&[self.districts count]) {
+        districtVC.districts = self.districts;
+    }
     [self addChildViewController:districtVC];
     [self.view addSubview:districtVC.view];
     self.districtViewController = districtVC;
     self.districtViewController.view.frame = CGRectMake(0, 36, UI_SCREEN_WIDTH, 0);
-    self.districtViewController.selectedDistrict = _selectedDistrict;
     self.districtLabel.textColor = UIColorFromRGB(0xF95C6F);
     self.districtArrow.image = [UIImage imageNamed:@"museum_tab_arrow_up"];
     
@@ -326,7 +330,6 @@
     } else {
         [self showDistrictView];
     }
-
 }
 
 -(void)orderPullDown{
@@ -338,7 +341,6 @@
     } else {
         [self showOrderView];
     }
-    
 }
 
 -(void)locationDidChange:(NSNotification*)notification
