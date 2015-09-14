@@ -119,6 +119,9 @@
 #define kLocateSuccessNotification @"kLocateSuccessNotification"
 #define kLocateFailedNotification @"kLocateFailedNotification"
 
+#define kUserInfoCurrentLocation @"currentLocation"
+#define kUserInfoCurrentCity @"cityLocation"
+
 #pragma mark - Utils
 
 //获取界面字符串

@@ -16,7 +16,7 @@
 #import "CityMeta.h"
 #import "LocationManager.h"
 
-@interface MovieListViewController ()
+@interface MovieListViewController ()<UIAlertViewDelegate>
 
 @property (nonatomic, strong) CLLocationManager *locationManager;//定义Manager
 @property (nonatomic, strong) UIButton *cityButton;
@@ -26,12 +26,8 @@
 @property (nonatomic, assign) int64_t cityID;
 @property (nonatomic, strong) NSString * location;
 @property (strong, nonatomic) IBOutlet UISegmentedControl *segmentedControl;
-
-//for locating
-@property (nonatomic, assign) NSInteger timestamp;
-@property (nonatomic, strong) NSArray* cityList;
-@property (nonatomic, strong) NSMutableDictionary *cities;
-@property (nonatomic, strong) NSMutableArray *keys; //城市首字母
+@property (nonatomic, strong) CityMeta * locateCity;
+@property (nonatomic, strong) UILabel* locationLabel;
 
 @end
 
@@ -40,22 +36,14 @@
 #pragma mark - life cycle
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    _timestamp = [[ApplicationSettings sharedInstance] timestamp];
-    _cityList = [[ApplicationSettings sharedInstance] cityList];
-    [self parseCityList:self.cityList];
-    
+
     _cityID = [[ApplicationSettings sharedInstance]cityID];
     _location = [[ApplicationSettings sharedInstance]cityName];
     if (!self.cityID) {
         self.location = @"北京";
         self.cityID  = 100005;
     }
-    
-    [[LocationManager sharedInstance] startLocate];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(versionGet:) name:kCityVersionSuccessNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(cityListSuccess:) name:kCityListSuccessNotification object:nil];
+
 }
 
 -(void)viewWillAppear:(BOOL)animated{
@@ -102,6 +90,7 @@
     
     UIView * view = [[UIView alloc]initWithFrame:CGRectMake(15, UI_STATUS_BAR_HEIGHT+UI_NAVIGATION_BAR_HEIGHT-14-locationHeight, locationWidth+5+image.size.width,locationHeight)];
     locationLabel.frame = CGRectMake(0, 0, locationWidth, locationHeight);
+    self.locationLabel = locationLabel;
     
     UIImageView * imageView = [[UIImageView alloc]initWithImage:image];
     imageView.frame = CGRectMake(+locationWidth+5, locationHeight-image.size.height-6, image.size.width, image.size.height);
@@ -116,17 +105,15 @@
     self.navigationItem.leftBarButtonItem = locationBarButton;
     
     self.edgesForExtendedLayout= UIRectEdgeNone;
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(locateSuccess:) name:kLocateSuccessNotification object:nil];
 }
 
 - (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kLocateSuccessNotification object:nil];
     [self.movieTableViewController.tableView removeFromSuperview];
     [self.cinemaListViewController.view removeFromSuperview];
-}
-
--(void)dealloc{
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:kCityVersionSuccessNotification object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:kCityListSuccessNotification object:nil];
-    [[LocationManager sharedInstance] endLocate];
 }
 
 #pragma mark - private methods
@@ -148,78 +135,41 @@
     }
 }
 
--(void)getCityData
-{
-    NSString *local = @"定位";
-    if (![self.keys containsObject:local]) {
-        [self.keys insertObject:local atIndex:0];
-    }
-    CityMeta* cityMeta = [self locatingCityMeta];
-    [self.cities setValue:@[cityMeta] forKey:local];
-}
-
--(void)parseCityList:(NSArray*)cityList{
+#pragma mark - notification handler
+-(void) locateSuccess:(NSNotification*)notification{
+    NSDictionary* userInfo = [notification userInfo];
+    CityMeta* city = userInfo[kUserInfoCurrentCity];
     
-    for(NSDictionary* cityDict in cityList){
-        NSEnumerator* enumerator = [cityDict keyEnumerator];
-        NSString* cityKey = nil;
-        if ((cityKey = enumerator.nextObject) != nil) {
-            NSString* key = cityKey;
-            if ([cityKey isEqualToString:@"hot"]) {
-                [self.keys addObject:@"热门"];
-                key = @"热门";
-            }else{
-                [self.keys addObject:cityKey];
-            }
-            NSMutableArray * cityArray = [NSMutableArray array];
-            for(NSDictionary* city in cityDict[cityKey]){
-                CityMeta* cityMeta =[[CityMeta alloc]initWithDict:city];
-                [cityArray addObject:cityMeta];
-            }
-            [self.cities setValue:cityArray forKey:key];
+    if (![[LocationManager sharedInstance] alertShow] && city.cityID >= 0) {
+        
+        if (city.cityID != self.cityID) {
+            NSString* title = [NSString stringWithFormat:@"定位到您当前所在城市为%@，是否切换？",city.cityName];
+            UIAlertView * alert = [[UIAlertView alloc]initWithTitle:title message:@"" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定",nil];
+            [alert show];
+            self.locateCity = city;
+            [LocationManager sharedInstance].alertShow = YES;
         }
     }
-    [self getCityData];
 }
 
--(CityMeta*)formatCityName:(NSString*)cityStr{
-    if (cityStr== nil) {
-        return [self locatingCityMeta];
-    }
-    for(NSString* key in self.keys){
-        for(CityMeta* city in self.cities[key]){
-            if ([cityStr hasPrefix:city.cityName]) {
-                return city;
-            }
-        }
-    }
-    return [self locatingCityMeta];
-}
-
--(CityMeta*)locatingCityMeta{
-    CityMeta* cityMeta = [[CityMeta alloc] init];
-    cityMeta.cityName =@"正在定位...";
-    cityMeta.cityID = -100;
-    return  cityMeta;
-}
-
-#pragma mark - notification
--(void)versionGet:(NSNotification*)notification{
-    NSDictionary * userInfo = [notification userInfo];
-    NSInteger timestamp = [userInfo[kUserInfoKeyCityVersion] integerValue];
-    if (timestamp > self.timestamp) {
-        [ApplicationSettings sharedInstance].timestamp = timestamp;
+#pragma mark - UIAlertViewDelegate
+-(void) alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    if (buttonIndex == 1) {
+        [ApplicationSettings sharedInstance].cityID = self.locateCity.cityID;
+        [ApplicationSettings sharedInstance].cityName = self.locateCity.cityName;
         [[ApplicationSettings sharedInstance] saveSettings];
-        [[NetworkManager sharedInstance] cityList];
-    }
-}
 
--(void)cityListSuccess:(NSNotification*)notification{
-    NSDictionary * userInfo = [notification userInfo];
-    [self parseCityList:userInfo[kUserInfoKeyCities]];
-    self.cityList = userInfo[kUserInfoKeyCities];
-    [ApplicationSettings sharedInstance].cityList = self.cityList;
-    [[ApplicationSettings sharedInstance] saveSettings];
+        self.cityID = self.locateCity.cityID;
+        self.location = self.locateCity.cityName;
+        
+        self.locationLabel.text = self.location;
+        
+        self.movieTableViewController.cityID = self.cityID;
+        self.cinemaListViewController.cityID = self.cityID;
+        
+        [[NetworkManager sharedInstance] movieListInCity:self.cityID page:1];
+        [[NetworkManager sharedInstance]cinemaListInCity:self.cityID movie:-1 inDistrict:(self.cinemaListViewController. selectedDistrict?self.cinemaListViewController.selectedDistrict.districtID:-1) page:1 location:self.cinemaListViewController.currentLocation orderBy:self.cinemaListViewController.selectedOrderType];
+    }
 }
 
 @end

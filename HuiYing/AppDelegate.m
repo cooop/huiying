@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "ApplicationSettings.h"
+#import "LocationManager.h"
 
 @interface AppDelegate ()
 @property (nonatomic, strong) ApplicationSettings *settings;
@@ -20,6 +21,8 @@
     // Override point for customization after application launch.
     self.settings = [ApplicationSettings sharedInstance];
     [self.settings loadSettings];
+    
+    [[LocationManager sharedInstance] startLocate];
     return YES;
 }
 

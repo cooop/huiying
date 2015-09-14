@@ -23,8 +23,8 @@
 
 -(id)init{
     if(self = [super init]){
-        _cities = [NSMutableDictionary dictionary];
-        _keys = [NSMutableArray array];
+        _cities = [[LocationManager sharedInstance] cities];
+        _keys = [[LocationManager sharedInstance] keys];
     }
     return self;
 }
@@ -34,10 +34,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    _timestamp = [[ApplicationSettings sharedInstance] timestamp];
-    _cityList = [[ApplicationSettings sharedInstance] cityList];
-    [self parseCityList:self.cityList];
-    
     self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
     
     UILabel *titleLabel = [[UILabel alloc]init];
@@ -168,130 +164,21 @@
         [ApplicationSettings sharedInstance].cityID = city.cityID;
         [ApplicationSettings sharedInstance].cityName = city.cityName;
         [[ApplicationSettings sharedInstance] saveSettings];
+        [LocationManager sharedInstance].alertShow = YES;
         [self.navigationController popToRootViewControllerAnimated:YES];
-
     }
 }
 
-#pragma mark -location
--(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations{
-    CLLocation *currentLocation = [locations lastObject];
-    [self getCity:currentLocation];
-}
-
-- (void)locationManager:(CLLocationManager *)manager
-       didFailWithError:(NSError *)error {
-    
-//    if (error.code == kCLErrorDenied) {
-//        // 提示用户出错原因，可按住Option键点击 KCLErrorDenied的查看更多出错信息，可打印error.code值查找原因所在
-//        UIAlertView * alert = [[UIAlertView alloc]initWithTitle:@"错误" message:@"定位失败" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil];
-//        [alert show];
-//        //TODO: 加入重试按钮
-//    }
-}
-
-#pragma mark - notification handler
--(void)versionGet:(NSNotification*)notification{
-    NSDictionary * userInfo = [notification userInfo];
-    NSInteger timestamp = [userInfo[kUserInfoKeyCityVersion] integerValue];
-    if (timestamp > self.timestamp) {
-        [ApplicationSettings sharedInstance].timestamp = timestamp;
-        [[ApplicationSettings sharedInstance] saveSettings];
-        [[NetworkManager sharedInstance] cityList];
-    }
-}
-
--(void)cityListSuccess:(NSNotification*)notification{
-    NSDictionary * userInfo = [notification userInfo];
-    [self parseCityList:userInfo[kUserInfoKeyCities]];
-    self.cityList = userInfo[kUserInfoKeyCities];
-    [ApplicationSettings sharedInstance].cityList = self.cityList;
-    [[ApplicationSettings sharedInstance] saveSettings];
+-(void)locateSuccess:(NSNotification*)notification{
+    self.keys = [[LocationManager sharedInstance] keys];
+    self.cities = [[LocationManager sharedInstance] cities];
     [self.tableView reloadData];
 }
 
-#pragma mark - private methods
--(void)getCityData
-{
-    NSString *local = @"定位";
-    if (![self.keys containsObject:local]) {
-        [self.keys insertObject:local atIndex:0];
-    }
-    CityMeta* cityMeta = [self locatingCityMeta];
-    [self.cities setValue:@[cityMeta] forKey:local];
-}
-
-
--(void)parseCityList:(NSArray*)cityList{
-    
-    for(NSDictionary* cityDict in cityList){
-        NSEnumerator* enumerator = [cityDict keyEnumerator];
-        NSString* cityKey = nil;
-        if ((cityKey = enumerator.nextObject) != nil) {
-            NSString* key = cityKey;
-            if ([cityKey isEqualToString:@"hot"]) {
-                [self.keys addObject:@"热门"];
-                key = @"热门";
-            }else{
-                [self.keys addObject:cityKey];
-            }
-            NSMutableArray * cityArray = [NSMutableArray array];
-            for(NSDictionary* city in cityDict[cityKey]){
-                CityMeta* cityMeta =[[CityMeta alloc]initWithDict:city];
-                [cityArray addObject:cityMeta];
-            }
-            [self.cities setValue:cityArray forKey:key];
-        }
-    }
-    [self getCityData];
-}
 
 -(void)backToMovieListView{
     [self.navigationController popViewControllerAnimated:YES];
 }
 
--(void)getCity:(CLLocation*)location{
-    CLGeocoder *geocoder = [[CLGeocoder alloc]init];
-    [geocoder reverseGeocodeLocation:location completionHandler:^(NSArray *placemarks, NSError *error) {
-        if (error == nil && [placemarks count] > 0){
-            CLPlacemark *placemark = [placemarks objectAtIndex:0];
-            NSString *cityStr = placemark.locality;
-            cityStr = cityStr?cityStr:placemark.administrativeArea;
-            [self.cities setValue:@[[self formatCityName:cityStr]] forKey:self.keys[0]];
-            [self.tableView reloadData];
-        }else if (error == nil &&[placemarks count] == 0){
-//            NSLog(@"No results were returned.");
-//            UIAlertView * alert = [[UIAlertView alloc]initWithTitle:@"错误" message:@"定位失败" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil];
-//            [alert show];
-//            //TODO: 加入重试按钮
-        }else if (error != nil){
-//            NSLog(@"An error occurred = %@", error);
-//            UIAlertView * alert = [[UIAlertView alloc]initWithTitle:@"错误" message:@"定位失败" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil];
-//            [alert show];
-//            //TODO: 加入重试按钮
-        }
-    }];
-}
-
--(CityMeta*)formatCityName:(NSString*)cityStr{
-    if (cityStr== nil) {
-        return [self locatingCityMeta];
-    }
-    for(NSString* key in self.keys){
-        for(CityMeta* city in self.cities[key]){
-            if ([cityStr hasPrefix:city.cityName]) {
-                return city;
-            }
-        }
-    }
-    return [self locatingCityMeta];
-}
-
--(CityMeta*)locatingCityMeta{
-    CityMeta* cityMeta = [[CityMeta alloc] init];
-    cityMeta.cityName =@"正在定位...";
-    cityMeta.cityID = -100;
-    return  cityMeta;
-}
 
 @end
