@@ -15,6 +15,8 @@
 #import "CinemaListViewController.h"
 #import "ApplicationSettings.h"
 #import "Utils.h"
+#import "MovieImagesViewController.h"
+#import "ImagePreviewController.h"
 
 @interface MovieDetailViewController ()
 @property (nonatomic, strong) MovieDetailMeta * movieDetail;
@@ -103,8 +105,7 @@
     [self drawImages];
     [self drawActors];
     _scrollView.contentSize = CGSizeMake(UI_SCREEN_WIDTH, CGRectGetHeight(_headerView.frame)+CGRectGetHeight(_descriptionView.frame)+ CGRectGetHeight(_imagesView.frame));
-    
-    
+
 }
 
 - (void)drawNavigationBar{
@@ -284,9 +285,21 @@
     for (int i =0; i< count; i++) {
         UIImageView * imageView = [[UIImageView alloc]initWithFrame:CGRectMake(10+(60+margin)*i, 25+size.height, 60, 60)];
         imageView.image = [UIImage imageNamed:@"defult_img2"];
-        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedWithObject:)];
         imageView.tag = i;
-        [imageView addGestureRecognizer:tap];
+        imageView.contentMode = UIViewContentModeScaleAspectFill;
+        imageView.clipsToBounds = YES;
+        
+        if (count == i+1) {
+            UILabel * moreLabel = [[UILabel alloc]initWithFrame:imageView.frame];
+            moreLabel.text = @"更多";
+            moreLabel.textAlignment = NSTextAlignmentCenter;
+            moreLabel.textColor = [UIColor whiteColor];
+            [_imagesView addSubview: moreLabel];
+            UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedWithLastObject:)];
+            [moreLabel addGestureRecognizer:tap];
+            moreLabel.userInteractionEnabled = YES;
+        }
+        
         [_imageViews addObject:imageView];
         [_imagesView addSubview:imageView];
     }
@@ -301,8 +314,16 @@
 
 - (void) tappedWithObject:(id)sender
 {
-    
+    ImagePreviewController* ipvc = [[ImagePreviewController alloc]initWithImages:self.movieDetail.images startIndex:[((UITapGestureRecognizer*)sender).view tag]];
+    [self.navigationController pushViewController:ipvc animated:YES];
 }
+
+- (void) tappedWithLastObject:(id)sender
+{
+    MovieImagesViewController* mivc = [[MovieImagesViewController alloc]initWithImageUrls:self.movieDetail.images];
+    [self.navigationController pushViewController:mivc animated:YES];
+}
+
 
 - (void)drawActors{
     _actorsView = [[UIView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(self.imagesView.frame), UI_SCREEN_WIDTH, CGRectGetHeight(self.scrollView.frame) - CGRectGetMaxY(self.imagesView.frame))];
@@ -429,7 +450,23 @@
     for (int i = 0; i< self.imageViews.count; i++) {
         NSURL * url = [NSURL URLWithString: [URLManager fullImageURL:self.movieDetail.images[i]]];
         [self.imageViews[i] setImageWithURLRequest:[[NSURLRequest alloc]initWithURL:url] placeholderImage:[UIImage imageNamed:@"defult_img2"]success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
-            ((UIImageView*)weakSelf.imageViews[i]).image = image;
+            if (self.imageViews.count == i+1) {
+                ((UIImageView*)self.imageViews[i]).image = [image applyBlurWithRadius:0.5f tintColor:[UIColor colorWithWhite:0.85f alpha:0.75f] saturationDeltaFactor:1.8 maskImage:nil];
+                UILabel * moreLabel = [[UILabel alloc]initWithFrame:((UIImageView*)self.imageViews[i]).frame];
+                moreLabel.text = @"更多";
+                moreLabel.textAlignment = NSTextAlignmentCenter;
+                moreLabel.textColor = [UIColor whiteColor];
+                [weakSelf.imagesView addSubview: moreLabel];
+                UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedWithLastObject:)];
+                [moreLabel addGestureRecognizer:tap];
+                moreLabel.userInteractionEnabled = YES;
+            }else{
+                ((UIImageView*)self.imageViews[i]).image = image;
+                UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedWithObject:)];
+                tap.view.tag = i;
+                ((UIImageView*)self.imageViews[i]).userInteractionEnabled = YES;
+                [((UIImageView*)self.imageViews[i]) addGestureRecognizer:tap];
+            }
         } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
             ((UIImageView*)weakSelf.imageViews[i]).image = [UIImage imageNamed:@"defult_img2"];
         }];

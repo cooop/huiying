@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2D28E5241BAF14EE00BC1191 /* MovieImagesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D28E5231BAF14EE00BC1191 /* MovieImagesViewController.m */; settings = {ASSET_TAGS = (); }; };
 		2D79D4B91B5BF54F004AC143 /* CinemaViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D79D4B81B5BF54F004AC143 /* CinemaViewController.m */; };
 		2D79D4BC1B5C0DB4004AC143 /* MyPoint.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D79D4BB1B5C0DB4004AC143 /* MyPoint.m */; };
 		2DB3A6201B7BA4E100EABB03 /* MJRefresh.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 2DB3A6161B7BA4E100EABB03 /* MJRefresh.bundle */; };
@@ -31,6 +32,8 @@
 		2DCE30F81B7CFED3003D6AEE /* Reveal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DCE30F71B7CFED3003D6AEE /* Reveal.framework */; };
 		2DCFCA711B5000320013F5B1 /* SessionsMeta.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DCFCA701B5000320013F5B1 /* SessionsMeta.m */; };
 		2DD612141B653F2800D886F9 /* TicketViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DD612131B653F2800D886F9 /* TicketViewController.m */; };
+		2DE115BF1BB031DB00A8D9B7 /* ImagePreviewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DE115BE1BB031DB00A8D9B7 /* ImagePreviewController.m */; settings = {ASSET_TAGS = (); }; };
+		2DE115C21BB0344900A8D9B7 /* ImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DE115C11BB0344900A8D9B7 /* ImageViewController.m */; settings = {ASSET_TAGS = (); }; };
 		2DF0FB9B1B9C84D800A80905 /* LocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DF0FB9A1B9C84D800A80905 /* LocationManager.m */; };
 		E60FD2ED1B2EF9B2001F13B8 /* MovieDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E60FD2EC1B2EF9B2001F13B8 /* MovieDetailViewController.m */; };
 		E6195D8B1B455A6B001DD9E4 /* SessionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E6195D8A1B455A6B001DD9E4 /* SessionViewController.m */; };
@@ -162,6 +165,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2D28E5221BAF14EE00BC1191 /* MovieImagesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MovieImagesViewController.h; path = Controllers/MovieImagesViewController.h; sourceTree = "<group>"; };
+		2D28E5231BAF14EE00BC1191 /* MovieImagesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MovieImagesViewController.m; path = Controllers/MovieImagesViewController.m; sourceTree = "<group>"; };
 		2D79D4B71B5BF54F004AC143 /* CinemaViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CinemaViewController.h; path = Controllers/CinemaViewController.h; sourceTree = "<group>"; };
 		2D79D4B81B5BF54F004AC143 /* CinemaViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CinemaViewController.m; path = Controllers/CinemaViewController.m; sourceTree = "<group>"; };
 		2D79D4BA1B5C0DB4004AC143 /* MyPoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MyPoint.h; path = views/MyPoint.h; sourceTree = "<group>"; };
@@ -209,6 +214,10 @@
 		2DCFCA701B5000320013F5B1 /* SessionsMeta.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SessionsMeta.m; path = Models/Session/SessionsMeta.m; sourceTree = "<group>"; };
 		2DD612121B653F2800D886F9 /* TicketViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TicketViewController.h; path = Controllers/TicketViewController.h; sourceTree = "<group>"; };
 		2DD612131B653F2800D886F9 /* TicketViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TicketViewController.m; path = Controllers/TicketViewController.m; sourceTree = "<group>"; };
+		2DE115BD1BB031DB00A8D9B7 /* ImagePreviewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ImagePreviewController.h; path = Controllers/ImagePreviewController.h; sourceTree = "<group>"; };
+		2DE115BE1BB031DB00A8D9B7 /* ImagePreviewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ImagePreviewController.m; path = Controllers/ImagePreviewController.m; sourceTree = "<group>"; };
+		2DE115C01BB0344900A8D9B7 /* ImageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ImageViewController.h; path = Controllers/ImageViewController.h; sourceTree = "<group>"; };
+		2DE115C11BB0344900A8D9B7 /* ImageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ImageViewController.m; path = Controllers/ImageViewController.m; sourceTree = "<group>"; };
 		2DF0FB991B9C84D800A80905 /* LocationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LocationManager.h; path = Models/Location/LocationManager.h; sourceTree = "<group>"; };
 		2DF0FB9A1B9C84D800A80905 /* LocationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LocationManager.m; path = Models/Location/LocationManager.m; sourceTree = "<group>"; };
 		E60FD2EB1B2EF9B2001F13B8 /* MovieDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MovieDetailViewController.h; path = Controllers/MovieDetailViewController.h; sourceTree = "<group>"; };
@@ -743,6 +752,12 @@
 				2D79D4B81B5BF54F004AC143 /* CinemaViewController.m */,
 				2DD612121B653F2800D886F9 /* TicketViewController.h */,
 				2DD612131B653F2800D886F9 /* TicketViewController.m */,
+				2D28E5221BAF14EE00BC1191 /* MovieImagesViewController.h */,
+				2D28E5231BAF14EE00BC1191 /* MovieImagesViewController.m */,
+				2DE115BD1BB031DB00A8D9B7 /* ImagePreviewController.h */,
+				2DE115BE1BB031DB00A8D9B7 /* ImagePreviewController.m */,
+				2DE115C01BB0344900A8D9B7 /* ImageViewController.h */,
+				2DE115C11BB0344900A8D9B7 /* ImageViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -1003,6 +1018,7 @@
 				E6DEA9FF1AFF6D14006E87C3 /* UIWebView+AFNetworking.m in Sources */,
 				2DCFCA711B5000320013F5B1 /* SessionsMeta.m in Sources */,
 				2DB3A6501B7BA55C00EABB03 /* MJRefreshBackGifFooter.m in Sources */,
+				2DE115C21BB0344900A8D9B7 /* ImageViewController.m in Sources */,
 				2DB3A6211B7BA4E100EABB03 /* MJRefreshConst.m in Sources */,
 				E6DEA9FD1AFF6D14006E87C3 /* UIProgressView+AFNetworking.m in Sources */,
 				2DB3A6331B7BA50300EABB03 /* MJRefreshHeader.m in Sources */,
@@ -1016,6 +1032,7 @@
 				E6DEA9FC1AFF6D14006E87C3 /* UIImageView+AFNetworking.m in Sources */,
 				2DB3A63D1B7BA52800EABB03 /* MJRefreshNormalHeader.m in Sources */,
 				2DB3A62F1B7BA50300EABB03 /* MJRefreshAutoFooter.m in Sources */,
+				2D28E5241BAF14EE00BC1191 /* MovieImagesViewController.m in Sources */,
 				E620C6CA1B0CB3A400DB4E55 /* CityListViewController.m in Sources */,
 				2DD612141B653F2800D886F9 /* TicketViewController.m in Sources */,
 				E6DEA9B41AFF6BCB006E87C3 /* MovieDetailMeta.m in Sources */,
@@ -1039,6 +1056,7 @@
 				E6DEA9E21AFF6CCC006E87C3 /* AFURLSessionManager.m in Sources */,
 				2DB3A6471B7BA54900EABB03 /* MJRefreshAutoNormalFooter.m in Sources */,
 				2DB3A6311B7BA50300EABB03 /* MJRefreshComponent.m in Sources */,
+				2DE115BF1BB031DB00A8D9B7 /* ImagePreviewController.m in Sources */,
 				E6CF12031AFA398A004FBDB7 /* main.m in Sources */,
 				E60FD2ED1B2EF9B2001F13B8 /* MovieDetailViewController.m in Sources */,
 				E6DEA9A11AFF3404006E87C3 /* Utils.m in Sources */,
