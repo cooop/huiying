@@ -17,6 +17,7 @@
 #import "Utils.h"
 #import "MovieImagesViewController.h"
 #import "ImagePreviewController.h"
+#import "LocationManager.h"
 
 @interface MovieDetailViewController ()
 @property (nonatomic, strong) MovieDetailMeta * movieDetail;
@@ -447,10 +448,24 @@
 
     _movieDescriptionView.attributedText = [[NSAttributedString alloc] initWithString:self.movieDetail.movieDescription attributes:attributes];
     
+    BOOL notFull = NO;
+    
+    if (self.imageViews.count >= self.movieDetail.images.count) {
+        notFull = YES;
+        for (int i = (int)self.movieDetail.images.count; i< self.imageViews.count; i++) {
+            [self.imageViews[i] removeFromSuperview];
+        }
+        self.imageViews = [[self.imageViews subarrayWithRange:NSMakeRange(0,self.movieDetail.images.count)] mutableCopy];
+    }
+    
     for (int i = 0; i< self.imageViews.count; i++) {
         NSURL * url = [NSURL URLWithString: [URLManager fullImageURL:self.movieDetail.images[i]]];
         [self.imageViews[i] setImageWithURLRequest:[[NSURLRequest alloc]initWithURL:url] placeholderImage:[UIImage imageNamed:@"defult_img2"]success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
-            if (self.imageViews.count == i+1) {
+            
+            for (UIGestureRecognizer * gesture in [((UIImageView*)self.imageViews[i]) gestureRecognizers]) {
+                [((UIImageView*)self.imageViews[i]) removeGestureRecognizer:gesture];
+            }
+            if (!notFull &&self.imageViews.count == i+1) {
                 ((UIImageView*)self.imageViews[i]).image = [image applyBlurWithRadius:0.5f tintColor:[UIColor colorWithWhite:0.85f alpha:0.75f] saturationDeltaFactor:1.8 maskImage:nil];
                 UILabel * moreLabel = [[UILabel alloc]initWithFrame:((UIImageView*)self.imageViews[i]).frame];
                 moreLabel.text = @"更多";
@@ -528,6 +543,7 @@
 
 -(void)buyButtonPressed:(id)sender{
     CinemaListViewController* clvc = [[CinemaListViewController alloc]initWithCityId:[[ApplicationSettings sharedInstance] cityID] movieId:self.movieID];
+    clvc.currentLocation = [[LocationManager sharedInstance] currentLocation];
     [self.navigationController pushViewController:clvc animated:YES];
 }
 

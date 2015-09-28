@@ -157,6 +157,7 @@ IMPLEMENT_SHARED_INSTANCE(LocationManager);
 #pragma mark -location
 -(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations{
     CLLocation* location = [locations lastObject];
+    self.currentLocation = location;
     [self getCity:location];
 }
 

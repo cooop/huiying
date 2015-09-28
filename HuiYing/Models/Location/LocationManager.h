@@ -18,6 +18,7 @@ DECLARE_SHARED_INSTANCE(LocationManager);
 @property (nonatomic, strong) NSMutableDictionary *cities;
 @property (nonatomic, strong) NSMutableArray *keys; //城市首字母
 @property (nonatomic, assign) BOOL alertShow;
+@property (nonatomic, strong) CLLocation* currentLocation;
 
 -(void)startLocate;
 -(void)endLocate;

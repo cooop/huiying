@@ -62,6 +62,11 @@
     [self.view addSubview:_scrollView];
     
     [_scrollView addSubview:self.centerImageView];
+    
+    UITapGestureRecognizer *doubleTap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(doDoubleTap)];
+    doubleTap.numberOfTapsRequired = 2;
+    doubleTap.numberOfTouchesRequired = 1;
+    [_scrollView addGestureRecognizer:doubleTap];
 
     //设置UIScrollView的滚动范围和图片的真实尺寸一致
     _scrollView.contentSize=self.centerImageView.bounds.size;
@@ -74,11 +79,24 @@
     _scrollView.maximumZoomScale=2.0;
     
     //设置最小伸缩比例
-    _scrollView.minimumZoomScale=0.5;
+    _scrollView.minimumZoomScale=1.0;
 
+}
+
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    _scrollView.zoomScale = 1.0;
 }
 
 -(UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView{
     return self.centerImageView;
+}
+
+-(void)doDoubleTap{
+    if (self.scrollView.zoomScale<= 1.5) {
+        [self.scrollView setZoomScale:2.0 animated:YES];
+    }else{
+        [self.scrollView setZoomScale:1.0 animated:YES];
+    }
 }
 @end
