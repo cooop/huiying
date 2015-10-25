@@ -224,10 +224,10 @@ IMPLEMENT_SHARED_INSTANCE(NetworkManager);
 
 #pragma mark - ticket queries
 -(void)ticketPriceOfSession:(int64_t)sessionID{
-    [self GET:[NSString stringWithFormat:@"%@&page=%d",[URLManager ticketPriceOfSession:sessionID],1] parameters:nil
+    [self GET:[URLManager ticketPriceOfSession:sessionID] parameters:nil
       success:^(AFHTTPRequestOperation *operation, id responseObject) {
           NSMutableArray *ticketMetas = [[NSMutableArray alloc]init];
-          for(id dict in (NSArray*)responseObject[@"results"]){
+          for(id dict in (NSArray*)responseObject){
               TicketMeta *ticketMeta =[[TicketMeta alloc]initWithDict:dict ofSession:sessionID];
               [ticketMetas addObject:ticketMeta];
           }

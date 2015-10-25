@@ -41,7 +41,7 @@
     _location = [[ApplicationSettings sharedInstance]cityName];
     if (!self.cityID) {
         self.location = @"北京";
-        self.cityID  = 100005;
+        self.cityID  = 100006;
     }
 
 }

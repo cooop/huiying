@@ -140,7 +140,12 @@
     versionView.frame= CGRectMake(CGRectGetMaxX(titleLabel.frame)+4, 20, 50, 20);
     versionView.image =[self versionImage:movieMeta];
     descriptionLabel.text = movieMeta.subtitle;
-    infoLabal.text = [NSString stringWithFormat:@"今天%lu家影院%lu场",movieMeta.cinemaNum,movieMeta.sessionNum];
+    if (movieMeta.sessionNum > 0) {
+        infoLabal.text = [NSString stringWithFormat:@"今天%lu家影院余%lu场",movieMeta.cinemaNum,movieMeta.sessionNum];
+    }else{
+        infoLabal.text = @"今天已经没有剩余场次";
+    }
+    
     ratingLabel.text =[NSString stringWithFormat:@"%.1f", (float)movieMeta.rate];
     return cell;
 }

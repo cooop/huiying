@@ -12,6 +12,8 @@
 #import "NetworkManager.h"
 #import "UIImageView+AFNetworking.h"
 #import "TicketMeta.h"
+#import "URLManager.h"
+#import "BuyTicketViewController.h"
 
 @interface TicketViewController ()<UITableViewDataSource,UITableViewDelegate>
 @property (nonatomic, strong) SessionMeta* session;
@@ -32,7 +34,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
-    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, UI_SCREEN_WIDTH, UI_SCREEN_HEIGHT - UI_STATUS_BAR_HEIGHT- UI_NAVIGATION_BAR_HEIGHT)];
+    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, UI_SCREEN_WIDTH, UI_SCREEN_HEIGHT - UI_STATUS_BAR_HEIGHT- UI_NAVIGATION_BAR_HEIGHT) style:UITableViewStylePlain];
     _tableView.dataSource = self;
     _tableView.delegate = self;
     self.tableView.tableFooterView = [[UIView alloc]init];
@@ -109,7 +111,7 @@
     TicketMeta * ticket = self.tickets[indexPath.row];
     
     UIImageView *imageView = [[UIImageView alloc]init];
-    [imageView setImageWithURL:[NSURL URLWithString:ticket.url]];
+    [imageView setImageWithURL:[NSURL URLWithString:[URLManager fullImageURL:[NSString stringWithFormat:@"%@.png", ticket.source]]]];
     imageView.frame = CGRectMake(10, (60-imageView.image.size.height)/2, imageView.image.size.width, imageView.image.size.height);
     
     UILabel* label = [[UILabel alloc]init];
@@ -117,7 +119,7 @@
     label.font = [UIFont systemFontOfSize:15];
     label.textColor = UIColorFromRGB(0x000000);
     CGSize size = [label.text sizeWithAttributes:@{NSFontAttributeName:label.font}];
-    label.frame = CGRectMake(CGRectGetMaxX(imageView.frame)+8, (60 - size.height)/20, size.width, size.height);
+    label.frame = CGRectMake(CGRectGetMaxX(imageView.frame)+8, (60 - size.height)/2, size.width, size.height);
     
     UIImage * buttonImage = [UIImage imageNamed:@"list_movie_btn_buy"];
     UIButton* buyButton = [[UIButton alloc]init];
@@ -125,9 +127,11 @@
     [buyButton setBackgroundImage:buttonImage forState:UIControlStateNormal];
     NSAttributedString* title = [[NSAttributedString alloc]initWithString:@"购票" attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:14],NSForegroundColorAttributeName:UIColorFromRGB(0xFE6F80)}];
     [buyButton setAttributedTitle:title forState:UIControlStateNormal];
+    buyButton.tag = indexPath.row;
+    [buyButton addTarget:self action:@selector(buyButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     
     UILabel* priceLabel = [[UILabel alloc]init];
-    priceLabel.text = [NSString stringWithFormat:@"%f", ticket.currentPrice];
+    priceLabel.text = [NSString stringWithFormat:@"%.0f", ticket.currentPrice];
     priceLabel.font = [UIFont fontWithName:@"HelveticaNeue-Italic" size:18];
     priceLabel.textColor = UIColorFromRGB(0xFF7833);
     size = [priceLabel.text sizeWithAttributes:@{NSFontAttributeName:priceLabel.font}];
@@ -153,6 +157,12 @@
     return [self.tickets count];
 }
 
+-(void)buyButtonPressed:(id)sender{
+    NSInteger index = [sender tag];
+    TicketMeta* ticket = self.tickets[index];
+    BuyTicketViewController* buyVC = [[BuyTicketViewController alloc]initWithURL:ticket.url];
+    [self.navigationController pushViewController:buyVC animated:YES];
+}
 
 
 @end

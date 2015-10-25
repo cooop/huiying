@@ -7,9 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2D28E5241BAF14EE00BC1191 /* MovieImagesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D28E5231BAF14EE00BC1191 /* MovieImagesViewController.m */; settings = {ASSET_TAGS = (); }; };
+		2D28E5241BAF14EE00BC1191 /* MovieImagesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D28E5231BAF14EE00BC1191 /* MovieImagesViewController.m */; };
+		2D7193121BD28D68003B7819 /* libMobClickLibrary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D71930F1BD28D68003B7819 /* libMobClickLibrary.a */; };
 		2D79D4B91B5BF54F004AC143 /* CinemaViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D79D4B81B5BF54F004AC143 /* CinemaViewController.m */; };
 		2D79D4BC1B5C0DB4004AC143 /* MyPoint.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D79D4BB1B5C0DB4004AC143 /* MyPoint.m */; };
+		2D8E73AB1BDD27BC00217BA0 /* BuyTicketViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D8E73AA1BDD27BC00217BA0 /* BuyTicketViewController.m */; };
 		2DB3A6201B7BA4E100EABB03 /* MJRefresh.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 2DB3A6161B7BA4E100EABB03 /* MJRefresh.bundle */; };
 		2DB3A6211B7BA4E100EABB03 /* MJRefreshConst.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DB3A6191B7BA4E100EABB03 /* MJRefreshConst.m */; };
 		2DB3A6221B7BA4E100EABB03 /* UIScrollView+MJExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DB3A61B1B7BA4E100EABB03 /* UIScrollView+MJExtension.m */; };
@@ -32,8 +34,8 @@
 		2DCE30F81B7CFED3003D6AEE /* Reveal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DCE30F71B7CFED3003D6AEE /* Reveal.framework */; };
 		2DCFCA711B5000320013F5B1 /* SessionsMeta.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DCFCA701B5000320013F5B1 /* SessionsMeta.m */; };
 		2DD612141B653F2800D886F9 /* TicketViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DD612131B653F2800D886F9 /* TicketViewController.m */; };
-		2DE115BF1BB031DB00A8D9B7 /* ImagePreviewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DE115BE1BB031DB00A8D9B7 /* ImagePreviewController.m */; settings = {ASSET_TAGS = (); }; };
-		2DE115C21BB0344900A8D9B7 /* ImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DE115C11BB0344900A8D9B7 /* ImageViewController.m */; settings = {ASSET_TAGS = (); }; };
+		2DE115BF1BB031DB00A8D9B7 /* ImagePreviewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DE115BE1BB031DB00A8D9B7 /* ImagePreviewController.m */; };
+		2DE115C21BB0344900A8D9B7 /* ImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DE115C11BB0344900A8D9B7 /* ImageViewController.m */; };
 		2DF0FB9B1B9C84D800A80905 /* LocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DF0FB9A1B9C84D800A80905 /* LocationManager.m */; };
 		E60FD2ED1B2EF9B2001F13B8 /* MovieDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E60FD2EC1B2EF9B2001F13B8 /* MovieDetailViewController.m */; };
 		E6195D8B1B455A6B001DD9E4 /* SessionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E6195D8A1B455A6B001DD9E4 /* SessionViewController.m */; };
@@ -167,10 +169,15 @@
 /* Begin PBXFileReference section */
 		2D28E5221BAF14EE00BC1191 /* MovieImagesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MovieImagesViewController.h; path = Controllers/MovieImagesViewController.h; sourceTree = "<group>"; };
 		2D28E5231BAF14EE00BC1191 /* MovieImagesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MovieImagesViewController.m; path = Controllers/MovieImagesViewController.m; sourceTree = "<group>"; };
+		2D71930F1BD28D68003B7819 /* libMobClickLibrary.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libMobClickLibrary.a; path = ../libMobClickLibrary.a; sourceTree = "<group>"; };
+		2D7193101BD28D68003B7819 /* MobClick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MobClick.h; path = ../MobClick.h; sourceTree = "<group>"; };
+		2D7193111BD28D68003B7819 /* MobClickSocialAnalytics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MobClickSocialAnalytics.h; path = ../MobClickSocialAnalytics.h; sourceTree = "<group>"; };
 		2D79D4B71B5BF54F004AC143 /* CinemaViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CinemaViewController.h; path = Controllers/CinemaViewController.h; sourceTree = "<group>"; };
 		2D79D4B81B5BF54F004AC143 /* CinemaViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CinemaViewController.m; path = Controllers/CinemaViewController.m; sourceTree = "<group>"; };
 		2D79D4BA1B5C0DB4004AC143 /* MyPoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MyPoint.h; path = views/MyPoint.h; sourceTree = "<group>"; };
 		2D79D4BB1B5C0DB4004AC143 /* MyPoint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MyPoint.m; path = views/MyPoint.m; sourceTree = "<group>"; };
+		2D8E73A91BDD27BC00217BA0 /* BuyTicketViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BuyTicketViewController.h; path = Controllers/BuyTicketViewController.h; sourceTree = "<group>"; };
+		2D8E73AA1BDD27BC00217BA0 /* BuyTicketViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BuyTicketViewController.m; path = Controllers/BuyTicketViewController.m; sourceTree = "<group>"; };
 		2DB3A6161B7BA4E100EABB03 /* MJRefresh.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = MJRefresh.bundle; path = views/MJRefresh/MJRefresh.bundle; sourceTree = "<group>"; };
 		2DB3A6171B7BA4E100EABB03 /* MJRefresh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MJRefresh.h; path = views/MJRefresh/MJRefresh.h; sourceTree = "<group>"; };
 		2DB3A6181B7BA4E100EABB03 /* MJRefreshConst.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MJRefreshConst.h; path = views/MJRefresh/MJRefreshConst.h; sourceTree = "<group>"; };
@@ -395,6 +402,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2DCE30F81B7CFED3003D6AEE /* Reveal.framework in Frameworks */,
+				2D7193121BD28D68003B7819 /* libMobClickLibrary.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -673,6 +681,9 @@
 		E6CF12001AFA398A004FBDB7 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				2D71930F1BD28D68003B7819 /* libMobClickLibrary.a */,
+				2D7193101BD28D68003B7819 /* MobClick.h */,
+				2D7193111BD28D68003B7819 /* MobClickSocialAnalytics.h */,
 				2DCE30F71B7CFED3003D6AEE /* Reveal.framework */,
 				E6CF12041AFA398A004FBDB7 /* AppDelegate.h */,
 				E6CF12051AFA398A004FBDB7 /* AppDelegate.m */,
@@ -730,6 +741,7 @@
 		E6CF122B1AFA39F6004FBDB7 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				E6EF770C1B1746DA000BCB4C /* PullDownViewController.m */,
 				E6CF120A1AFA398A004FBDB7 /* MovieListViewController.h */,
 				E6CF120B1AFA398A004FBDB7 /* MovieListViewController.m */,
 				E620C6C81B0CB3A400DB4E55 /* CityListViewController.h */,
@@ -739,7 +751,6 @@
 				E6E951351B15E3360012CDA3 /* MovieTableViewController.h */,
 				E6E951361B15E3360012CDA3 /* MovieTableViewController.m */,
 				E6EF770B1B1746DA000BCB4C /* PullDownViewController.h */,
-				E6EF770C1B1746DA000BCB4C /* PullDownViewController.m */,
 				E6EF770E1B1748CE000BCB4C /* DistrictPullDownViewController.h */,
 				E6EF770F1B1748CE000BCB4C /* DistrictPullDownViewController.m */,
 				E6E7A6221B1DCDDA00464A47 /* OrderPullDownViewController.h */,
@@ -758,6 +769,8 @@
 				2DE115BE1BB031DB00A8D9B7 /* ImagePreviewController.m */,
 				2DE115C01BB0344900A8D9B7 /* ImageViewController.h */,
 				2DE115C11BB0344900A8D9B7 /* ImageViewController.m */,
+				2D8E73A91BDD27BC00217BA0 /* BuyTicketViewController.h */,
+				2D8E73AA1BDD27BC00217BA0 /* BuyTicketViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -887,6 +900,7 @@
 					};
 					E6CF12181AFA398A004FBDB7 = {
 						CreatedOnToolsVersion = 6.3;
+						DevelopmentTeam = 4NRV79QG35;
 						TestTargetID = E6CF11FC1AFA398A004FBDB7;
 					};
 				};
@@ -1036,6 +1050,7 @@
 				E620C6CA1B0CB3A400DB4E55 /* CityListViewController.m in Sources */,
 				2DD612141B653F2800D886F9 /* TicketViewController.m in Sources */,
 				E6DEA9B41AFF6BCB006E87C3 /* MovieDetailMeta.m in Sources */,
+				2D8E73AB1BDD27BC00217BA0 /* BuyTicketViewController.m in Sources */,
 				E6EF770D1B1746DA000BCB4C /* PullDownViewController.m in Sources */,
 				E6DEA9DC1AFF6CCC006E87C3 /* AFHTTPSessionManager.m in Sources */,
 				2DB3A6321B7BA50300EABB03 /* MJRefreshFooter.m in Sources */,
@@ -1226,6 +1241,10 @@
 				INFOPLIST_FILE = HuiYing/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};
@@ -1245,6 +1264,10 @@
 				INFOPLIST_FILE = HuiYing/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -1255,6 +1278,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -1266,6 +1291,7 @@
 				INFOPLIST_FILE = HuiYingTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/HuiYing.app/HuiYing";
 			};
 			name = Debug;
@@ -1274,6 +1300,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -1281,6 +1309,7 @@
 				INFOPLIST_FILE = HuiYingTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/HuiYing.app/HuiYing";
 			};
 			name = Release;

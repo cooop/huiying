@@ -20,6 +20,7 @@ typedef enum TicketAccessMethod{
 @property (nonatomic) TicketAccessMethod accessMethod;
 @property (nonatomic) int64_t sessionID;
 @property (nonatomic) NSString* url;
+@property (nonatomic) NSString* iconUrl;
 
 -(id) initWithDict:(NSDictionary*)dict ofSession:(int64_t)sessionID;
 +(TicketAccessMethod) translateTicketAccessMethod:(NSString*)method;
