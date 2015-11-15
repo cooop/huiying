@@ -9,6 +9,8 @@
 #import "AppDelegate.h"
 #import "ApplicationSettings.h"
 #import "LocationManager.h"
+#import "MobClick.h"
+#import "Constraits.h"
 
 @interface AppDelegate ()
 @property (nonatomic, strong) ApplicationSettings *settings;
@@ -23,6 +25,8 @@
     [self.settings loadSettings];
     
     [[LocationManager sharedInstance] startLocate];
+    
+    [MobClick startWithAppkey:UMengAppkey reportPolicy:SEND_ON_EXIT channelId:nil];
     return YES;
 }
 

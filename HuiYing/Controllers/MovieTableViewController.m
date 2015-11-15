@@ -15,6 +15,7 @@
 #import "MJRefresh.h"
 #import "NetworkManager.h"
 #import "CinemaListViewController.h"
+#import "MobClick.h"
 
 @interface MovieTableViewController ()
 
@@ -179,6 +180,7 @@
     int64_t movieId = [sender tag];
     CinemaListViewController * cinemaListVC = [[CinemaListViewController alloc]initWithCityId:self.cityID movieId:movieId];
     [self.navigationController pushViewController:cinemaListVC animated:YES];
+    [MobClick event:UMengClickBuyInMovieList];
 }
 
 #pragma mark - notification handler

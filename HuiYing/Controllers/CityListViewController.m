@@ -12,6 +12,7 @@
 #import "CityMeta.h"
 #import "NetworkManager.h"
 #import "LocationManager.h"
+#import "MobClick.h"
 
 
 @interface CityListViewController ()
@@ -69,11 +70,13 @@
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(locateSuccess:) name:kLocateSuccessNotification object:nil];
+    [MobClick beginLogPageView:UMengCityList];
 }
 
 -(void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kLocateSuccessNotification object:nil];
+    [MobClick endLogPageView:UMengCityList];
 }
 
 - (void)didReceiveMemoryWarning

@@ -8,6 +8,7 @@
 
 #import "BuyTicketViewController.h"
 #import "Constraits.h"
+#import "MobClick.h"
 
 @interface BuyTicketViewController()<UIWebViewDelegate>
 @property (nonatomic, strong) UIWebView * webView;
@@ -74,6 +75,16 @@
 
 -(void)backToParentView{
     [self.navigationController popViewControllerAnimated:YES];
+}
+
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [MobClick beginLogPageView:UMengBuyTicketWebView];
+}
+
+-(void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    [MobClick endLogPageView:UMengBuyTicketWebView];
 }
 
 - (void)webViewDidStartLoad:(UIWebView *)webView

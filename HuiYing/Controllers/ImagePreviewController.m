@@ -9,6 +9,7 @@
 #import "ImagePreviewController.h"
 #import "ImageViewController.h"
 #import "Constraits.h"
+#import "MobClick.h"
 
 @interface ImagePreviewController ()<UIPageViewControllerDataSource,UIPageViewControllerDelegate>
 @property (nonatomic, strong) UIPageViewController *pageViewController;
@@ -70,6 +71,15 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [MobClick beginLogPageView:UMengImagePreview];
+}
+
+-(void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    [MobClick endLogPageView:UMengImagePreview];
+}
 
 - (void)initPageViewController
 {

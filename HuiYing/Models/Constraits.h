@@ -180,4 +180,22 @@ alpha:(alphaValue)]
 #define UIScreenScale   ([[UIScreen mainScreen] scale])
 #define IsLandscape     (UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation]))
 
+//友盟
+#define UMengAppkey         @"5639ef6be0f55af45b001d7e"
+#define UMengMovieList      @"UMengMovieList"
+#define UMengCinemaList     @"UMengCinemaList"
+#define UMengCityList       @"UMengCityList"
+#define UMengMovieDetail    @"UMengMovieDetail"
+#define UMengSessionList    @"UMengSessionList"
+#define UMengTicketList     @"UMengTicketList"
+#define UMengMovieImagesList    @"UMengMoviewImagesList"
+#define UMengImagePreview       @"UMengImagePreview"
+#define UMengBuyTicketWebView   @"UMengBuyTicketWebView"
+#define UMengCinemaDetail   @"UMengCinemaDetail"
+#define UMengClickBuyInMovieList  @"UMengClickBuyInMovieList"
+#define UMengClickBuyInMovieDetail  @"UMengClickBuyInMovieDetail"
+#define UMengClickBuyInTicketList   @"UMengClickBuyInTicketList"
+#define UMengClickChangeDistrict    @"UMengClickChangeDistrict"
+#define UMengClickChangeOrder       @"UMengClickChangeOrder"
+
 #endif

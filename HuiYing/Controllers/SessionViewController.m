@@ -17,6 +17,7 @@
 #import "CinemaViewController.h"
 #import "TicketViewController.h"
 #import "URLManager.h"
+#import "MobClick.h"
 
 @interface SessionViewController ()
 @property (nonatomic, strong) CinemaMeta* cinema;
@@ -84,11 +85,13 @@
         [self refreshMoviewView];
     }
     [[NetworkManager sharedInstance]movieListInCinema:self.cinema.cinemaID];
+    [MobClick beginLogPageView:UMengSessionList];
 }
 
 -(void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kMovieListSuccessNotification object:nil];
+    [MobClick endLogPageView:UMengSessionList];
 }
 
 -(void)movieListSuccessInCinema:(NSNotification*)notification{

@@ -11,6 +11,7 @@
 #import "Constraits.h"
 #import "URLManager.h"
 #import "ImagePreviewController.h"
+#import "MobClick.h"
 
 #define kImageViewWidth (UI_SCREEN_WIDTH - 40)/4
 
@@ -69,6 +70,16 @@
     
     UIBarButtonItem *backBarButton = [[UIBarButtonItem alloc]initWithCustomView:view];
     self.navigationItem.leftBarButtonItem = backBarButton;
+}
+
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [MobClick beginLogPageView:UMengMovieImagesList];
+}
+
+-(void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    [MobClick endLogPageView:UMengMovieImagesList];
 }
 
 

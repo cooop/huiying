@@ -11,6 +11,7 @@
 		2D7193121BD28D68003B7819 /* libMobClickLibrary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D71930F1BD28D68003B7819 /* libMobClickLibrary.a */; };
 		2D79D4B91B5BF54F004AC143 /* CinemaViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D79D4B81B5BF54F004AC143 /* CinemaViewController.m */; };
 		2D79D4BC1B5C0DB4004AC143 /* MyPoint.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D79D4BB1B5C0DB4004AC143 /* MyPoint.m */; };
+		2D7AEC4C1BE63B8C00FB96BC /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D7AEC4B1BE63B8C00FB96BC /* libz.tbd */; };
 		2D8E73AB1BDD27BC00217BA0 /* BuyTicketViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D8E73AA1BDD27BC00217BA0 /* BuyTicketViewController.m */; };
 		2DB3A6201B7BA4E100EABB03 /* MJRefresh.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 2DB3A6161B7BA4E100EABB03 /* MJRefresh.bundle */; };
 		2DB3A6211B7BA4E100EABB03 /* MJRefreshConst.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DB3A6191B7BA4E100EABB03 /* MJRefreshConst.m */; };
@@ -176,6 +177,7 @@
 		2D79D4B81B5BF54F004AC143 /* CinemaViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CinemaViewController.m; path = Controllers/CinemaViewController.m; sourceTree = "<group>"; };
 		2D79D4BA1B5C0DB4004AC143 /* MyPoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MyPoint.h; path = views/MyPoint.h; sourceTree = "<group>"; };
 		2D79D4BB1B5C0DB4004AC143 /* MyPoint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MyPoint.m; path = views/MyPoint.m; sourceTree = "<group>"; };
+		2D7AEC4B1BE63B8C00FB96BC /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		2D8E73A91BDD27BC00217BA0 /* BuyTicketViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BuyTicketViewController.h; path = Controllers/BuyTicketViewController.h; sourceTree = "<group>"; };
 		2D8E73AA1BDD27BC00217BA0 /* BuyTicketViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BuyTicketViewController.m; path = Controllers/BuyTicketViewController.m; sourceTree = "<group>"; };
 		2DB3A6161B7BA4E100EABB03 /* MJRefresh.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = MJRefresh.bundle; path = views/MJRefresh/MJRefresh.bundle; sourceTree = "<group>"; };
@@ -401,6 +403,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2D7AEC4C1BE63B8C00FB96BC /* libz.tbd in Frameworks */,
 				2DCE30F81B7CFED3003D6AEE /* Reveal.framework in Frameworks */,
 				2D7193121BD28D68003B7819 /* libMobClickLibrary.a in Frameworks */,
 			);
@@ -645,6 +648,7 @@
 		E6CF11F41AFA398A004FBDB7 = {
 			isa = PBXGroup;
 			children = (
+				2D7AEC4B1BE63B8C00FB96BC /* libz.tbd */,
 				E620C6C51B0CB2AE00DB4E55 /* Resource */,
 				E6CF11FF1AFA398A004FBDB7 /* HuiYing */,
 				E6CF121C1AFA398A004FBDB7 /* HuiYingTests */,
@@ -1183,7 +1187,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "1f119707-56f2-4923-9e61-50787325c3a0";
+				PROVISIONING_PROFILE = "0c274e10-e3d4-499a-b4ce-bdd8fefa4b9a";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -1221,7 +1225,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE = "f590a80a-293d-47df-aec4-5aabebbe53a4";
+				PROVISIONING_PROFILE = "70cf2805-cb61-43e5-ae05-8ec0df4de3c5";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -1245,6 +1249,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.huiying.iphone;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};
@@ -1255,7 +1260,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Jiaxing Qiluo Network Co., Ltd. (XGU2TF5WC8)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1269,8 +1274,9 @@
 					"$(PROJECT_DIR)",
 				);
 				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = com.huiying.iphone;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "92297af4-1975-4200-89b8-3e63a7a0ec21";
 			};
 			name = Release;
 		};

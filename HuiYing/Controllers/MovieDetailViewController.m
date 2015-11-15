@@ -18,6 +18,7 @@
 #import "MovieImagesViewController.h"
 #import "ImagePreviewController.h"
 #import "LocationManager.h"
+#import "MobClick.h"
 
 @interface MovieDetailViewController ()
 @property (nonatomic, strong) MovieDetailMeta * movieDetail;
@@ -362,6 +363,13 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(movieDetailListSuccess:) name:kMovieDetailListSuccessNotification object:nil];
     [[NetworkManager sharedInstance] movieListDetailWithID:self.movieID];
+    [MobClick beginLogPageView:UMengMovieDetail];
+}
+
+-(void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kMovieDetailListSuccessNotification object:nil];
+    [MobClick endLogPageView:UMengMovieDetail];
 }
 
 - (void)movieDetailListSuccess:(NSNotification*)notification
@@ -545,6 +553,7 @@
     CinemaListViewController* clvc = [[CinemaListViewController alloc]initWithCityId:[[ApplicationSettings sharedInstance] cityID] movieId:self.movieID];
     clvc.currentLocation = [[LocationManager sharedInstance] currentLocation];
     [self.navigationController pushViewController:clvc animated:YES];
+    [MobClick event:UMengClickBuyInMovieDetail];
 }
 
 @end

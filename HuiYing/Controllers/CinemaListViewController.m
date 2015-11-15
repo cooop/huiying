@@ -14,6 +14,7 @@
 #import "SessionViewController.h"
 #import "MJRefresh.h"
 #import "NetworkManager.h"
+#import "MobClick.h"
 
 @interface CinemaListViewController ()<UITableViewDataSource,UITableViewDelegate>
 @property (nonatomic, strong) UIView* districtView;
@@ -160,12 +161,14 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(observeCinemaList:) name:kCinemaListInCitySuccessNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(locationDidChange:) name:kLocateSuccessNotification object:nil];
     [[NetworkManager sharedInstance]cinemaListInCity:self.cityID movie:self.movieId inDistrict:(self.selectedDistrict?self.selectedDistrict.districtID:-1) page:1 location:self.currentLocation orderBy:self.selectedOrderType];
+    [MobClick beginLogPageView:UMengCinemaList];
 }
 
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kCinemaListInCitySuccessNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kLocateSuccessNotification object:nil];
+    [MobClick endLogPageView:UMengCinemaList];
 }
 
 #pragma mark - Table view data source
@@ -322,6 +325,7 @@
 
 
 -(void)districtPullDown{
+    [MobClick event:UMengClickChangeDistrict];
     if (self.orderViewController) {
         [self hideOrderView];
     }
@@ -333,6 +337,7 @@
 }
 
 -(void)orderPullDown{
+    [MobClick event:UMengClickChangeOrder];
     if (self.districtViewController) {
         [self hideDistrictView];
     }

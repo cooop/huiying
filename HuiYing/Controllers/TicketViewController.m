@@ -14,6 +14,7 @@
 #import "TicketMeta.h"
 #import "URLManager.h"
 #import "BuyTicketViewController.h"
+#import "MobClick.h"
 
 @interface TicketViewController ()<UITableViewDataSource,UITableViewDelegate>
 @property (nonatomic, strong) SessionMeta* session;
@@ -74,6 +75,7 @@
     [super viewWillAppear:animated];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(ticketListSuccess:) name:kTicketListSuccessNotification object:nil];
     [[NetworkManager sharedInstance]ticketPriceOfSession:self.session.sessionID];
+    [MobClick beginLogPageView:UMengTicketList];
 }
 
 -(void)ticketListSuccess:(NSNotification*)notification{
@@ -85,6 +87,7 @@
 -(void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     [[NSNotificationCenter defaultCenter] removeObserver:kCinemaDetailListSuccessNotification];
+    [MobClick endLogPageView:UMengTicketList];
 }
 
 
@@ -162,6 +165,7 @@
     TicketMeta* ticket = self.tickets[index];
     BuyTicketViewController* buyVC = [[BuyTicketViewController alloc]initWithURL:ticket.url];
     [self.navigationController pushViewController:buyVC animated:YES];
+    [MobClick event:UMengClickBuyInTicketList];
 }
 
 

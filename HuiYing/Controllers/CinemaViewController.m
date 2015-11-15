@@ -10,6 +10,7 @@
 #import "CinemaDetailMeta.h"
 #import "NetworkManager.h"
 #import "MyPoint.h"
+#import "MobClick.h"
 
 @interface CinemaViewController ()<MKMapViewDelegate,UITableViewDataSource,UITableViewDelegate>
 @property (nonatomic, strong) MKMapView* mapView;
@@ -134,11 +135,13 @@
     [super viewWillAppear:animated];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(cinemaDetailListSuccess:) name:kCinemaDetailListSuccessNotification object:nil];
     [[NetworkManager sharedInstance]cinemaListDetailWithID:self.cinemaID];
+    [MobClick beginLogPageView:UMengCinemaDetail];
 }
 
 -(void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     [[NSNotificationCenter defaultCenter] removeObserver:kCinemaDetailListSuccessNotification];
+    [MobClick endLogPageView:UMengCinemaDetail];
 }
 
 - (void)cinemaDetailListSuccess:(NSNotification*)notification{

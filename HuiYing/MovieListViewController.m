@@ -15,6 +15,7 @@
 #import "MJRefresh.h"
 #import "CityMeta.h"
 #import "LocationManager.h"
+#import "MobClick.h"
 
 @interface MovieListViewController ()<UIAlertViewDelegate>
 
@@ -126,12 +127,16 @@
 -(void)switchBetweenMovieAndCinema{
     if (self.segmentedControl.selectedSegmentIndex == 1) {
         self.movieTableViewController.tableView.hidden = YES;
+        [MobClick endLogPageView:UMengMovieList];
         self.cinemaListViewController.view.hidden = NO;
         [self.cinemaListViewController.tableView reloadData];
+        [MobClick beginLogPageView:UMengCinemaList];
     }else{
         self.cinemaListViewController.view.hidden = YES;
+        [MobClick endLogPageView:UMengCinemaList];
         self.movieTableViewController.tableView.hidden = NO;
         [self.movieTableViewController.tableView reloadData];
+        [MobClick beginLogPageView:UMengMovieList];
     }
 }
 
