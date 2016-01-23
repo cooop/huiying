@@ -17,4 +17,7 @@
 +(UIImage *)image:(UIImage *)image rotation:(UIImageOrientation)orientation;
 +(UIImage*)defaultBlurImage:(UIImage*)image;
 
++(UIImage*)versionImage:(NSString*)version;
++(NSString*)versionString:(NSString *)versionString;
+
 @end

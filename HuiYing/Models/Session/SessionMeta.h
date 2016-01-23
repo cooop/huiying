@@ -11,7 +11,7 @@
 
 @interface SessionMeta : NSObject
 @property (nonatomic) int64_t sessionID;
-@property (nonatomic) MovieVersion version;
+@property (nonatomic,strong) NSString* version;
 @property (nonatomic,strong) NSDate* startTime;
 @property (nonatomic,strong) NSDate* endTime;
 @property (nonatomic) int64_t maxPrice;

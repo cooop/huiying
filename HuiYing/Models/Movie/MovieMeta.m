@@ -16,7 +16,7 @@
         _chineseName = [dict objectForKey:kJSONKeyMovieCName];
         _englishName = [dict objectForKey:kJSONKeyMovieEName];
         _subtitle = [dict objectForKey:kJSONKeyMovieSubtitle];
-        _version = [MovieMeta translateMovieVersion:[dict objectForKey:kJSONKeyMovieVersions]];
+        _version = [dict objectForKey:kJSONKeyMovieVersions];
         _rate = [[dict objectForKey:kJSONKeyMovieRate]floatValue];
         _coverImage = [dict objectForKey:kJSONKeyMovieCoverImage];
         _cinemaNum = [[dict objectForKey:kJSONKeyMovieCinemaNum]intValue];
@@ -25,22 +25,8 @@
     return self;
 }
 
-+(MovieVersion) translateMovieVersion:(NSString *) version{
-    if ([version isEqualToString:@"2d"]) {
-        return kMovieVersion2D;
-    }else if([version isEqualToString:@"2dimax"]){
-        return kMovieVersion2DIMAX;
-    }else if ([version isEqualToString:@"3d"]){
-        return kMovieVersion3D;
-    }else if ([version isEqualToString:@"3dimax"]){
-        return kMovieVersion3DIMAX;
-    }else{
-        return kMovieVersionUnknown;
-    }
-}
-
 -(NSString *)description{
-    return [NSString stringWithFormat:@"MovieMeta{\n\tmovieID : %lld,\n\tchineseName : %@,\n\tenglishName : %@,\n\tsubtitle : %@,\n\tversion : %d,\n\trate : %f,\n\tcoverImage : %@\n}",_movieID,_chineseName,_englishName,_subtitle,_version,_rate,_coverImage];
+    return [NSString stringWithFormat:@"MovieMeta{\n\tmovieID : %lld,\n\tchineseName : %@,\n\tenglishName : %@,\n\tsubtitle : %@,\n\tversion : %@,\n\trate : %f,\n\tcoverImage : %@\n}",_movieID,_chineseName,_englishName,_subtitle,_version,_rate,_coverImage];
 }
 
 @end

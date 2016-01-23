@@ -220,7 +220,7 @@
     _moreButton = [[UIButton alloc]init];
     UIImage * downArrowImage = [UIImage imageNamed:@"intro_movie_arrow"];
     [_moreButton setImage:downArrowImage forState:UIControlStateNormal];
-    _moreButton.frame = CGRectMake((UI_SCREEN_WIDTH - downArrowImage.size.width)/2, 150 -downArrowImage.size.height, downArrowImage.size.width, downArrowImage.size.height);
+    _moreButton.frame = CGRectMake(0, 150 - downArrowImage.size.height, UI_SCREEN_WIDTH, downArrowImage.size.height);
     [_moreButton addTarget:self action:@selector(moreButtonPressed) forControlEvents:UIControlEventTouchUpInside];
     [_descriptionView addSubview:_moreButton];
     
@@ -246,7 +246,7 @@
     if ([self isFullDescription]) {
         [_moreButton setImage:downArrowImage forState:UIControlStateNormal];
         _descriptionView.frame = CGRectMake(0, 132, UI_SCREEN_WIDTH, 160);
-        _moreButton.frame = CGRectMake((UI_SCREEN_WIDTH - downArrowImage.size.width)/2, 150 -downArrowImage.size.height, downArrowImage.size.width, downArrowImage.size.height);
+        _moreButton.frame = CGRectMake(0, 150 -downArrowImage.size.height, UI_SCREEN_WIDTH, downArrowImage.size.height);
         _movieDescriptionView.frame = CGRectMake(10, CGRectGetMaxY(_tipLabel.frame)+5, UI_SCREEN_WIDTH -20, 130 - size.height - downArrowImage.size.height);
         _movieDescriptionView.contentSize = _movieDescriptionView.frame.size;
         self.fullDescription = NO;
@@ -256,7 +256,7 @@
         if (deSize.height > 130 - size.height - downArrowImage.size.height) {
             CGFloat height = 30+size.height+downArrowImage.size.height+ deSize.height;
             _descriptionView.frame = CGRectMake(0, 132, UI_SCREEN_WIDTH,height);
-            _moreButton.frame = CGRectMake((UI_SCREEN_WIDTH - downArrowImage.size.width)/2, height - 10 -downArrowImage.size.height, downArrowImage.size.width, downArrowImage.size.height);
+            _moreButton.frame = CGRectMake(0, height - 10 -downArrowImage.size.height, UI_SCREEN_WIDTH, downArrowImage.size.height);
             _movieDescriptionView.frame = CGRectMake(10, CGRectGetMaxY(_tipLabel.frame)+5, UI_SCREEN_WIDTH -20, deSize.height);
         }
         self.fullDescription = YES;
@@ -406,7 +406,7 @@
     size = [_ratingLabel.text sizeWithAttributes:@{NSFontAttributeName:_ratingLabel.font}];
     _ratingLabel.frame = CGRectMake(CGRectGetMaxX(_star5.frame)+6, CGRectGetMaxY(_durationLabel.frame)+10,size.width, size.height);
     
-    _versionImageView.image = [self versionImage:self.movieDetail];
+    _versionImageView.image = [Utils versionImage:self.movieDetail.version];
     size = _versionImageView.image.size;
     _versionImageView.frame = CGRectMake(CGRectGetMaxX(_titleLabel.frame)+4, 24, size.width, size.height);
     
@@ -529,24 +529,6 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
-}
-
--(UIImage*)versionImage:(MovieMeta*)movieMeta{
-    UIImage* image = nil;
-    switch (movieMeta.version) {
-        case kMovieVersion2DIMAX:
-            image = [UIImage imageNamed:@"list_movie_ico_imax2d"];
-            break;
-        case kMovieVersion3D:
-            image = [UIImage imageNamed:@"list_movie_ico_3d"];
-            break;
-        case kMovieVersion3DIMAX:
-            image = [UIImage imageNamed:@"list_movie_ico_imax3d"];
-            break;
-        default:
-            break;
-    }
-    return image;
 }
 
 -(void)buyButtonPressed:(id)sender{

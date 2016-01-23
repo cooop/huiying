@@ -56,7 +56,7 @@
     UIBarButtonItem *backBarButton = [[UIBarButtonItem alloc]initWithCustomView:view];
     self.navigationItem.leftBarButtonItem = backBarButton;
     
-    _tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
+    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, UI_SCREEN_WIDTH, UI_SCREEN_HEIGHT - UI_NAVIGATION_BAR_HEIGHT- UI_STATUS_BAR_HEIGHT) style:UITableViewStylePlain];
     _tableView.backgroundColor = [UIColor whiteColor];
     _tableView.sectionIndexBackgroundColor = [UIColor clearColor];
     _tableView.sectionIndexColor = UIColorFromRGB(0x008BFF);

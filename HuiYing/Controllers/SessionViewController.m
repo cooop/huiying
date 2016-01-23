@@ -18,6 +18,7 @@
 #import "TicketViewController.h"
 #import "URLManager.h"
 #import "MobClick.h"
+#import "Utils.h"
 
 @interface SessionViewController ()
 @property (nonatomic, strong) CinemaMeta* cinema;
@@ -122,7 +123,7 @@
     NSDictionary* userInfo = [notification userInfo];
     SessionsMeta* sessions = userInfo[kUserInfoKeySessions];
     self.dates = sessions.dates;
-    if (self.dates.count >0) {
+    if (self.selectedDate == nil && self.dates.count >0) {
         self.selectedDate = self.dates[0];
     }
     self.sessions = sessions.dateSessionsDic;
@@ -243,7 +244,7 @@
     CGSize size = [self.movieName.text sizeWithAttributes:@{NSFontAttributeName:self.movieName.font}];
     self.movieName.frame = CGRectMake(10, (46-size.height)/2, size.width, size.height);
     
-    self.movieVersion.image = [self versionImage:self.selectedMovie];
+    self.movieVersion.image = [Utils versionImage:self.selectedMovie.version];
     size = self.movieVersion.image.size;
     self.movieVersion.frame = CGRectMake(CGRectGetMaxX(self.movieName.frame)+5, (46-size.height)/2, size.width, size.height);
     
@@ -252,24 +253,6 @@
     self.movieRate.frame = CGRectMake(CGRectGetMaxX(self.movieVersion.frame)+8, (46-size.height)/2, size.width, size.height);
     
     [[NetworkManager sharedInstance]sessionOfMovie:self.selectedMovie.movieID inCinema:self.cinema.cinemaID];
-}
-
--(UIImage*)versionImage:(MovieMeta*)movieMeta{
-    UIImage* image = nil;
-    switch (movieMeta.version) {
-        case kMovieVersion2DIMAX:
-            image = [UIImage imageNamed:@"list_movie_ico_imax2d"];
-            break;
-        case kMovieVersion3D:
-            image = [UIImage imageNamed:@"list_movie_ico_3d"];
-            break;
-        case kMovieVersion3DIMAX:
-            image = [UIImage imageNamed:@"list_movie_ico_imax3d"];
-            break;
-        default:
-            break;
-    }
-    return image;
 }
 
 -(void)backToParentView{
@@ -396,6 +379,7 @@
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
     if ([collectionView isEqual:self.imageCollectionView]) {
         self.selectedMovie = self.movies[indexPath.row];
+        self.selectedDate = nil;
         [self refreshMoviewView];
         [self.imageCollectionView reloadData];
     }else{
@@ -429,7 +413,7 @@
     endTimeLabel.frame = CGRectMake(15, 44, size.width, size.height);
     
     UILabel* movieLabel = [[UILabel alloc]init];
-    movieLabel.text = [NSString stringWithFormat:@"%@/%@", [self versionString:session.version],session.language];
+    movieLabel.text = [NSString stringWithFormat:@"%@/%@", [Utils versionString:session.version],session.language];
     movieLabel.font = [UIFont systemFontOfSize:13];
     movieLabel.textColor = UIColorFromRGB(0x6E6E6E);
     size = [movieLabel.text sizeWithAttributes:@{NSFontAttributeName:movieLabel.font}];
@@ -443,7 +427,11 @@
     roomLabel.frame = CGRectMake((UI_SCREEN_WIDTH-size.width)/2, 44, size.width, size.height);
     
     UILabel* priceLabel = [[UILabel alloc]init];
-    priceLabel.text = [NSString stringWithFormat:@"%lld-%lld", session.minPrice, session.maxPrice];
+    if (session.minPrice == session.maxPrice) {
+        priceLabel.text = [NSString stringWithFormat:@"%lld", session.minPrice];
+    }else{
+        priceLabel.text = [NSString stringWithFormat:@"%lld-%lld", session.minPrice, session.maxPrice];
+    }
     priceLabel.font = [UIFont fontWithName:@"HelveticaNeue-Italic" size:18];
     priceLabel.textColor = UIColorFromRGB(0xFF7833);
     size = [priceLabel.text sizeWithAttributes:@{NSFontAttributeName:priceLabel.font}];
@@ -494,24 +482,6 @@
         }
     }
     return nil;
-}
-
--(NSString*)versionString:(MovieVersion)movieVersion{
-    NSString* str = @"2D";
-    switch (movieVersion) {
-        case kMovieVersion2DIMAX:
-            str = @"2D IMAX";
-            break;
-        case kMovieVersion3D:
-            str = @"3D";
-            break;
-        case kMovieVersion3DIMAX:
-            str = @"3D IMAX";
-            break;
-        default:
-            break;
-    }
-    return str;
 }
 
 -(void)cinemaPressed:(id)sender{

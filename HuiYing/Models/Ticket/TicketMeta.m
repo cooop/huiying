@@ -13,6 +13,7 @@
 -(id)initWithDict:(NSDictionary *)dict ofSession:(int64_t)sessionID{
     if (self =[super init]) {
         _source = [dict objectForKey:kJSONKeyTicketSource];
+        _cname = [self translateSource:self.source];
         _url = [dict objectForKey:kJSONKeyTicketImageUrl];
         _originalPrice = [[dict objectForKey:kJSONKeyTicketOriginalPrice]floatValue];
         _currentPrice = [[dict objectForKey:kJSONKeyTicketCurrentPrice]floatValue];
@@ -28,6 +29,16 @@
     }else{
         return kTicketAccessMethodWeb;
     }
+}
+
+-(NSString*)translateSource:(NSString*)ename{
+    NSString* cname = ename;
+    if ([ename isEqualToString:@"taobao"]) {
+        cname =  @"淘宝电影";
+    }else if([ename isEqualToString:@"netease"]){
+        cname = @"网易电影";
+    }
+    return cname;
 }
 
 -(NSString *)description{

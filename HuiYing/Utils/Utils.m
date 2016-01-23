@@ -91,4 +91,39 @@
     return [image applyBlurWithRadius:5.0f tintColor:[UIColor colorWithWhite:0.85f alpha:0.75f] saturationDeltaFactor:1.8f maskImage:nil];
 }
 
++(UIImage*)versionImage:(NSString *)versionString{
+    NSArray* versions = [versionString componentsSeparatedByString:@"/"];
+    NSString* highestQuality = @"";
+    for (NSString* version in versions) {
+        if ([version isEqualToString:@"IMAX"]) {
+            highestQuality = @"list_movie_ico_imax3d";
+            break;
+        }
+        if([version isEqualToString:@"3D"]){
+            highestQuality = @"list_movie_ico_3d";
+        }
+    }
+    if ([highestQuality isEqualToString:@""]) {
+        return nil;
+    }
+    return [UIImage imageNamed:highestQuality];
+
+}
+
++(NSString*)versionString:(NSString *)versionString{
+    NSArray* versions = [versionString componentsSeparatedByString:@"/"];
+    NSString* highestQuality = @"2D";
+    for (NSString* version in versions) {
+        if ([version isEqualToString:@"IMAX"]) {
+            highestQuality = @"IMAX";
+            break;
+        }
+        if([version isEqualToString:@"3D"]){
+            highestQuality = @"3D";
+        }
+    }
+    return highestQuality;
+}
+
+
 @end

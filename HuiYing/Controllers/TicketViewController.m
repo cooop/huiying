@@ -113,14 +113,21 @@
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     TicketMeta * ticket = self.tickets[indexPath.row];
     
-    UIImageView *imageView = [[UIImageView alloc]init];
-    [imageView setImageWithURL:[NSURL URLWithString:[URLManager fullImageURL:[NSString stringWithFormat:@"%@.png", ticket.source]]]];
-    imageView.frame = CGRectMake(10, (60-imageView.image.size.height)/2, imageView.image.size.width, imageView.image.size.height);
-    
     UILabel* label = [[UILabel alloc]init];
-    label.text = ticket.source;
+    label.text = ticket.cname;
     label.font = [UIFont systemFontOfSize:15];
     label.textColor = UIColorFromRGB(0x000000);
+    
+    UIImageView *imageView = [[UIImageView alloc]init];
+    __weak UIImageView* weakImageView = imageView;
+    NSURLRequest * urlRequest = [[NSURLRequest alloc]initWithURL:[NSURL URLWithString:[URLManager fullImageURL:[NSString stringWithFormat:@"%@.png", ticket.source]]]];
+    [imageView setImageWithURLRequest:urlRequest placeholderImage:nil success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
+        weakImageView.image = image;
+        weakImageView.frame = CGRectMake(10, (60-image.size.height)/2, image.size.width, image.size.height);
+        CGSize size = [label.text sizeWithAttributes:@{NSFontAttributeName:label.font}];
+        label.frame = CGRectMake(CGRectGetMaxX(weakImageView.frame)+8, (60 - size.height)/2, size.width, size.height);
+    } failure:nil];
+    
     CGSize size = [label.text sizeWithAttributes:@{NSFontAttributeName:label.font}];
     label.frame = CGRectMake(CGRectGetMaxX(imageView.frame)+8, (60 - size.height)/2, size.width, size.height);
     
@@ -160,8 +167,16 @@
     return [self.tickets count];
 }
 
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    [self buyWithIndex:indexPath.row];
+}
+
 -(void)buyButtonPressed:(id)sender{
     NSInteger index = [sender tag];
+    [self buyWithIndex:index];
+}
+
+-(void)buyWithIndex:(NSInteger)index{
     TicketMeta* ticket = self.tickets[index];
     BuyTicketViewController* buyVC = [[BuyTicketViewController alloc]initWithURL:ticket.url];
     [self.navigationController pushViewController:buyVC animated:YES];

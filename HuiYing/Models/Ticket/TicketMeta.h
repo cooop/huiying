@@ -15,6 +15,7 @@ typedef enum TicketAccessMethod{
 
 @interface TicketMeta : NSObject
 @property (nonatomic) NSString* source;
+@property (nonatomic) NSString* cname;
 @property (nonatomic) float originalPrice;
 @property (nonatomic) float currentPrice;
 @property (nonatomic) TicketAccessMethod accessMethod;

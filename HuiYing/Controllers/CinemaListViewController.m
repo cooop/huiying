@@ -59,7 +59,7 @@
     self.view.backgroundColor = [UIColor whiteColor];
     self.tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
-    self.tableView.frame = CGRectMake(0, 36, UI_SCREEN_WIDTH, UI_SCREEN_HEIGHT - UI_STATUS_BAR_HEIGHT - UI_NAVIGATION_BAR_HEIGHT);
+    self.tableView.frame = CGRectMake(0, 36, UI_SCREEN_WIDTH, UI_SCREEN_HEIGHT - UI_STATUS_BAR_HEIGHT - UI_NAVIGATION_BAR_HEIGHT - 36);
     self.tableView.rowHeight = 80;
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
@@ -482,5 +482,7 @@
 -(void)backToParentView{
     [self.navigationController popViewControllerAnimated:YES];
 }
+
+
 
 @end

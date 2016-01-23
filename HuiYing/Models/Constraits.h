@@ -198,4 +198,9 @@ alpha:(alphaValue)]
 #define UMengClickChangeDistrict    @"UMengClickChangeDistrict"
 #define UMengClickChangeOrder       @"UMengClickChangeOrder"
 
+//广点通
+#define GDTAPPKEY @"1105032879"
+#define GDTBANNERID @"3030805841859947"
+#define GDTLAUNCHID @"4010007811651979"
+
 #endif

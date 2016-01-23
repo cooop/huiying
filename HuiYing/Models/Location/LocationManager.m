@@ -88,18 +88,22 @@ IMPLEMENT_SHARED_INSTANCE(LocationManager);
         NSString* cityKey = nil;
         if ((cityKey = enumerator.nextObject) != nil) {
             NSString* key = cityKey;
-            if ([cityKey isEqualToString:@"hot"]) {
-                [self.keys addObject:@"热门"];
-                key = @"热门";
-            }else{
-                [self.keys addObject:cityKey];
-            }
+            
             NSMutableArray * cityArray = [NSMutableArray array];
             for(NSDictionary* city in cityDict[cityKey]){
                 CityMeta* cityMeta =[[CityMeta alloc]initWithDict:city];
                 [cityArray addObject:cityMeta];
             }
-            [self.cities setValue:cityArray forKey:key];
+            
+            if ([cityArray count] > 0) {
+                if ([cityKey isEqualToString:@"hot"]) {
+                    [self.keys addObject:@"热门"];
+                    key = @"热门";
+                }else{
+                    [self.keys addObject:cityKey];
+                }
+                [self.cities setValue:cityArray forKey:key];
+            }
         }
     }
     [self getCityData];
@@ -183,6 +187,8 @@ IMPLEMENT_SHARED_INSTANCE(LocationManager);
 
 -(void)cityListSuccess:(NSNotification*)notification{
     NSDictionary * userInfo = [notification userInfo];
+    [self.keys removeAllObjects];
+    [self.cities removeAllObjects];
     [self parseCityList:userInfo[kUserInfoKeyCities]];
     self.cityList = userInfo[kUserInfoKeyCities];
     [ApplicationSettings sharedInstance].cityList = self.cityList;

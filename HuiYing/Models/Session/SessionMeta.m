@@ -14,7 +14,7 @@
 -(id)initWithDict:(NSDictionary *)dict ofMovie:(int64_t)movieID inCinema:(int64_t)cinemaID{
     if (self = [super init]) {
         _sessionID = [[dict objectForKey:kJSONKeySessionID]intValue];
-        _version = [MovieMeta translateMovieVersion:[dict objectForKey:kJSONKeySessionVersion]];
+        _version = [dict objectForKey:kJSONKeySessionVersion];
         _startTime = [Utils formatDate:[dict objectForKey:kJSONKeySessionStartTime]];
         _endTime = [Utils formatDate:[dict objectForKey:kJSONKeySessionEndTime]];
         _maxPrice = [[dict objectForKey:kJSONKeySessionMaxPrice]integerValue];

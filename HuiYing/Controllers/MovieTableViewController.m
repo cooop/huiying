@@ -16,6 +16,7 @@
 #import "NetworkManager.h"
 #import "CinemaListViewController.h"
 #import "MobClick.h"
+#import "Utils.h"
 
 @interface MovieTableViewController ()
 
@@ -98,7 +99,6 @@
     descriptionLabel.font = [UIFont systemFontOfSize:13];
     descriptionLabel.textColor = UIColorFromRGB(0x6E6E6E);
     
-    
     UILabel *infoLabal = [[UILabel alloc]init];
     infoLabal.frame = CGRectMake(CGRectGetMaxX(coverImageView.frame)+10, 78, 150, 15);
     infoLabal.backgroundColor = [UIColor clearColor];
@@ -126,6 +126,11 @@
     buyButton.tag = movieMeta.movieID;
     [buyButton setAttributedTitle:title forState:UIControlStateNormal];
     
+    if (CGRectGetMaxX(descriptionLabel.frame) > CGRectGetMinX(buyButton.frame)) {
+        descriptionLabel.frame = CGRectMake(descriptionLabel.frame.origin.x, descriptionLabel.frame.origin.y, CGRectGetMinX(buyButton.frame) - CGRectGetMinX(descriptionLabel.frame) - 5, descriptionLabel.frame.size.height);
+    }
+
+    
     [cell addSubview:coverImageView];
     [cell addSubview:titleLabel];
     [cell addSubview:versionView];
@@ -139,7 +144,7 @@
     CGFloat titleWidth = [titleLabel.text sizeWithAttributes:@{NSFontAttributeName:titleLabel.font}].width;
     titleLabel.frame = CGRectMake(CGRectGetMaxX(coverImageView.frame)+10, 20, titleWidth, 20);
     versionView.frame= CGRectMake(CGRectGetMaxX(titleLabel.frame)+4, 20, 50, 20);
-    versionView.image =[self versionImage:movieMeta];
+    versionView.image =[Utils versionImage:movieMeta.version];
     descriptionLabel.text = movieMeta.subtitle;
     if (movieMeta.sessionNum > 0) {
         infoLabal.text = [NSString stringWithFormat:@"今天%lu家影院余%lu场",movieMeta.cinemaNum,movieMeta.sessionNum];
@@ -150,25 +155,6 @@
     ratingLabel.text =[NSString stringWithFormat:@"%.1f", (float)movieMeta.rate];
     return cell;
 }
-
--(UIImage*)versionImage:(MovieMeta*)movieMeta{
-    UIImage* image = nil;
-    switch (movieMeta.version) {
-        case kMovieVersion2DIMAX:
-            image = [UIImage imageNamed:@"list_movie_ico_imax2d"];
-            break;
-        case kMovieVersion3D:
-            image = [UIImage imageNamed:@"list_movie_ico_3d"];
-            break;
-        case kMovieVersion3DIMAX:
-            image = [UIImage imageNamed:@"list_movie_ico_imax3d"];
-            break;
-        default:
-            break;
-    }
-    return image;
-}
-
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     MovieMeta *movie = self.movies[indexPath.row];

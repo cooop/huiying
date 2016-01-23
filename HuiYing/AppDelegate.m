@@ -11,15 +11,39 @@
 #import "LocationManager.h"
 #import "MobClick.h"
 #import "Constraits.h"
+#import "GDTSplashAd.h"
 
-@interface AppDelegate ()
+@interface AppDelegate ()<GDTSplashAdDelegate>
 @property (nonatomic, strong) ApplicationSettings *settings;
+@property (nonatomic, strong) GDTSplashAd * splash;
 @end
 
 @implementation AppDelegate
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    //开屏广告初始化并展示代码
+    GDTSplashAd *splash = [[GDTSplashAd alloc] initWithAppkey:GDTAPPKEY placementId:GDTLAUNCHID];
+    splash.delegate = self; //设置代理
+    //根据iPhone设备不同设置不同背景图
+    CGFloat height = [[UIScreen mainScreen] bounds].size.height;
+    if(height >= 736.0f){
+        splash.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"LaunchImage-800-Portrait-736h"]];
+    }else if(height >= 667.0f){
+        splash.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"LaunchImage-800-667h"]];
+    }else if(height >= 568.0f) {
+        splash.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"LaunchImage-568h"]];
+    } else {
+        splash.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"LaunchImage"]];
+    }
+    splash.fetchDelay = 3; //开发者可以设置开屏拉取时间,超时则放弃展示
+    //开屏广告拉取并展示在当前window中
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [splash loadAdAndShowInWindow:self.window];
+    });
+    self.splash = splash;
+
+    
     // Override point for customization after application launch.
     self.settings = [ApplicationSettings sharedInstance];
     [self.settings loadSettings];
@@ -27,6 +51,7 @@
     [[LocationManager sharedInstance] startLocate];
     
     [MobClick startWithAppkey:UMengAppkey reportPolicy:SEND_ON_EXIT channelId:nil];
+    
     return YES;
 }
 
