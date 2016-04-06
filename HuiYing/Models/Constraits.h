@@ -3,7 +3,7 @@
 //  HuiYing
 //
 //  Created by Jin Xin on 15/5/8.
-//  Copyright (c) 2015年 Netease. All rights reserved.
+//  Copyright (c) 2015年 huiying. All rights reserved.
 //
 
 #ifndef HuiYing_Constraits_h
@@ -61,6 +61,7 @@
 #define kJSONKeySessionLanguage @"language"
 
 #define kJSONKeyTicketSource @"source"
+#define kJSONKeyTicketCNSource @"cn_source"
 #define kJSONKeyTicketOriginalPrice @"yuanjia"
 #define kJSONKeyTicketCurrentPrice @"xianjia"
 #define kJSONKeyTicketAccessMethod @"method"
@@ -121,6 +122,8 @@
 
 #define kUserInfoCurrentLocation @"currentLocation"
 #define kUserInfoCurrentCity @"cityLocation"
+
+#define kNotifyHideKeyboard @"kNotifyHideKeyboard"
 
 #pragma mark - Utils
 

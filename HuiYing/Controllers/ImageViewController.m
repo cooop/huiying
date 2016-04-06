@@ -3,7 +3,7 @@
 //  HuiYing
 //
 //  Created by 金鑫 on 15/9/21.
-//  Copyright © 2015年 Netease. All rights reserved.
+//  Copyright © 2015年 huiying. All rights reserved.
 //
 
 #import "ImageViewController.h"

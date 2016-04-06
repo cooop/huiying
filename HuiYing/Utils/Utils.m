@@ -3,7 +3,7 @@
 //  HuiYing
 //
 //  Created by Jin Xin on 15/5/10.
-//  Copyright (c) 2015年 Netease. All rights reserved.
+//  Copyright (c) 2015年 huiying. All rights reserved.
 //
 
 #import "Utils.h"
@@ -95,11 +95,12 @@
     NSArray* versions = [versionString componentsSeparatedByString:@"/"];
     NSString* highestQuality = @"";
     for (NSString* version in versions) {
-        if ([version isEqualToString:@"IMAX"]) {
+        NSString *versionStr = [version stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+        if ([versionStr isEqualToString:@"IMAX"]) {
             highestQuality = @"list_movie_ico_imax3d";
             break;
         }
-        if([version isEqualToString:@"3D"]){
+        if([versionStr isEqualToString:@"3D"]){
             highestQuality = @"list_movie_ico_3d";
         }
     }
@@ -114,11 +115,12 @@
     NSArray* versions = [versionString componentsSeparatedByString:@"/"];
     NSString* highestQuality = @"2D";
     for (NSString* version in versions) {
-        if ([version isEqualToString:@"IMAX"]) {
+        NSString *versionStr = [version stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+        if ([versionStr containsString:@"IMAX"]) {
             highestQuality = @"IMAX";
             break;
         }
-        if([version isEqualToString:@"3D"]){
+        if([versionStr containsString:@"3D"]){
             highestQuality = @"3D";
         }
     }

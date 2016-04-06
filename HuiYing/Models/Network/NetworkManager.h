@@ -3,7 +3,7 @@
 //  HuiYing
 //
 //  Created by Jin Xin on 15/5/8.
-//  Copyright (c) 2015年 Netease. All rights reserved.
+//  Copyright (c) 2015年 huiying. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
@@ -24,10 +24,12 @@ DECLARE_SHARED_INSTANCE(NetworkManager);
 //影院查询
 -(void) cinemaList;
 -(void) cinemaListInCity:(int64_t)cityID movie:(int64_t)movieID inDistrict:(int64_t)districtID page:(int64_t)page location:(CLLocation*)location orderBy:(CinemaOrderType)order;
+-(void)cinemaListInCity:(int64_t)cityID movie:(int64_t)movieID inDistrict:(int64_t)districtID page:(int64_t)page location:(CLLocation*)location orderBy:(CinemaOrderType)order searchKey:(NSString*)key;
 -(void) cinemaListDetailWithID:(int64_t)cinemaID;
 
 //电影查询
 -(void)movieListInCity:(int64_t)cityID page:(int64_t)page;
+-(void)movieListInCity:(int64_t)cityID page:(int64_t)page searchKey:(NSString*)key;
 -(void)movieListInCinema:(int64_t)cinemaID;
 -(void) movieListDetailWithID:(int64_t)movieID;
 

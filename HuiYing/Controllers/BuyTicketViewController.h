@@ -3,7 +3,7 @@
 //  HuiYing
 //
 //  Created by 金鑫 on 15/10/25.
-//  Copyright © 2015年 Netease. All rights reserved.
+//  Copyright © 2015年 huiying. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>

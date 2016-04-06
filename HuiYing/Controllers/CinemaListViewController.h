@@ -3,7 +3,7 @@
 //  HuiYing
 //
 //  Created by Jin Xin on 15/5/25.
-//  Copyright (c) 2015年 Netease. All rights reserved.
+//  Copyright (c) 2015年 huiying. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
@@ -21,8 +21,12 @@
 @property (nonatomic, strong) CLLocation *currentLocation;
 @property (nonatomic, assign) int64_t movieId;
 @property (nonatomic, assign) int64_t oldCityID;
-@property (nonatomic,strong) NSArray* districts;
+@property (nonatomic, strong) NSArray* districts;
+@property (nonatomic, assign) BOOL isSearch;
 
 -(instancetype)initWithCityId:(int64_t)cityId;
 -(instancetype)initWithCityId:(int64_t)cityId movieId:(int64_t)movieId;
+-(instancetype)initWithCityId:(int64_t)cityId isSearch:(BOOL)isSearch;
+
+- (void)search:(NSString*)searchKey;
 @end

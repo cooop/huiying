@@ -16,11 +16,13 @@
 		2D0D69981C4BBD5600ECBF9F /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D0D69971C4BBD5600ECBF9F /* Security.framework */; };
 		2D0D699A1C4BBD5E00ECBF9F /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D0D69991C4BBD5E00ECBF9F /* StoreKit.framework */; };
 		2D28E5241BAF14EE00BC1191 /* MovieImagesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D28E5231BAF14EE00BC1191 /* MovieImagesViewController.m */; };
+		2D4016EE1CAD438600C8B7FB /* HMSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D4016ED1CAD438600C8B7FB /* HMSegmentedControl.m */; };
 		2D7193121BD28D68003B7819 /* libMobClickLibrary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D71930F1BD28D68003B7819 /* libMobClickLibrary.a */; };
 		2D79D4B91B5BF54F004AC143 /* CinemaViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D79D4B81B5BF54F004AC143 /* CinemaViewController.m */; };
 		2D79D4BC1B5C0DB4004AC143 /* MyPoint.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D79D4BB1B5C0DB4004AC143 /* MyPoint.m */; };
 		2D7AEC4C1BE63B8C00FB96BC /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D7AEC4B1BE63B8C00FB96BC /* libz.tbd */; };
 		2D8E73AB1BDD27BC00217BA0 /* BuyTicketViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D8E73AA1BDD27BC00217BA0 /* BuyTicketViewController.m */; };
+		2DAB19161C9C126F004733D7 /* SearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DAB19151C9C126F004733D7 /* SearchViewController.m */; };
 		2DB3A6201B7BA4E100EABB03 /* MJRefresh.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 2DB3A6161B7BA4E100EABB03 /* MJRefresh.bundle */; };
 		2DB3A6211B7BA4E100EABB03 /* MJRefreshConst.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DB3A6191B7BA4E100EABB03 /* MJRefreshConst.m */; };
 		2DB3A6221B7BA4E100EABB03 /* UIScrollView+MJExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DB3A61B1B7BA4E100EABB03 /* UIScrollView+MJExtension.m */; };
@@ -189,6 +191,8 @@
 		2D0D69991C4BBD5E00ECBF9F /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		2D28E5221BAF14EE00BC1191 /* MovieImagesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MovieImagesViewController.h; path = Controllers/MovieImagesViewController.h; sourceTree = "<group>"; };
 		2D28E5231BAF14EE00BC1191 /* MovieImagesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MovieImagesViewController.m; path = Controllers/MovieImagesViewController.m; sourceTree = "<group>"; };
+		2D4016EC1CAD438600C8B7FB /* HMSegmentedControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HMSegmentedControl.h; path = "../../../Downloads/HMSegmentedControl-master/HMSegmentedControl/HMSegmentedControl.h"; sourceTree = "<group>"; };
+		2D4016ED1CAD438600C8B7FB /* HMSegmentedControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HMSegmentedControl.m; path = "../../../Downloads/HMSegmentedControl-master/HMSegmentedControl/HMSegmentedControl.m"; sourceTree = "<group>"; };
 		2D71930F1BD28D68003B7819 /* libMobClickLibrary.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libMobClickLibrary.a; path = ../libMobClickLibrary.a; sourceTree = "<group>"; };
 		2D7193101BD28D68003B7819 /* MobClick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MobClick.h; path = ../MobClick.h; sourceTree = "<group>"; };
 		2D7193111BD28D68003B7819 /* MobClickSocialAnalytics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MobClickSocialAnalytics.h; path = ../MobClickSocialAnalytics.h; sourceTree = "<group>"; };
@@ -199,6 +203,8 @@
 		2D7AEC4B1BE63B8C00FB96BC /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		2D8E73A91BDD27BC00217BA0 /* BuyTicketViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BuyTicketViewController.h; path = Controllers/BuyTicketViewController.h; sourceTree = "<group>"; };
 		2D8E73AA1BDD27BC00217BA0 /* BuyTicketViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BuyTicketViewController.m; path = Controllers/BuyTicketViewController.m; sourceTree = "<group>"; };
+		2DAB19141C9C126F004733D7 /* SearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SearchViewController.h; path = Controllers/SearchViewController.h; sourceTree = "<group>"; };
+		2DAB19151C9C126F004733D7 /* SearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SearchViewController.m; path = Controllers/SearchViewController.m; sourceTree = "<group>"; };
 		2DB3A6161B7BA4E100EABB03 /* MJRefresh.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = MJRefresh.bundle; path = views/MJRefresh/MJRefresh.bundle; sourceTree = "<group>"; };
 		2DB3A6171B7BA4E100EABB03 /* MJRefresh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MJRefresh.h; path = views/MJRefresh/MJRefresh.h; sourceTree = "<group>"; };
 		2DB3A6181B7BA4E100EABB03 /* MJRefreshConst.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MJRefreshConst.h; path = views/MJRefresh/MJRefreshConst.h; sourceTree = "<group>"; };
@@ -718,6 +724,8 @@
 		E6CF12001AFA398A004FBDB7 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				2D4016EC1CAD438600C8B7FB /* HMSegmentedControl.h */,
+				2D4016ED1CAD438600C8B7FB /* HMSegmentedControl.m */,
 				2D0D69871C4BB59B00ECBF9F /* GDTMobBannerView.h */,
 				2D0D69881C4BB59B00ECBF9F /* GDTMobInterstitial.h */,
 				2D0D69891C4BB59B00ECBF9F /* GDTNativeAd.h */,
@@ -813,6 +821,8 @@
 				2DE115C11BB0344900A8D9B7 /* ImageViewController.m */,
 				2D8E73A91BDD27BC00217BA0 /* BuyTicketViewController.h */,
 				2D8E73AA1BDD27BC00217BA0 /* BuyTicketViewController.m */,
+				2DAB19141C9C126F004733D7 /* SearchViewController.h */,
+				2DAB19151C9C126F004733D7 /* SearchViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -938,7 +948,7 @@
 				TargetAttributes = {
 					E6CF11FC1AFA398A004FBDB7 = {
 						CreatedOnToolsVersion = 6.3;
-						DevelopmentTeam = XGU2TF5WC8;
+						DevelopmentTeam = JPLJBR4U7A;
 					};
 					E6CF12181AFA398A004FBDB7 = {
 						CreatedOnToolsVersion = 6.3;
@@ -1120,12 +1130,14 @@
 				E6CF120C1AFA398A004FBDB7 /* MovieListViewController.m in Sources */,
 				E6DEA9DE1AFF6CCC006E87C3 /* AFSecurityPolicy.m in Sources */,
 				2DF0FB9B1B9C84D800A80905 /* LocationManager.m in Sources */,
+				2D4016EE1CAD438600C8B7FB /* HMSegmentedControl.m in Sources */,
 				E6DEA9E11AFF6CCC006E87C3 /* AFURLResponseSerialization.m in Sources */,
 				2DB3A6241B7BA4E100EABB03 /* UIView+MJExtension.m in Sources */,
 				E6DEA9FE1AFF6D14006E87C3 /* UIRefreshControl+AFNetworking.m in Sources */,
 				E6DEA9FA1AFF6D14006E87C3 /* UIAlertView+AFNetworking.m in Sources */,
 				E6DEA9E01AFF6CCC006E87C3 /* AFURLRequestSerialization.m in Sources */,
 				2DB3A6461B7BA54900EABB03 /* MJRefreshAutoGifFooter.m in Sources */,
+				2DAB19161C9C126F004733D7 /* SearchViewController.m in Sources */,
 				E6DF72891B1341A000299D61 /* CinemaListViewController.m in Sources */,
 				E6DEA9B81AFF6BF4006E87C3 /* CinemaMeta.m in Sources */,
 				2DB3A63C1B7BA52800EABB03 /* MJRefreshGifHeader.m in Sources */,
@@ -1202,8 +1214,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: chun yun Ma (W292K29GRB)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: chun yun Ma (W292K29GRB)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Xin Jin (M5AWUV4362)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Xin Jin (M5AWUV4362)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -1225,7 +1237,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "0c274e10-e3d4-499a-b4ce-bdd8fefa4b9a";
+				PROVISIONING_PROFILE = "0cffc8c1-bfc1-4b29-9e69-c0694d5b7f4c";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -1247,8 +1259,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Jiaxing Qiluo Network Co., Ltd. (XGU2TF5WC8)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Jiaxing Qiluo Network Co., Ltd. (XGU2TF5WC8)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Xin Jin (JPLJBR4U7A)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Xin Jin (JPLJBR4U7A)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
@@ -1263,7 +1275,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE = "70cf2805-cb61-43e5-ae05-8ec0df4de3c5";
+				PROVISIONING_PROFILE = "ca4065aa-b8f3-4e86-bdfc-5a6cc98d81bd";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -1274,8 +1286,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: chun yun Ma (W292K29GRB)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: chun yun Ma (W292K29GRB)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/HuiYing",
@@ -1290,7 +1302,7 @@
 				"OTHER_LDFLAGS[arch=*]" = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.huiying.iphone;
 				PRODUCT_NAME = "惠影";
-				PROVISIONING_PROFILE = "f2e4c309-ef5c-472d-96ec-5603e61361c4";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -1299,8 +1311,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Jiaxing Qiluo Network Co., Ltd. (XGU2TF5WC8)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Jiaxing Qiluo Network Co., Ltd. (XGU2TF5WC8)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/HuiYing",
@@ -1316,7 +1328,7 @@
 				"OTHER_LDFLAGS[arch=*]" = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.huiying.iphone;
 				PRODUCT_NAME = "惠影";
-				PROVISIONING_PROFILE = "92297af4-1975-4200-89b8-3e63a7a0ec21";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};
@@ -1324,8 +1336,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Xin Jin (M5AWUV4362)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Xin Jin (M5AWUV4362)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -1337,7 +1349,7 @@
 				INFOPLIST_FILE = HuiYingTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "惠影";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "0cffc8c1-bfc1-4b29-9e69-c0694d5b7f4c";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/惠影.app/惠影";
 			};
 			name = Debug;
@@ -1346,8 +1358,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Xin Jin (JPLJBR4U7A)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Xin Jin (JPLJBR4U7A)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -1355,7 +1367,7 @@
 				INFOPLIST_FILE = HuiYingTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "惠影";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "ca4065aa-b8f3-4e86-bdfc-5a6cc98d81bd";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/惠影.app/惠影";
 			};
 			name = Release;

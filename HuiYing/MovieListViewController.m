@@ -3,7 +3,7 @@
 //  HuiYing
 //
 //  Created by Jin Xin on 15/5/6.
-//  Copyright (c) 2015年 Netease. All rights reserved.
+//  Copyright (c) 2015年 huiying. All rights reserved.
 //
 
 #import "MovieListViewController.h"
@@ -18,6 +18,7 @@
 #import "MobClick.h"
 #import "GDTMobBannerView.h"
 #import "Constraits.h"
+#import "SearchViewController.h"
 
 @interface MovieListViewController ()<UIAlertViewDelegate, GDTMobBannerViewDelegate>
 
@@ -33,7 +34,6 @@
 @property (nonatomic, strong) CityMeta * locateCity;
 @property (nonatomic, strong) UILabel* locationLabel;
 
-@property (nonatomic, assign) BOOL adClicked;
 
 @end
 
@@ -49,7 +49,6 @@
         self.location = @"北京";
         self.cityID  = 100006;
     }
-    _adClicked = NO;
 }
 
 -(void)viewWillAppear:(BOOL)animated{
@@ -111,6 +110,11 @@
     UIBarButtonItem *locationBarButton = [[UIBarButtonItem alloc]initWithCustomView:view];
     self.navigationItem.leftBarButtonItem = locationBarButton;
     
+    UIImageView* searchImage = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"search_icon"]];
+    [searchImage addGestureRecognizer:[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(pushToSearchView)]];
+    UIBarButtonItem *searchBarButton = [[UIBarButtonItem alloc]initWithCustomView:searchImage];
+    self.navigationItem.rightBarButtonItem = searchBarButton;
+    
     self.edgesForExtendedLayout= UIRectEdgeNone;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(locateSuccess:) name:kLocateSuccessNotification object:nil];
@@ -131,17 +135,6 @@
     });
 }
 
-- (void)viewDidAppear:(BOOL)animated{
-    [super viewDidAppear:animated];
-    if (!self.adClicked) {
-        _movieTableViewController.tableView.frame = CGRectMake(0, 0, UI_SCREEN_WIDTH, UI_SCREEN_HEIGHT - UI_STATUS_BAR_HEIGHT - UI_NAVIGATION_BAR_HEIGHT-GDTMOB_AD_SUGGEST_SIZE_320x50.height);
-        _cinemaListViewController.view.frame = CGRectMake(0, 0, UI_SCREEN_WIDTH, UI_SCREEN_HEIGHT - UI_STATUS_BAR_HEIGHT - UI_NAVIGATION_BAR_HEIGHT-GDTMOB_AD_SUGGEST_SIZE_320x50.height);
-        _cinemaListViewController.tableView.frame = CGRectMake(0, 36, UI_SCREEN_WIDTH, UI_SCREEN_HEIGHT - UI_STATUS_BAR_HEIGHT - UI_NAVIGATION_BAR_HEIGHT-GDTMOB_AD_SUGGEST_SIZE_320x50.height- 36);
-    }
-
-    
-}
-
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     
@@ -150,6 +143,8 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kLocateSuccessNotification object:nil];
     [self.movieTableViewController.tableView removeFromSuperview];
     [self.cinemaListViewController.view removeFromSuperview];
+    [self.adBannerView removeFromSuperview];
+    self.adBannerView = nil;
 }
 
 -(void)dealloc{
@@ -163,6 +158,11 @@
 -(void)pushToCityListView {
     CityListViewController * cityListViewController = [[CityListViewController alloc]init];
     [self.navigationController pushViewController:cityListViewController animated:YES];
+}
+
+-(void)pushToSearchView{
+    SearchViewController * searchVC = [[SearchViewController alloc]initWithCityID:self.cityID];
+    [self.navigationController pushViewController:searchVC animated:YES];
 }
 
 -(void)switchBetweenMovieAndCinema{
@@ -217,17 +217,21 @@
 #pragma mark - GDTMobBannerViewDelegate
 
 - (void)bannerViewWillClose{
-    self.adClicked = YES;
     _movieTableViewController.tableView.frame = CGRectMake(0, 0, UI_SCREEN_WIDTH, UI_SCREEN_HEIGHT - UI_STATUS_BAR_HEIGHT - UI_NAVIGATION_BAR_HEIGHT);
     _cinemaListViewController.view.frame = CGRectMake(0, 0, UI_SCREEN_WIDTH, UI_SCREEN_HEIGHT - UI_STATUS_BAR_HEIGHT - UI_NAVIGATION_BAR_HEIGHT);
     _cinemaListViewController.tableView.frame = CGRectMake(0, 36, UI_SCREEN_WIDTH, UI_SCREEN_HEIGHT - UI_STATUS_BAR_HEIGHT - UI_NAVIGATION_BAR_HEIGHT- 36);
 }
 
 - (void)bannerViewFailToReceived:(NSError *)error{
-    self.adClicked = NO;
     _movieTableViewController.tableView.frame = CGRectMake(0, 0, UI_SCREEN_WIDTH, UI_SCREEN_HEIGHT - UI_STATUS_BAR_HEIGHT - UI_NAVIGATION_BAR_HEIGHT);
     _cinemaListViewController.view.frame = CGRectMake(0, 0, UI_SCREEN_WIDTH, UI_SCREEN_HEIGHT - UI_STATUS_BAR_HEIGHT - UI_NAVIGATION_BAR_HEIGHT);
     _cinemaListViewController.tableView.frame = CGRectMake(0, 36, UI_SCREEN_WIDTH, UI_SCREEN_HEIGHT - UI_STATUS_BAR_HEIGHT - UI_NAVIGATION_BAR_HEIGHT- 36);
+}
+
+- (void)bannerViewDidReceived{
+    _movieTableViewController.tableView.frame = CGRectMake(0, 0, UI_SCREEN_WIDTH, UI_SCREEN_HEIGHT - UI_STATUS_BAR_HEIGHT - UI_NAVIGATION_BAR_HEIGHT-GDTMOB_AD_SUGGEST_SIZE_320x50.height);
+    _cinemaListViewController.view.frame = CGRectMake(0, 0, UI_SCREEN_WIDTH, UI_SCREEN_HEIGHT - UI_STATUS_BAR_HEIGHT - UI_NAVIGATION_BAR_HEIGHT-GDTMOB_AD_SUGGEST_SIZE_320x50.height);
+    _cinemaListViewController.tableView.frame = CGRectMake(0, 36, UI_SCREEN_WIDTH, UI_SCREEN_HEIGHT - UI_STATUS_BAR_HEIGHT - UI_NAVIGATION_BAR_HEIGHT-GDTMOB_AD_SUGGEST_SIZE_320x50.height- 36);
 }
 
 

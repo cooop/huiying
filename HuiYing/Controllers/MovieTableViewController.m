@@ -3,7 +3,7 @@
 //  HuiYing
 //
 //  Created by Jin Xin on 15/5/27.
-//  Copyright (c) 2015年 Netease. All rights reserved.
+//  Copyright (c) 2015年 huiying. All rights reserved.
 //
 
 #import "MovieTableViewController.h"
@@ -19,15 +19,25 @@
 #import "Utils.h"
 
 @interface MovieTableViewController ()
-
+@property (nonatomic, strong) NSString* searchKey;
 @end
 
 @implementation MovieTableViewController
+
+-(instancetype)initWithCityId:(int64_t)cityId isSearch:(BOOL)isSearch{
+    if (self = [super init]) {
+        _cityID = cityId;
+        _moviePage = 1;
+        _isSearch = isSearch;
+    }
+    return self;
+}
 
 -(instancetype)initWithCityId:(int64_t)cityId{
     if (self = [super init]) {
         _cityID = cityId;
         _moviePage = 1;
+        _isSearch = NO;
     }
     return self;
 }
@@ -42,13 +52,25 @@
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
     self.tableView.header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(refreshMovies)];
-    self.tableView.footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreMovies)];
+    self.tableView.footer = [MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreMovies)];
 }
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(movieListSuccess:) name:kMovieListSuccessNotification object:nil];
-    [[NetworkManager sharedInstance] movieListInCity:self.cityID page:1];
+    if (!self.isSearch) {
+        [[NetworkManager sharedInstance] movieListInCity:self.cityID page:1];
+    }
+    
+}
+
+- (void)search:(NSString*)searchKey{
+    if (self.isSearch) {
+        if (searchKey && ![searchKey isEqualToString:@""]) {
+            [[NetworkManager sharedInstance] movieListInCity:self.cityID page:1 searchKey:searchKey];
+            self.searchKey = searchKey;
+        }
+    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated{
@@ -157,6 +179,7 @@
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
     MovieMeta *movie = self.movies[indexPath.row];
     MovieDetailViewController* mdvc = [[MovieDetailViewController alloc] initWithMovieID:movie.movieID];
     [self.navigationController pushViewController:mdvc animated:YES];
@@ -167,6 +190,12 @@
     CinemaListViewController * cinemaListVC = [[CinemaListViewController alloc]initWithCityId:self.cityID movieId:movieId];
     [self.navigationController pushViewController:cinemaListVC animated:YES];
     [MobClick event:UMengClickBuyInMovieList];
+}
+
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
+    if (self.searchKey) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:kNotifyHideKeyboard object:nil];
+    }
 }
 
 #pragma mark - notification handler
@@ -185,13 +214,20 @@
     }
     [self.tableView reloadData];
     [self.tableView.header endRefreshing];
+    
 }
 
 #pragma mark - refresh
 - (void) refreshMovies
 {
     NetworkManager *networkManager = [NetworkManager sharedInstance];
-    [networkManager movieListInCity:self.cityID page:1];
+    if (self.isSearch) {
+        if (self.searchKey && ![self.searchKey isEqualToString:@""]) {
+            [networkManager movieListInCity:self.cityID page:1 searchKey:self.searchKey];
+        }
+    }else{
+        [networkManager movieListInCity:self.cityID page:1];
+    }
     self.moviePage = 1;
 }
 
@@ -199,7 +235,13 @@
 - (void) loadMoreMovies
 {
     NetworkManager *networkManager = [NetworkManager sharedInstance];
-    [networkManager movieListInCity:self.cityID page:self.moviePage+1];
+    if (self.isSearch) {
+        if (self.searchKey && ![self.searchKey isEqualToString:@""]) {
+            [networkManager movieListInCity:self.cityID page:self.moviePage+1 searchKey:self.searchKey];
+        }
+    }else{
+        [networkManager movieListInCity:self.cityID page:self.moviePage+1];
+    }
     [self.tableView.footer endRefreshing];
 }
 

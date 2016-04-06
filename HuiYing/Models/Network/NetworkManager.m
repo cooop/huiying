@@ -3,7 +3,7 @@
 //  HuiYing
 //
 //  Created by Jin Xin on 15/5/8.
-//  Copyright (c) 2015年 Netease. All rights reserved.
+//  Copyright (c) 2015年 huiying. All rights reserved.
 //
 
 #import "NetworkManager.h"
@@ -95,8 +95,16 @@ IMPLEMENT_SHARED_INSTANCE(NetworkManager);
       }];
 }
 
--(void)cinemaListInCity:(int64_t)cityID movie:(int64_t)movieID inDistrict:(int64_t)districtID page:(int64_t)page location:(CLLocation*)location orderBy:(CinemaOrderType)order{
+-(void) cinemaListInCity:(int64_t)cityID movie:(int64_t)movieID inDistrict:(int64_t)districtID page:(int64_t)page location:(CLLocation*)location orderBy:(CinemaOrderType)order{
+    [self cinemaListInCity:cityID movie:movieID inDistrict:districtID page:page location:location orderBy:order searchKey:nil];
+}
+
+-(void)cinemaListInCity:(int64_t)cityID movie:(int64_t)movieID inDistrict:(int64_t)districtID page:(int64_t)page location:(CLLocation*)location orderBy:(CinemaOrderType)order searchKey:(NSString*)key{
     NSString* url = [NSString stringWithFormat:@"%@&page=%lld",[URLManager cinemaListInCity:cityID],page];
+    
+    if (key) {
+        url = [url stringByAppendingString:[NSString stringWithFormat:@"&search_keyword=%@",[key stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]];
+    }
     if (movieID >= 0) {
         url = [url stringByAppendingString:[NSString stringWithFormat:@"&movie_id=%lld",movieID]];
     }
@@ -159,6 +167,25 @@ IMPLEMENT_SHARED_INSTANCE(NetworkManager);
 
 -(void)movieListInCity:(int64_t)cityID page:(int64_t)page{
     [self GET:[NSString stringWithFormat:@"%@&page=%lld",[URLManager movieListInCity:cityID],page] parameters:nil
+      success:^(AFHTTPRequestOperation *operation, id responseObject) {
+          NSMutableArray *movieMetas = [[NSMutableArray alloc]init];
+          for(id dict in (NSArray*)[responseObject objectForKey:@"results"]){
+              MovieMeta *movieMeta =[[MovieMeta alloc]initWithDict:dict];
+              [movieMetas addObject:movieMeta];
+          }
+          for(MovieMeta *movieMeta in movieMetas){
+              NSLog(@"%@",movieMeta);
+          }
+          NSDictionary * userInfo =@{kUserInfoKeyMethodLocation:@"movieList",kUserInfoKeyMovies:movieMetas,kUserInfoKeyPage:@(page)};
+          [[NSNotificationCenter defaultCenter] postNotificationName:kMovieListSuccessNotification object:self userInfo:userInfo];
+      } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+          NSDictionary * userInfo  = @{kUserInfoKeyMethodLocation:@"movieList",kUserInfoKeyError:error.description};
+          [[NSNotificationCenter defaultCenter] postNotificationName:kMovieListFailedNotification object:self userInfo:userInfo];
+      }];
+}
+
+-(void)movieListInCity:(int64_t)cityID page:(int64_t)page searchKey:(NSString*)key{
+    [self GET:[NSString stringWithFormat:@"%@&page=%lld&search_keyword=%@",[URLManager movieListInCity:cityID],page,[key stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]] parameters:nil
       success:^(AFHTTPRequestOperation *operation, id responseObject) {
           NSMutableArray *movieMetas = [[NSMutableArray alloc]init];
           for(id dict in (NSArray*)[responseObject objectForKey:@"results"]){

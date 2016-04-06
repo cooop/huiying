@@ -3,7 +3,7 @@
 //  HuiYing
 //
 //  Created by Jin Xin on 15/5/25.
-//  Copyright (c) 2015年 Netease. All rights reserved.
+//  Copyright (c) 2015年 huiying. All rights reserved.
 //
 
 #import "CinemaListViewController.h"
@@ -28,9 +28,22 @@
 @property (nonatomic, strong) DistrictPullDownViewController* districtViewController;
 @property (nonatomic, strong) OrderPullDownViewController* orderViewController;
 
+@property (nonatomic, strong) NSString* searchKey;
+
 @end
 
 @implementation CinemaListViewController
+
+-(instancetype)initWithCityId:(int64_t)cityId isSearch:(BOOL)isSearch{
+    if (self = [super init]) {
+        _oldCityID = -1;
+        _cityID = cityId;
+        _cinemaPage = 1;
+        _movieId = -1;
+        _isSearch = isSearch;
+    }
+    return self;
+}
 
 -(instancetype)initWithCityId:(int64_t)cityId{
     if (self = [super init]) {
@@ -38,6 +51,7 @@
         _cityID = cityId;
         _cinemaPage = 1;
         _movieId = -1;
+        _isSearch = NO;
     }
     return self;
 }
@@ -67,7 +81,7 @@
     self.tableView.sectionHeaderHeight = 36;
     self.tableView.separatorInset = UIEdgeInsetsMake(0, 10, 0, 10);
     self.tableView.header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(refreshCinemas)];
-    self.tableView.footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreCinemas)];
+    self.tableView.footer = [MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreCinemas)];
     
     UIView* headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, UI_SCREEN_WIDTH, 36)];
     
@@ -160,8 +174,20 @@
     [super viewWillAppear:animated];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(observeCinemaList:) name:kCinemaListInCitySuccessNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(locationDidChange:) name:kLocateSuccessNotification object:nil];
-    [[NetworkManager sharedInstance]cinemaListInCity:self.cityID movie:self.movieId inDistrict:(self.selectedDistrict?self.selectedDistrict.districtID:-1) page:1 location:self.currentLocation orderBy:self.selectedOrderType];
+    if (!self.isSearch) {
+        [[NetworkManager sharedInstance]cinemaListInCity:self.cityID movie:self.movieId inDistrict:(self.selectedDistrict?self.selectedDistrict.districtID:-1) page:1 location:self.currentLocation orderBy:self.selectedOrderType];
+    }
     [MobClick beginLogPageView:UMengCinemaList];
+}
+
+- (void)search:(NSString*)searchKey{
+    if (self.isSearch) {
+        if (searchKey && ![searchKey isEqualToString:@""]) {
+                [[NetworkManager sharedInstance]cinemaListInCity:self.cityID movie:self.movieId inDistrict:(self.selectedDistrict?self.selectedDistrict.districtID:-1) page:1 location:self.currentLocation orderBy:self.selectedOrderType searchKey:searchKey];
+            self.searchKey = searchKey;
+        }
+    }
+
 }
 
 - (void)viewWillDisappear:(BOOL)animated{
@@ -353,7 +379,7 @@
     CLLocation* location = (CLLocation*)notification.userInfo[@"currentLocation"];
     if (!self.currentLocation || [location distanceFromLocation:self.currentLocation] > 1000) {
         self.currentLocation = location;
-        [[NetworkManager sharedInstance]cinemaListInCity:self.cityID movie:self.movieId inDistrict:(self.selectedDistrict?self.selectedDistrict.districtID:-1) page:1 location:self.currentLocation orderBy:self.selectedOrderType];
+        [[NetworkManager sharedInstance]cinemaListInCity:self.cityID movie:self.movieId inDistrict:(self.selectedDistrict?self.selectedDistrict.districtID:-1) page:1 location:self.currentLocation orderBy:self.selectedOrderType searchKey:self.searchKey];
     }
 }
 
@@ -447,6 +473,7 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     CinemaMeta* cinema = self.cinemas[indexPath.row];
     SessionViewController* svc = nil;
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
     if (self.movieId >= 0) {
         svc = [[SessionViewController alloc]initWithCinemaMeta:cinema andMovieId:self.movieId];
     }else{
@@ -455,14 +482,24 @@
     [self.navigationController pushViewController:svc animated:YES];
 }
 
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
+    if (self.searchKey) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:kNotifyHideKeyboard object:nil];
+    }
+}
+
 #pragma mark - refresh
 - (void) refreshCinemas
 {
     NetworkManager *networkManager = [NetworkManager sharedInstance];
+    if (self.isSearch && (!self.searchKey || [self.searchKey isEqualToString:@""])) {
+        return;
+    }
+    
     if (self.selectedDistrict) {
-        [networkManager cinemaListInCity:self.cityID movie:self.movieId inDistrict:self.selectedDistrict.districtID page:1 location:self.currentLocation orderBy:self.selectedOrderType];
+        [networkManager cinemaListInCity:self.cityID movie:self.movieId inDistrict:self.selectedDistrict.districtID page:1 location:self.currentLocation orderBy:self.selectedOrderType searchKey:self.searchKey];
     }else{
-        [networkManager cinemaListInCity:self.cityID movie:self.movieId inDistrict:-1 page:1 location:self.currentLocation orderBy:self.selectedOrderType];
+        [networkManager cinemaListInCity:self.cityID movie:self.movieId inDistrict:-1 page:1 location:self.currentLocation orderBy:self.selectedOrderType searchKey:self.searchKey];
     }
     self.cinemaPage = 1;
 }
@@ -471,10 +508,14 @@
 - (void) loadMoreCinemas
 {
     NetworkManager *networkManager = [NetworkManager sharedInstance];
+    if (self.isSearch && (!self.searchKey || [self.searchKey isEqualToString:@""])) {
+        return;
+    }
+    
     if (self.selectedDistrict) {
-        [networkManager cinemaListInCity:self.cityID movie:self.movieId inDistrict:self.selectedDistrict.districtID page:self.cinemaPage+1 location:self.currentLocation orderBy:self.selectedOrderType];
+        [networkManager cinemaListInCity:self.cityID movie:self.movieId inDistrict:self.selectedDistrict.districtID page:self.cinemaPage+1 location:self.currentLocation orderBy:self.selectedOrderType searchKey:self.searchKey];
     }else{
-        [networkManager cinemaListInCity:self.cityID movie:self.movieId inDistrict:-1 page:self.cinemaPage+1 location:self.currentLocation orderBy:self.selectedOrderType];
+        [networkManager cinemaListInCity:self.cityID movie:self.movieId inDistrict:-1 page:self.cinemaPage+1 location:self.currentLocation orderBy:self.selectedOrderType searchKey:self.searchKey];
     }
     [self.tableView.footer endRefreshing];
 }
